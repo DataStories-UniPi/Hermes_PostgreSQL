@@ -1,0 +1,302 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="PostgreSQL 9.4|Win32">
+      <Configuration>PostgreSQL 9.4</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="PostgreSQL 9.4|x64">
+      <Configuration>PostgreSQL 9.4</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C Library\h\Clustering\Traclus\Distance.h" />
+    <ClInclude Include="C Library\h\Marine\AIS.h" />
+    <ClInclude Include="C Library\h\Hermes.h" />
+    <ClInclude Include="C Library\h\Spatial\CRS\Ellipsoid\Definition.h" />
+    <ClInclude Include="C Library\h\Spatial\CRS\PointLL\Distance.h" />
+    <ClInclude Include="C Library\h\Utilities\UnitConversion.h" />
+    <ClInclude Include="C Library\h\Math\Vector2D\ArithmeticOperators.h" />
+    <ClInclude Include="C Library\h\Math\Vector2D\Casts.h" />
+    <ClInclude Include="C Library\h\Math\Vector2D\Definition.h" />
+    <ClInclude Include="C Library\h\Math\Vector3D\ArithmeticOperators.h" />
+    <ClInclude Include="C Library\h\Math\Vector3D\Casts.h" />
+    <ClInclude Include="C Library\h\Math\Vector3D\Definition.h" />
+    <ClInclude Include="C Library\h\SessionParameters.h" />
+    <ClInclude Include="C Library\h\Spatial\BoxSP\Casts.h" />
+    <ClInclude Include="C Library\h\Spatial\BoxSP\Definition.h" />
+    <ClInclude Include="C Library\h\Spatial\BoxSP\Distance.h" />
+    <ClInclude Include="C Library\h\Spatial\BoxSP\Interactions.h" />
+    <ClInclude Include="C Library\h\Spatial\BoxSP\Properties.h" />
+    <ClInclude Include="C Library\h\Spatial\BoxSP\RelationalOperators.h" />
+    <ClInclude Include="C Library\h\Spatial\CRS\Conversions.h" />
+    <ClInclude Include="C Library\h\Spatial\CRS\PointENU\Definition.h" />
+    <ClInclude Include="C Library\h\Spatial\CRS\PointLL\Definition.h" />
+    <ClInclude Include="C Library\h\Spatial\CRS\PointPLH\Definition.h" />
+    <ClInclude Include="C Library\h\Spatial\CRS\PointXYZ\Definition.h" />
+    <ClInclude Include="C Library\h\Spatial\CRS\PointXY\Casts.h" />
+    <ClInclude Include="C Library\h\Spatial\LineSP\ArithmeticOperators.h" />
+    <ClInclude Include="C Library\h\Spatial\LineSP\Definition.h" />
+    <ClInclude Include="C Library\h\Spatial\LineSP\Properties.h" />
+    <ClInclude Include="C Library\h\Spatial\LineSP\RelationalOperators.h" />
+    <ClInclude Include="C Library\h\Spatial\CRS\PointXY\Definition.h" />
+    <ClInclude Include="C Library\h\Spatial\PointSP\Casts.h" />
+    <ClInclude Include="C Library\h\Spatial\PointSP\Definition.h" />
+    <ClInclude Include="C Library\h\Spatial\PointSP\Distance.h" />
+    <ClInclude Include="C Library\h\Spatial\PointSP\RelationalOperators.h" />
+    <ClInclude Include="C Library\h\Spatial\RangeSP\Casts.h" />
+    <ClInclude Include="C Library\h\Spatial\RangeSP\Definition.h" />
+    <ClInclude Include="C Library\h\Spatial\RangeSP\Properties.h" />
+    <ClInclude Include="C Library\h\Spatial\SegmentSP\ArithmeticOperators.h" />
+    <ClInclude Include="C Library\h\Spatial\SegmentSP\Casts.h" />
+    <ClInclude Include="C Library\h\Spatial\SegmentSP\Definition.h" />
+    <ClInclude Include="C Library\h\Spatial\SegmentSP\Distance.h" />
+    <ClInclude Include="C Library\h\Spatial\SegmentSP\Interactions.h" />
+    <ClInclude Include="C Library\h\Spatial\SegmentSP\Properties.h" />
+    <ClInclude Include="C Library\h\Spatial\SegmentSP\RelationalOperators.h" />
+    <ClInclude Include="C Library\h\Spatial\SessionParameters.h" />
+    <ClInclude Include="C Library\h\SpatioTemporal\BoxST\Casts.h" />
+    <ClInclude Include="C Library\h\SpatioTemporal\BoxST\Definition.h" />
+    <ClInclude Include="C Library\h\SpatioTemporal\BoxST\Editors.h" />
+    <ClInclude Include="C Library\h\SpatioTemporal\BoxST\Interactions.h" />
+    <ClInclude Include="C Library\h\SpatioTemporal\BoxST\Properties.h" />
+    <ClInclude Include="C Library\h\SpatioTemporal\BoxST\RelationalOperators.h" />
+    <ClInclude Include="C Library\h\SpatioTemporal\SegmentST\Accessors.h" />
+    <ClInclude Include="C Library\h\SpatioTemporal\SegmentST\Indexing\S2T.h" />
+    <ClInclude Include="C Library\h\SpatioTemporal\PointST\Casts.h" />
+    <ClInclude Include="C Library\h\SpatioTemporal\PointST\Definition.h" />
+    <ClInclude Include="C Library\h\SpatioTemporal\RangeST\Casts.h" />
+    <ClInclude Include="C Library\h\SpatioTemporal\RangeST\Definition.h" />
+    <ClInclude Include="C Library\h\SpatioTemporal\SegmentST\Casts.h" />
+    <ClInclude Include="C Library\h\SpatioTemporal\SegmentST\Definition.h" />
+    <ClInclude Include="C Library\h\SpatioTemporal\SegmentST\Interpolation.h" />
+    <ClInclude Include="C Library\h\SpatioTemporal\SegmentST\Properties.h" />
+    <ClInclude Include="C Library\h\SpatioTemporal\SegmentST\RelationalOperators.h" />
+    <ClInclude Include="C Library\h\SpatioTemporal\SegmentST\Similarity.h" />
+    <ClInclude Include="C Library\h\SpatioTemporal\Trajectory\Definition.h" />
+    <ClInclude Include="C Library\h\SpatioTemporal\Trajectory\Similarity.h" />
+    <ClInclude Include="C Library\h\SpatioTemporal\Trajectory\RelationalOperators.h" />
+    <ClInclude Include="C Library\h\SpatioTemporal\Trajectory\SessionParameters.h" />
+    <ClInclude Include="C Library\h\SpatioTemporal\Trajectory\Simplification.h" />
+    <ClInclude Include="C Library\h\Temporal\Period\Casts.h" />
+    <ClInclude Include="C Library\h\Temporal\Period\Definition.h" />
+    <ClInclude Include="C Library\h\Temporal\Period\Distance.h" />
+    <ClInclude Include="C Library\h\Temporal\Period\Interactions.h" />
+    <ClInclude Include="C Library\h\Temporal\Period\Properties.h" />
+    <ClInclude Include="C Library\h\Temporal\Period\RelationalOperators.h" />
+    <ClInclude Include="C Library\h\Temporal\RangeT\Casts.h" />
+    <ClInclude Include="C Library\h\Temporal\RangeT\Definition.h" />
+    <ClInclude Include="C Library\h\Temporal\SessionParameters.h" />
+    <ClInclude Include="C Library\h\Temporal\Timestamp\RelationalOperators.h" />
+    <ClInclude Include="C Library\h\SpatioTemporal\Trajectory\Interpolation.h" />
+    <ClInclude Include="C Library\h\SpatioTemporal\Trajectory\Constructors.h" />
+    <ClInclude Include="C Library\h\Utilities\MSVCWorkarounds.h" />
+    <ClInclude Include="C Library\h\SpatioTemporal\Trajectory\Editors.h" />
+    <ClInclude Include="C Library\h\SpatioTemporal\Trajectory\Casts.h" />
+    <ClInclude Include="C Library\h\SpatioTemporal\Trajectory\Accessors.h" />
+    <ClInclude Include="C Library\h\Utilities\Utilities.h" />
+    <ClInclude Include="C Library\h\SpatioTemporal\Trajectory\Properties.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="C Library\Clustering\Traclus\Distance.c" />
+    <ClCompile Include="C Library\Marine\AIS.c" />
+    <ClCompile Include="C Library\Hermes.c" />
+    <ClCompile Include="C Library\Spatial\CRS\Ellipsoid\Definition.c" />
+    <ClCompile Include="C Library\Spatial\CRS\PointLL\Distance.c" />
+    <ClCompile Include="C Library\SpatioTemporal\BoxST\Indexing\GiST.c" />
+    <ClCompile Include="C Library\SpatioTemporal\BoxST\PseudoDistance.c" />
+    <ClCompile Include="C Library\SpatioTemporal\BoxST\PseudoRelationalOperators.c" />
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Similarity\EuclideanStartEnd.c" />
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Similarity\EuclideanEnd.c" />
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Similarity\EuclideanStart.c" />
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Similarity\DISSIM.c" />
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Similarity\DTW.c" />
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Similarity\EDR.c" />
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Similarity\ERP.c" />
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Similarity\LCSS.c" />
+    <ClCompile Include="C Library\Utilities\UnitConversion.c" />
+    <ClCompile Include="C Library\Math\Vector2D\ArithmeticOperators.c" />
+    <ClCompile Include="C Library\Math\Vector2D\Casts.c" />
+    <ClCompile Include="C Library\Math\Vector2D\Definition.c" />
+    <ClCompile Include="C Library\Math\Vector3D\ArithmeticOperators.c" />
+    <ClCompile Include="C Library\Math\Vector3D\Casts.c" />
+    <ClCompile Include="C Library\Math\Vector3D\Definition.c" />
+    <ClCompile Include="C Library\PGMagic.c" />
+    <ClCompile Include="C Library\SessionParameters.c" />
+    <ClCompile Include="C Library\Spatial\BoxSP\Casts.c" />
+    <ClCompile Include="C Library\Spatial\BoxSP\Definition.c" />
+    <ClCompile Include="C Library\Spatial\BoxSP\Distance.c" />
+    <ClCompile Include="C Library\Spatial\BoxSP\Interactions.c" />
+    <ClCompile Include="C Library\Spatial\BoxSP\Properties.c" />
+    <ClCompile Include="C Library\Spatial\BoxSP\RelationalOperators.c" />
+    <ClCompile Include="C Library\Spatial\CRS\Conversions.c" />
+    <ClCompile Include="C Library\Spatial\CRS\PointENU\Definition.c" />
+    <ClCompile Include="C Library\Spatial\CRS\PointLL\Definition.c" />
+    <ClCompile Include="C Library\Spatial\CRS\PointPLH\Definition.c" />
+    <ClCompile Include="C Library\Spatial\CRS\PointXYZ\Definition.c" />
+    <ClCompile Include="C Library\Spatial\CRS\PointXY\Casts.c" />
+    <ClCompile Include="C Library\Spatial\LineSP\ArithmeticOperators.c" />
+    <ClCompile Include="C Library\Spatial\LineSP\Definition.c" />
+    <ClCompile Include="C Library\Spatial\LineSP\Properties.c" />
+    <ClCompile Include="C Library\Spatial\LineSP\RelationalOperators.c" />
+    <ClCompile Include="C Library\Spatial\PointSP\Casts.c" />
+    <ClCompile Include="C Library\Spatial\PointSP\Definition.c" />
+    <ClCompile Include="C Library\Spatial\PointSP\Distance.c" />
+    <ClCompile Include="C Library\Spatial\PointSP\RelationalOperators.c" />
+    <ClCompile Include="C Library\Spatial\CRS\PointXY\Definition.c" />
+    <ClCompile Include="C Library\Spatial\RangeSP\Casts.c" />
+    <ClCompile Include="C Library\Spatial\RangeSP\Definition.c" />
+    <ClCompile Include="C Library\Spatial\RangeSP\Properties.c" />
+    <ClCompile Include="C Library\Spatial\SegmentSP\ArithmeticOperators.c" />
+    <ClCompile Include="C Library\Spatial\SegmentSP\Casts.c" />
+    <ClCompile Include="C Library\Spatial\SegmentSP\Definition.c" />
+    <ClCompile Include="C Library\Spatial\SegmentSP\Distance.c" />
+    <ClCompile Include="C Library\Spatial\SegmentSP\Interactions.c" />
+    <ClCompile Include="C Library\Spatial\SegmentSP\Properties.c" />
+    <ClCompile Include="C Library\Spatial\SegmentSP\RelationalOperators.c" />
+    <ClCompile Include="C Library\Spatial\SessionParameters.c" />
+    <ClCompile Include="C Library\SpatioTemporal\BoxST\Casts.c" />
+    <ClCompile Include="C Library\SpatioTemporal\BoxST\Definition.c" />
+    <ClCompile Include="C Library\SpatioTemporal\BoxST\Editors.c" />
+    <ClCompile Include="C Library\SpatioTemporal\SegmentST\Accessors.c" />
+    <ClCompile Include="C Library\SpatioTemporal\SegmentST\Indexing\S2T.c" />
+    <ClCompile Include="C Library\SpatioTemporal\PointST\Aggregates.c" />
+    <ClCompile Include="C Library\SpatioTemporal\SegmentST\Indexing\GiST.c" />
+    <ClCompile Include="C Library\SpatioTemporal\BoxST\Interactions.c" />
+    <ClCompile Include="C Library\SpatioTemporal\BoxST\Properties.c" />
+    <ClCompile Include="C Library\SpatioTemporal\BoxST\RelationalOperators.c" />
+    <ClCompile Include="C Library\SpatioTemporal\PointST\Casts.c" />
+    <ClCompile Include="C Library\SpatioTemporal\PointST\Definition.c" />
+    <ClCompile Include="C Library\SpatioTemporal\RangeST\Casts.c" />
+    <ClCompile Include="C Library\SpatioTemporal\RangeST\Definition.c" />
+    <ClCompile Include="C Library\SpatioTemporal\SegmentST\Casts.c" />
+    <ClCompile Include="C Library\SpatioTemporal\SegmentST\Definition.c" />
+    <ClCompile Include="C Library\SpatioTemporal\SegmentST\PseudoDistance.c" />
+    <ClCompile Include="C Library\SpatioTemporal\SegmentST\Interpolation.c" />
+    <ClCompile Include="C Library\SpatioTemporal\SegmentST\Properties.c" />
+    <ClCompile Include="C Library\SpatioTemporal\SegmentST\RelationalOperators.c" />
+    <ClCompile Include="C Library\SpatioTemporal\SegmentST\PseudoRelationalOperators.c" />
+    <ClCompile Include="C Library\SpatioTemporal\SegmentST\Similarity\Trapezoidal.c" />
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Definition.c" />
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Similarity\Chebyshev.c" />
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Similarity\Euclidean.c" />
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Similarity\Manhattan.c" />
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Properties.c" />
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\RelationalOperators.c" />
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\SessionParameters.c" />
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Simplification.c" />
+    <ClCompile Include="C Library\Temporal\Period\Casts.c" />
+    <ClCompile Include="C Library\Temporal\Period\Definition.c" />
+    <ClCompile Include="C Library\Temporal\Period\Distance.c" />
+    <ClCompile Include="C Library\Temporal\Period\Interactions.c" />
+    <ClCompile Include="C Library\Temporal\Period\Properties.c" />
+    <ClCompile Include="C Library\Temporal\Period\RelationalOperators.c" />
+    <ClCompile Include="C Library\Temporal\RangeT\Casts.c" />
+    <ClCompile Include="C Library\Temporal\RangeT\Definition.c" />
+    <ClCompile Include="C Library\Temporal\SessionParameters.c" />
+    <ClCompile Include="C Library\Temporal\Timestamp\RelationalOperators.c" />
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Editors.c" />
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Interpolation.c" />
+    <ClCompile Include="C Library\Utilities\MSVCWorkarounds.c" />
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Casts.c" />
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Accessors.c" />
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Constructors.c" />
+    <ClCompile Include="C Library\Utilities\Utilities.c" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{6149390D-6220-4E1D-B43A-0E9818433514}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>Hermes</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PostgreSQL 9.4|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PostgreSQL 9.4|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='PostgreSQL 9.4|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='PostgreSQL 9.4|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PostgreSQL 9.4|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IntDir>$(Configuration)\$(Platform)\</IntDir>
+    <OutDir>$(SolutionDir)$(Configuration)\$(Platform)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PostgreSQL 9.4|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IntDir>$(Configuration)\$(Platform)\</IntDir>
+    <OutDir>$(SolutionDir)$(Configuration)\$(Platform)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='PostgreSQL 9.4|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;HERMES_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <ObjectFileName>$(IntDir)/%(RelativeDir)</ObjectFileName>
+      <UndefinePreprocessorDefinitions>%(UndefinePreprocessorDefinitions)</UndefinePreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\PostgreSQL\9.4\x86\include;C:\PostgreSQL\9.4\x86\include\server;C:\PostgreSQL\9.4\x86\include\server\port\win32</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>postgres.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\PostgreSQL\9.4\x86\lib</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='PostgreSQL 9.4|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;HERMES_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <ObjectFileName>$(IntDir)/%(RelativeDir)</ObjectFileName>
+      <UndefinePreprocessorDefinitions>%(UndefinePreprocessorDefinitions)</UndefinePreprocessorDefinitions>
+      <BrowseInformation>true</BrowseInformation>
+      <AdditionalIncludeDirectories>C:\PostgreSQL\9.4\x64\include;C:\PostgreSQL\9.4\x64\include\server;C:\PostgreSQL\9.4\x64\include\server\port\win32</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>postgres.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\PostgreSQL\9.4\x64\lib</AdditionalLibraryDirectories>
+    </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

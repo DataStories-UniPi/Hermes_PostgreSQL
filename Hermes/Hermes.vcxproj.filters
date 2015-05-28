@@ -1,0 +1,591 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C Library\h\Clustering\Traclus\Distance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Math\Vector2D\ArithmeticOperators.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Math\Vector2D\Casts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Math\Vector2D\Definition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Math\Vector3D\ArithmeticOperators.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Math\Vector3D\Casts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Math\Vector3D\Definition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\BoxSP\Casts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\BoxSP\Definition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\BoxSP\Distance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\BoxSP\Interactions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\BoxSP\Properties.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\BoxSP\RelationalOperators.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\CRS\PointENU\Definition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\CRS\PointLL\Definition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\CRS\PointPLH\Definition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\CRS\PointXY\Casts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\CRS\PointXY\Definition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\CRS\PointXYZ\Definition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\CRS\Conversions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\LineSP\ArithmeticOperators.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\LineSP\Definition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\LineSP\Properties.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\LineSP\RelationalOperators.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\PointSP\Casts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\PointSP\Definition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\PointSP\Distance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\PointSP\RelationalOperators.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\RangeSP\Casts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\RangeSP\Definition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\RangeSP\Properties.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\SegmentSP\ArithmeticOperators.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\SegmentSP\Casts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\SegmentSP\Definition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\SegmentSP\Distance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\SegmentSP\Interactions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\SegmentSP\Properties.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\SegmentSP\RelationalOperators.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\SessionParameters.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\SpatioTemporal\BoxST\Casts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\SpatioTemporal\BoxST\Definition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\SpatioTemporal\BoxST\Interactions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\SpatioTemporal\BoxST\Properties.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\SpatioTemporal\BoxST\RelationalOperators.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\SpatioTemporal\PointST\Casts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\SpatioTemporal\PointST\Definition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\SpatioTemporal\RangeST\Casts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\SpatioTemporal\RangeST\Definition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\SpatioTemporal\SegmentST\Casts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\SpatioTemporal\SegmentST\Definition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\SpatioTemporal\SegmentST\Interpolation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\SpatioTemporal\SegmentST\Properties.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\SpatioTemporal\Trajectory\Definition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Temporal\Period\Casts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Temporal\Period\Definition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Temporal\Period\Distance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Temporal\Period\Interactions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Temporal\Period\Properties.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Temporal\Period\RelationalOperators.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Temporal\RangeT\Casts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Temporal\RangeT\Definition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Temporal\Timestamp\RelationalOperators.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Temporal\SessionParameters.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Utilities\Utilities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Hermes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\SessionParameters.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\SpatioTemporal\Trajectory\SessionParameters.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\SpatioTemporal\Trajectory\Properties.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\SpatioTemporal\Trajectory\Editors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\SpatioTemporal\Trajectory\Interpolation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\SpatioTemporal\Trajectory\Casts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\SpatioTemporal\Trajectory\Accessors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\SpatioTemporal\SegmentST\RelationalOperators.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\SpatioTemporal\Trajectory\RelationalOperators.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Marine\AIS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\SpatioTemporal\Trajectory\Constructors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\SpatioTemporal\Trajectory\Similarity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\SpatioTemporal\BoxST\Editors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\SpatioTemporal\SegmentST\Indexing\S2T.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\SpatioTemporal\SegmentST\Similarity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\SpatioTemporal\Trajectory\Simplification.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\SpatioTemporal\SegmentST\Accessors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Utilities\UnitConversion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\CRS\PointLL\Distance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Spatial\CRS\Ellipsoid\Definition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C Library\h\Utilities\MSVCWorkarounds.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="C Library\Clustering\Traclus\Distance.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Math\Vector2D\ArithmeticOperators.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Math\Vector2D\Casts.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Math\Vector2D\Definition.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Math\Vector3D\ArithmeticOperators.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Math\Vector3D\Casts.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Math\Vector3D\Definition.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\BoxSP\Casts.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\BoxSP\Definition.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\BoxSP\Distance.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\BoxSP\Interactions.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\BoxSP\Properties.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\BoxSP\RelationalOperators.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\CRS\PointENU\Definition.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\CRS\PointLL\Definition.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\CRS\PointPLH\Definition.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\CRS\PointXY\Casts.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\CRS\PointXY\Definition.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\CRS\PointXYZ\Definition.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\CRS\Conversions.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\LineSP\ArithmeticOperators.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\LineSP\Definition.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\LineSP\Properties.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\LineSP\RelationalOperators.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\PointSP\Casts.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\PointSP\Definition.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\PointSP\Distance.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\PointSP\RelationalOperators.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\RangeSP\Casts.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\RangeSP\Definition.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\RangeSP\Properties.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\SegmentSP\ArithmeticOperators.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\SegmentSP\Casts.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\SegmentSP\Definition.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\SegmentSP\Distance.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\SegmentSP\Interactions.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\SegmentSP\Properties.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\SegmentSP\RelationalOperators.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\SessionParameters.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\BoxST\Casts.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\BoxST\Definition.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\BoxST\Interactions.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\BoxST\Properties.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\BoxST\RelationalOperators.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\PointST\Aggregates.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\PointST\Casts.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\PointST\Definition.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\RangeST\Casts.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\RangeST\Definition.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\SegmentST\Casts.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\SegmentST\Definition.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\SegmentST\Interpolation.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\SegmentST\Properties.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\SegmentST\PseudoDistance.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\SegmentST\PseudoRelationalOperators.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\SegmentST\RelationalOperators.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Definition.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Temporal\Period\Casts.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Temporal\Period\Definition.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Temporal\Period\Distance.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Temporal\Period\Interactions.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Temporal\Period\Properties.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Temporal\Period\RelationalOperators.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Temporal\RangeT\Casts.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Temporal\RangeT\Definition.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Temporal\Timestamp\RelationalOperators.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Temporal\SessionParameters.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Utilities\MSVCWorkarounds.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Utilities\Utilities.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Hermes.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\PGMagic.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SessionParameters.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\SessionParameters.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Properties.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Editors.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Interpolation.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Casts.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Accessors.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\RelationalOperators.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Marine\AIS.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Constructors.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Similarity\Manhattan.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Similarity\Chebyshev.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Similarity\Euclidean.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\SegmentST\Indexing\GiST.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\BoxST\Editors.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\SegmentST\Indexing\S2T.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\SegmentST\Similarity\Trapezoidal.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Simplification.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\SegmentST\Accessors.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Utilities\UnitConversion.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\CRS\PointLL\Distance.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\Spatial\CRS\Ellipsoid\Definition.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Similarity\EDR.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Similarity\DTW.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Similarity\ERP.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Similarity\LCSS.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Similarity\DISSIM.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Similarity\EuclideanStart.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Similarity\EuclideanEnd.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\Trajectory\Similarity\EuclideanStartEnd.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\BoxST\Indexing\GiST.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\BoxST\PseudoRelationalOperators.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C Library\SpatioTemporal\BoxST\PseudoDistance.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

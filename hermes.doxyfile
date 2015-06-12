@@ -32,7 +32,7 @@ DOXYFILE_ENCODING = UTF-8
 # title of most generated pages and in a few other places.
 # The default value is: My Project.
 
-PROJECT_NAME = "Hermes"
+PROJECT_NAME = Hermes
 
 # The PROJECT_NUMBER tag can be used to enter a project or revision number. This
 # could be handy for archiving the generated documentation or if some version
@@ -234,7 +234,7 @@ TCL_SUBST =
 # members will be omitted, etc.
 # The default value is: NO.
 
-OPTIMIZE_OUTPUT_FOR_C = NO
+OPTIMIZE_OUTPUT_FOR_C = YES
 
 # Set the OPTIMIZE_OUTPUT_JAVA tag to YES if your project consists of Java or
 # Python sources only. Doxygen will then generate output that is more tailored
@@ -416,7 +416,7 @@ EXTRACT_PACKAGE = NO
 # included in the documentation.
 # The default value is: NO.
 
-EXTRACT_STATIC = YES
+EXTRACT_STATIC = NO
 
 # If the EXTRACT_LOCAL_CLASSES tag is set to YES classes (and structs) defined
 # locally in source files will be included in the documentation. If set to NO
@@ -672,7 +672,7 @@ LAYOUT_FILE =
 # search path. Do not use file names with spaces, bibtex cannot handle them. See
 # also \cite for info how to create references.
 
-CITE_BIB_FILES = 
+CITE_BIB_FILES = doc/references.bib
 
 #---------------------------------------------------------------------------
 # Configuration options related to warning and progress messages
@@ -743,7 +743,15 @@ WARN_LOGFILE =
 # spaces.
 # Note: If this tag is empty the current directory is searched.
 
-INPUT = README.md Hermes 
+INPUT = README.md \
+		doc/introduction.md \
+		doc/installation.md \
+		doc/data_types.md \
+		doc/dataset_loading.md \
+		doc/clustering.md \
+ 		doc/PostGIS.md \
+		doc/documentation.md \
+		Hermes  
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses
@@ -857,7 +865,7 @@ INPUT_FILTER =
 # filters are used. If the FILTER_PATTERNS tag is empty or if none of the
 # patterns match the file name, INPUT_FILTER is applied.
 
-FILTER_PATTERNS = 
+FILTER_PATTERNS = .sql =
 
 # If the FILTER_SOURCE_FILES tag is set to YES, the input filter (if set using
 # INPUT_FILTER ) will also be used to filter the input files that are used for
@@ -1068,7 +1076,7 @@ HTML_STYLESHEET =
 # see the documentation.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_EXTRA_STYLESHEET = 
+HTML_EXTRA_STYLESHEET = doc/configuration/doxygen_html_style.css
 
 # The HTML_EXTRA_FILES tag can be used to specify one or more extra images or
 # other source files which should be copied to the HTML output directory. Note
@@ -1540,7 +1548,7 @@ EXTRA_SEARCH_MAPPINGS =
 # If the GENERATE_LATEX tag is set to YES doxygen will generate LaTeX output.
 # The default value is: YES.
 
-GENERATE_LATEX = NO
+GENERATE_LATEX = YES
 
 # The LATEX_OUTPUT tag is used to specify where the LaTeX docs will be put. If a
 # relative path is entered the value of OUTPUT_DIRECTORY will be put in front of
@@ -1559,7 +1567,7 @@ LATEX_OUTPUT = latex
 # The default file is: latex.
 # This tag requires that the tag GENERATE_LATEX is set to YES.
 
-LATEX_CMD_NAME = latex
+LATEX_CMD_NAME = 
 
 # The MAKEINDEX_CMD_NAME tag can be used to specify the command name to generate
 # index for LaTeX.
@@ -1634,7 +1642,7 @@ LATEX_EXTRA_FILES =
 # The default value is: YES.
 # This tag requires that the tag GENERATE_LATEX is set to YES.
 
-PDF_HYPERLINKS = NO
+PDF_HYPERLINKS = YES
 
 # If the LATEX_PDFLATEX tag is set to YES, doxygen will use pdflatex to generate
 # the PDF file directly from the LaTeX files. Set this option to YES to get a

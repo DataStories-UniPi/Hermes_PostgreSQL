@@ -1,0 +1,6 @@
+/* Fixing the size of the figures so they could fit on the page. 
+   It is used on the HTML_EXTRA_STYLESHEET of the hermes.doxyfile. */
+
+div.image img[src="hermes_figure1.png"]{ 
+    width:100%; 
+}

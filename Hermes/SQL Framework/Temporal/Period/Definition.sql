@@ -1,5 +1,9 @@
-/*
- * Authors: Marios Vodas (mvodas@gmail.com).
+/**
+ * @author Marios Vodas (mvodas@gmail.com).
+ * 
+ * UNFORTUNATELLY THE DOXYGEN doesn`t support yet sql. So the documentation
+ * of this file is on file doc/data_types.md and should always be on sync with
+ * this file !!!!
  */
 
 /******************************************************************************/

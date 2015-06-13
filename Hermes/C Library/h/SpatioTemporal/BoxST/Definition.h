@@ -1,5 +1,9 @@
 /*
- * Authors: Marios Vodas (mvodas@gmail.com).
+* @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief File containing the BoxST data type.
+ *
+ * @see @ref BoxST
  */
 
 #ifndef HE_BOXST_DEFINITION_H_
@@ -8,9 +12,16 @@
 #include "../../Temporal/Period/Definition.h"
 #include "../../Spatial/BoxSP/Definition.h"
 
+/**
+ * BoxST is a spatio-temporal data type and is
+ * compromised of a Period "t" and a BoxSP "sp"
+ * Consider a BoxST as a cube in 3D space.
+ *
+ */
 typedef struct {
-	Period t;
-	BoxSP sp;
+	Period t; /**< period for which we search */
+	BoxSP sp; /**< the area in which we want to
+				   search at the particular time*/
 } BoxST;
 
 BoxST *cloneBoxST(const BoxST *box, BoxST *result);

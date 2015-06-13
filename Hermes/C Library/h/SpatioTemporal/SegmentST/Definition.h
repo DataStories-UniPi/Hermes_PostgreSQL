@@ -1,5 +1,9 @@
 /*
- * Authors: Marios Vodas (mvodas@gmail.com).
+* @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief File containing the SegmentST data type.
+ *
+ * @see @ref SegmentST
  */
 
 #ifndef HE_SEGMENTST_DEFINITION_H_
@@ -9,9 +13,14 @@
 #include "../../Spatial/SegmentSP/Definition.h"
 #include "../PointST/Definition.h"
 
+/**
+ * SegmentST is a spatio-temporal data type and is
+ * compromised of a Period and a SegmentSP
+ *
+ */
 typedef struct {
-	Period t;
-	SegmentSP sp;
+	Period t;      /**< period for the segment to be created */
+	SegmentSP sp; /**< the segment created at the particular period */
 } SegmentST;
 
 SegmentST *cloneSegmentST(const SegmentST *segment, SegmentST *result);

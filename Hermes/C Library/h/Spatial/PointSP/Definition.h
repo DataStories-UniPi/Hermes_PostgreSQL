@@ -1,5 +1,9 @@
 /*
- * Authors: Marios Vodas (mvodas@gmail.com).
+* @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief File containing the PointSP data type.
+ *
+ * @see @ref PointSP
  */
 
 #ifndef HE_POINTSP_DEFINITION_H_
@@ -8,9 +12,13 @@
 #include <postgres.h>
 #include <fmgr.h>
 
+/**
+ * PointSP is spatial data type and is comprised of
+ * the coordinates (usually in meters)
+ */
 typedef struct {
-	int32 x;
-	int32 y;
+	int32 x; /**< the x coordinate */
+	int32 y; /**< the y coordinate */
 } PointSP;
 
 PointSP *clonePointSP(const PointSP *point, PointSP *result);

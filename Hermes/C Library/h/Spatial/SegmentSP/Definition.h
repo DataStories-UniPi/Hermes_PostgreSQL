@@ -1,5 +1,9 @@
 /*
- * Authors: Marios Vodas (mvodas@gmail.com).
+* @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief File containing the SegmentSP data type.
+ *
+ * @see @ref SegmentSP
  */
 
 #ifndef HE_SEGMENTSP_DEFINITION_H_
@@ -7,9 +11,13 @@
 
 #include "../PointSP/Definition.h"
 
+/**
+ * PointSP is spatial data type and is comprised of
+ * two PointSP(i,e) representing the segment (of a line)
+ */
 typedef struct {
-	PointSP i;
-	PointSP e;
+	PointSP i; /**< the initial point of the segment */
+	PointSP e; /**< the ending point of the segment */
 } SegmentSP;
 
 SegmentSP *cloneSegmentSP(const SegmentSP *segment, SegmentSP *result);

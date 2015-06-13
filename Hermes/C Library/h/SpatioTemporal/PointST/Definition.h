@@ -1,5 +1,9 @@
 /*
- * Authors: Marios Vodas (mvodas@gmail.com).
+* @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief File containing the PointST data type.
+ *
+ * @see @ref PointST
  */
 
 #ifndef HE_POINTST_DEFINITION_H_
@@ -8,9 +12,15 @@
 #include "../../Spatial/PointSP/Definition.h"
 #include <utils/timestamp.h>
 
+/**
+ * PointST is a spatio-temporal data type and is
+ * compromised of a Timestamp "t" and a PointSP "sp"
+ * Consider it a point in time and space
+ *
+ */
 typedef struct {
-	Timestamp t;
-	PointSP sp;
+	Timestamp t; /**< the timestamp of the recorded point */
+	PointSP sp; /**< the coordinates of the recorded point */
 } PointST;
 
 PointST *clonePointST(const PointST *point, PointST *result);

@@ -67,6 +67,6 @@ The previous data types do not have a surface. In contrast, the @ref BoxSP data 
 
 According to @cite vodas2013hermes spatio-temporal data types are those types that model both the temporal and spatial dimension of Mobility in a unified manner. The main spatio-temporal data types are @ref PointST, @ref SegmentST and @ref BoxST
 
-# The "Trajectory" type
+# Trajectory type
 
 Trajectory data type in an object containing a sequence of spatio-temporal points ordered in time. In contrast with the previous data types, it has a variable length and is compromised of s sequence of PointST objects ordered by time @cite vodas2013hermes. The different approach to this data type is that we look at the movement of an object as a whole and not as segments in smaller parts. 

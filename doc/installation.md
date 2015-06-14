@@ -10,7 +10,7 @@ Hermes requires:
 
 - [PostgreSQL  9.4](http://www.postgresql.org/)
 
-# Installation on Ubuntu 14.04
+# Installation on Ubuntu 14.04 {#installation_ubuntu}
 
 - Postgresql 9.4 is not available in 14.04 "Trusty" but it was added in 14.10 "Utopic", so users that have 14.10 should only execute the last command. For the installation of the PostgreSQL [execute in terminal](http://www.postgresql.org/download/linux/ubuntu/):
   
@@ -34,7 +34,7 @@ Hermes requires:
       $ sudo -u postgres psql -f script.installation	
 
 
-# Installation on Windows
+# Installation on Windows {#installation_windows}
 
 - Download the latest edition of [Ubuntu](http://www.ubuntu.com)
 - Create a [bootable USB stick](http://www.ubuntu.com/download/desktop/create-a-usb-stick-on-windows)
@@ -44,11 +44,11 @@ Hermes requires:
 
 Hopefully you wan`t commit suicide after realizing what a big mistake were Windows. Alternative you can use the [Hermes Installer](https://hermes-mod.java.net/Installer/BookVersion/HermesInstaller.zip)
 
-# Installation on Mac OS
+# Installation on Mac OS {#installation_mac}
 
 - If you have the money to buy a Mac pay someone that actually knows from computers to install it for you (including me :-P).
 
-# Compile from source code on Ubuntu 14.04
+# Compile from source code on Ubuntu 14.04 {#installation_compile}
 
 If you are compiling the Hermes MOD from source, except from the PostgreSQL you will also need to install the postgresql-server-dev-9.4 
 

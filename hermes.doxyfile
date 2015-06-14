@@ -747,7 +747,7 @@ INPUT = README.md \
 		doc/introduction.md \
 		doc/installation.md \
 		doc/data_types.md \
-		doc/dataset_loading.md \
+		doc/dataset.md \
 		doc/clustering.md \
  		doc/PostGIS.md \
 		doc/documentation.md \

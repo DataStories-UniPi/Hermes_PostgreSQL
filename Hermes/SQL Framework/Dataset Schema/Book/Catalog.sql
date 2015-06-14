@@ -1,7 +1,10 @@
-/*
- * Authors: Marios Vodas (mvodas@gmail.com).
+/**
+ * @author Marios Vodas (mvodas@gmail.com).
+ * 
+ * UNFORTUNATELLY THE DOXYGEN doesn`t support yet sql. So the documentation
+ * of this file is on file doc/dataset_loading.md and should always be on sync with
+ * this file !!!!
  */
-
 /******************************************************************************/
 CREATE TABLE HDatasets (
 	id serial NOT NULL,

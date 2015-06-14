@@ -1,5 +1,9 @@
 /*
- * Authors: Marios Vodas (mvodas@gmail.com).
+* @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief File containing the PointXY data type.
+ *
+ * @see @ref PointXY
  */
 
 #ifndef HE_POINTXY_DEFINITION_H_
@@ -8,9 +12,14 @@
 #include <postgres.h>
 #include <fmgr.h>
 
+  /**
+  * PointXY is auxiliary spatial data type which is
+  * used to represent points in topocentric coordinates
+  * so that we can later transform them to eyclidean space
+  */
 typedef struct {
-	float8 x;
-	float8 y;
+	float8 x; /**< the x coordinate */
+	float8 y; /**< the y coordinate */
 } PointXY;
 
 PointXY *clonePointXY(const PointXY *point, PointXY *result);

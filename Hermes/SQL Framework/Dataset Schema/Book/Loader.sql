@@ -7,7 +7,7 @@
 --EXECUTE 'UPDATE ' || quote_ident(dataset_name || '_input_data')::regclass || ' SET var = val WHERE CURRENT OF ' || quote_ident(c::text) || ';';
 
 /******************************************************************************/
-CREATE FUNCTION HDatasetsLoad(dataset_name text, csv_file text DEFAULT '', keep_input_data boolean DEFAULT false) RETURNS TABLE(operation text, duration interval) AS $$
+CREATE FUNCTION HDatasetsLoad(dataset_name text, csv_file text DEFAULT '', keep_input_data boolean DEFAULT false) RETURNS TABLE(operation text) AS $$
 DECLARE
 	dataset_id integer;
 	dataset_LRP PointLL;
@@ -54,18 +54,6 @@ DECLARE
 	curr_x integer;
 	curr_y integer;
 
-	ti bigint;
-	te bigint;
-
-	ti_2 bigint;
-	te_2 bigint;
-
-	dt_insert_new_traj double precision := 0;
-	dt_update_traj double precision := 0;
-	dt_search_last_seg double precision := 0;
-	dt_insert_new_seg double precision := 0;
-	dt_search_last_subtraj double precision := 0;
-	dt_insert_new_subtraj double precision := 0;
 BEGIN
 	SELECT id, LRP, SRID, segment_storage, trajectory_storage, subtrajectory_storage, semantics_enabled
 		INTO dataset_id, dataset_LRP, dataset_SRID, dataset_segment_storage, dataset_trajectory_storage, dataset_subtrajectory_storage, dataset_semantics_enabled
@@ -104,17 +92,14 @@ BEGIN
 
 		EXECUTE query_1;
 		
-		ti := ProcessTime();
 		EXECUTE
 			'
 				COPY ' || quote_ident(dataset_name || '_input_data')::regclass || query_2 || '
 				FROM ''' || csv_file || '''
 				WITH CSV HEADER;
 			';
-		te := ProcessTime();
 
 		operation := 'COPY TO TABLE';
-		duration := '1 second'::interval * ProcessTimeDiff(te, ti);
 		RETURN NEXT;
 		
 		EXECUTE 'CREATE INDEX ON ' || quote_ident(dataset_name || '_input_data')::regclass || ' (obj_id, traj_id) WITH (FILLFACTOR = 100);';
@@ -141,7 +126,6 @@ BEGIN
 		END IF;
 	END IF;
 
-	ti_2 := ProcessTime();
 	FOR curr_obj IN EXECUTE 'SELECT DISTINCT obj_id FROM ' || quote_ident(dataset_name || '_input_data')::regclass || ';' LOOP
 		EXECUTE 'SELECT exists(SELECT 1 FROM ' || quote_ident(dataset_name || '_obj')::regclass || ' WHERE obj_id = $1 LIMIT 1);' INTO row_exists USING curr_obj.obj_id;
 
@@ -187,35 +171,26 @@ BEGIN
 			END IF;
 
 			IF NOT traj_exists THEN
-				ti := ProcessTime();
 				EXECUTE 'INSERT INTO ' || quote_ident(dataset_name || '_traj')::regclass || '(obj_id, traj_id) VALUES ($1, $2);' USING curr_obj.obj_id, curr_traj.traj_id;
-				te := ProcessTime();
-				dt_insert_new_traj := dt_insert_new_traj + ProcessTimeDiff(te, ti);
 			END IF;
 
 			IF dataset_segment_storage THEN
 				seg_exists := false;
 
-				ti := ProcessTime();
 				EXECUTE
 					'SELECT seg_id, getTe(seg), getEx(seg), getEy(seg) FROM ' || quote_ident(dataset_name || '_seg')::regclass || ' WHERE (obj_id, traj_id) = ($1, $2) ORDER BY seg_id DESC, getTe(seg) DESC LIMIT 1;'
 				INTO last_seg_id, prev_t, prev_x, prev_y USING curr_obj.obj_id, curr_traj.traj_id;
 				GET DIAGNOSTICS rcnt = ROW_COUNT;
-				te := ProcessTime();
-				dt_search_last_seg := dt_search_last_seg + ProcessTimeDiff(te, ti);
 
 				IF rcnt > 0 THEN
 					seg_exists := true;
 				ELSE
 					last_seg_id := 0;
 
-					ti := ProcessTime();
 					EXECUTE
 						'SELECT t, x, y FROM ' || quote_ident(dataset_name || '_seg_lobby')::regclass || ' WHERE (obj_id, traj_id) = ($1, $2);'
 					INTO prev_t, prev_x, prev_y USING curr_obj.obj_id, curr_traj.traj_id;
 					GET DIAGNOSTICS rcnt = ROW_COUNT;
-					te := ProcessTime();
-					dt_search_last_seg := dt_search_last_seg + ProcessTimeDiff(te, ti);
 
 					IF rcnt > 0 THEN
 						EXECUTE
@@ -227,11 +202,7 @@ BEGIN
 				END IF;
 
 				IF seg_exists THEN
-					ti := ProcessTime();
 					EXECUTE 'INSERT INTO ' || quote_ident(dataset_name || '_seg')::regclass || '(obj_id, traj_id, seg_id, seg) VALUES ($1, $2, $3, $4);' USING curr_obj.obj_id, curr_traj.traj_id, last_seg_id + 1, SegmentST(prev_t, prev_x, prev_y, curr_row.t, curr_x, curr_y);
-					te := ProcessTime();
-					dt_insert_new_seg := dt_insert_new_seg + ProcessTimeDiff(te, ti);
-
 					last_seg_id := last_seg_id + 1;
 				ELSE
 					first_t := curr_row.t;
@@ -244,12 +215,9 @@ BEGIN
 				DECLARE
 					lastPoint PointST;
 				BEGIN
-					ti := ProcessTime();
 					EXECUTE 'SELECT lastPoint(subtraj) FROM ' || quote_ident(dataset_name || '_subtraj')::regclass || ' WHERE (obj_id, traj_id) = ($1, $2) ORDER BY subtraj_id DESC LIMIT 1;' INTO lastPoint USING curr_obj.obj_id, curr_traj.traj_id;
 					GET DIAGNOSTICS rcnt = ROW_COUNT;
-					te := ProcessTime();
-					dt_search_last_subtraj := dt_search_last_subtraj + ProcessTimeDiff(te, ti);
-
+					
 					IF rcnt > 0 THEN
 						PERFORM TrajCache_Append(subtraj_cache_id, lastPoint);
 					END IF;
@@ -290,10 +258,7 @@ BEGIN
 				END IF;
 
 				IF dataset_segment_storage THEN
-					ti := ProcessTime();
 					EXECUTE 'INSERT INTO ' || quote_ident(dataset_name || '_seg')::regclass || '(obj_id, traj_id, seg_id, seg) VALUES ($1, $2, $3, $4);' USING curr_obj.obj_id, curr_traj.traj_id, last_seg_id + 1, SegmentST(prev_t, prev_x, prev_y, curr_row.t, curr_x, curr_y);
-					te := ProcessTime();
-					dt_insert_new_seg := dt_insert_new_seg + ProcessTimeDiff(te, ti);
 
 					last_seg_id := last_seg_id + 1;
 				END IF;
@@ -301,18 +266,12 @@ BEGIN
 				IF dataset_subtrajectory_storage THEN
 					IF prev_subtraj_id <> curr_row.subtraj_id THEN
 						IF dataset_semantics_enabled THEN
-							ti := ProcessTime();
 							EXECUTE 'INSERT INTO ' || quote_ident(dataset_name || '_subtraj')::regclass || '(obj_id, traj_id, subtraj_id, subtraj, episode, tags) VALUES ($1, $2, $3, $4, $5, $6);' USING curr_obj.obj_id, curr_traj.traj_id, prev_subtraj_id, TrajCache2Trajectory(subtraj_cache_id), prev_episode, prev_tags;
-							te := ProcessTime();
-							dt_insert_new_subtraj := dt_insert_new_subtraj + ProcessTimeDiff(te, ti);
-
+							
 							prev_episode := curr_row.episode;
 							prev_tags := curr_row.tags;
 						ELSE
-							ti := ProcessTime();
 							EXECUTE 'INSERT INTO ' || quote_ident(dataset_name || '_subtraj')::regclass || '(obj_id, traj_id, subtraj_id, subtraj) VALUES ($1, $2, $3, $4);' USING curr_obj.obj_id, curr_traj.traj_id, prev_subtraj_id, TrajCache2Trajectory(subtraj_cache_id);
-							te := ProcessTime();
-							dt_insert_new_subtraj := dt_insert_new_subtraj + ProcessTimeDiff(te, ti);
 						END IF;
 
 						PERFORM TrajCache_ResetIndex(subtraj_cache_id);
@@ -340,10 +299,7 @@ BEGIN
 					traj := expand(traj_old, traj);
 				END IF;
 
-				ti := ProcessTime();
 				EXECUTE 'UPDATE ' || quote_ident(dataset_name || '_traj')::regclass || ' SET traj = $3 WHERE (obj_id, traj_id) = ($1, $2);' USING curr_obj.obj_id, curr_traj.traj_id, traj;
-				te := ProcessTime();
-				dt_update_traj := dt_update_traj + ProcessTimeDiff(te, ti);
 			END IF;
 
 			IF dataset_segment_storage THEN
@@ -356,20 +312,13 @@ BEGIN
 
 			IF dataset_subtrajectory_storage THEN
 				IF dataset_semantics_enabled THEN
-					ti := ProcessTime();
 					EXECUTE 'INSERT INTO ' || quote_ident(dataset_name || '_subtraj')::regclass || '(obj_id, traj_id, subtraj_id, subtraj, episode, tags) VALUES ($1, $2, $3, $4, $5, $6);' USING curr_obj.obj_id, curr_traj.traj_id, prev_subtraj_id, TrajCache2Trajectory(subtraj_cache_id), prev_episode, prev_tags;
-					te := ProcessTime();
-					dt_insert_new_subtraj := dt_insert_new_subtraj + ProcessTimeDiff(te, ti);
 				ELSE
-					ti := ProcessTime();
 					EXECUTE 'INSERT INTO ' || quote_ident(dataset_name || '_subtraj')::regclass || '(obj_id, traj_id, subtraj_id, subtraj) VALUES ($1, $2, $3, $4);' USING curr_obj.obj_id, curr_traj.traj_id, prev_subtraj_id, TrajCache2Trajectory(subtraj_cache_id);
-					te := ProcessTime();
-					dt_insert_new_subtraj := dt_insert_new_subtraj + ProcessTimeDiff(te, ti);
 				END IF;
 			END IF;
 		END LOOP;
 	END LOOP;
-	te_2 := ProcessTime();
 
 	IF dataset_trajectory_storage OR dataset_subtrajectory_storage THEN
 		PERFORM TrajCache_Clean();
@@ -377,36 +326,29 @@ BEGIN
 
 	IF dataset_trajectory_storage THEN
 		operation := 'INSERT NEW TRAJ';
-		duration := '1 second'::interval * dt_insert_new_traj;
 		RETURN NEXT;
 
 		operation := 'UPDATE TRAJ';
-		duration := '1 second'::interval * dt_update_traj;
 		RETURN NEXT;
 	END IF;
 
 	IF dataset_segment_storage THEN
 		operation := 'SEARCH LAST SEG';
-		duration := '1 second'::interval * dt_search_last_seg;
 		RETURN NEXT;
 
 		operation := 'INSERT NEW SEG';
-		duration := '1 second'::interval * dt_insert_new_seg;
 		RETURN NEXT;
 	END IF;
 
 	IF dataset_subtrajectory_storage THEN
 		operation := 'SEARCH LAST SUBTRAJ';
-		duration := '1 second'::interval * dt_search_last_subtraj;
 		RETURN NEXT;
 
 		operation := 'INSERT NEW SUBTRAJ';
-		duration := '1 second'::interval * dt_insert_new_subtraj;
 		RETURN NEXT;
 	END IF;
 
 	operation := 'OVERALL PROCESSING';
-	duration := '1 second'::interval * ProcessTimeDiff(te_2, ti_2);
 	RETURN NEXT;
 
 	IF NOT keep_input_data THEN

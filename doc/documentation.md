@@ -18,7 +18,16 @@ and the documentation is generated in the doc/bin/ folder. The html folder conta
 
 # Known shortcoming of doxygen
 
-- Doxygen does not support yet the sql language (12/06/2015). For this reason it was preferred the documentation of the sql commands to happen in the doc file. All the documentations that happened in different files MUST BE KEPT in sync and the files must mention the others files.
+- Doxygen does not support yet the sql language (12/06/2015). For this reason a [flex filter from MADLib](https://github.com/madlib/madlib/wiki/Documentation-Guide-%28Doxygen%29) was used. To create the executable file of the filter, used in the documentation of the sql, [flex](http://flex.sourceforge.net/) and [bison](http://www.gnu.org/software/bison/) are needed. To compile the parser, which is located in doc/SQL2C++ folder, the following commands must be executed (in ubuntu):
+		
+		cd bin
+		flex -L -outfile='sql.scanner.cc' ../sql.ll
+		mv utfile\=sql.scanner.cc sql.parser.cc
+ 		bison -y -d ../sql.yy --output=sql.parser.cc
+ 		g++ sql.parser.cc sql.scanner.cc -lfl -o SQL2C++
+ 	
+ The executable file must be placed in doc/SQL2C++/bin folder or change the configurations of the hermes.doxyfile. In other operating systems another compile must be used or [install gcc on the windows](https://gcc.gnu.org/install/binaries.html) 
+ From time to time, someone should check for updates in the filter or if the newer editions of the doxygen support sql. 
 
 - [Doxygen does not support the ordering of pages in a custom (or any) fashion](
 http://stackoverflow.com/questions/18001897/how-do-you-order-doxygen-custom-pages). For the time being the ordering is declared in the hermes.doxyfile

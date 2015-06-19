@@ -1,8 +1,17 @@
-/*
- * Authors: Marios Vodas (mvodas@gmail.com).
+/**
+ * @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief The file implements the statistics function for the datasets
+ *
+ * @see @ref dataset_ais
+ *
  */
 
-/******************************************************************************/
+
+/** @brief This function create the necessary tables for the Hermes MOD 
+ * 	Statistics
+ *
+ */
 CREATE TABLE HDatasets_Statistics (
 	dataset integer NOT NULL,
 
@@ -154,6 +163,12 @@ CREATE TABLE HDatasets_Statistics (
 		ON UPDATE CASCADE
 );
 
+/** @brief This function calculates the statistics for the 
+ * 	dataset
+ *
+ *	@param[in] dataset_name the name of the dataset
+ *
+ */
 CREATE FUNCTION HDatasetsStatistics(dataset_name text) RETURNS boolean AS $$
 DECLARE
 	dataset_id integer;

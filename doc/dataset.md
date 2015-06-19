@@ -132,3 +132,8 @@ By default, the dataset is hosted in "imis_seg" table, according to a segment-or
 If someone wants to delete the dataset, he should execute the below command:
 
 	SELECT HDatasetsDrop('imis');	
+	
+@see Catalog.sql
+@see Compatibility.sql
+@see Loader.sql
+@see Statistics.sql

@@ -750,9 +750,9 @@ INPUT = README.md \
 		doc/functionality.md \
 		doc/dataset.md \
 		doc/querying.md \
+		doc/visualization.md \
 		doc/similarity.md \
 		doc/clustering.md \
-		doc/visualization.md \
 		doc/documentation.md \
 		Hermes 
 

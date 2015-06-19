@@ -26,11 +26,7 @@ Spatio-temporal | Trajectory (to be entered)
 
 # Temporal data types {#data_types_temporal}
 
-According to @cite vodas2013hermes temporal data types are those types that model only the temporal dimension of Mobility. The main type for temporal data type is introduced by PostrgreSQL and Hermes encapsulates it in its data model. An example of a timestamp is ‘2012-09-20 08:05:46’. Another encapsulated data type is the Interval which is used to store information like ‘1 second’ or ‘05:30:5’ (which means 5 hours 30 minutes and 5 seconds) hence
-contains a temporal quantity. One potential limitation of interval is that on
-cases where it was produced from a subtraction of two timestamps it won’t
-keep the original timestamps from which it was computed. That limitation
-led to the development of some custom temporal types in Hermes @cite vodas2013hermes.
+According to @cite vodas2013hermes temporal data types are those types that model only the temporal dimension of Mobility. The main type for temporal data type is introduced by PostrgreSQL and Hermes encapsulates it in its data model. An example of a timestamp is ‘2012-09-20 08:05:46’. Another encapsulated data type is the Interval which is used to store information like ‘1 second’ or ‘05:30:5’ (which means 5 hours 30 minutes and 5 seconds) hence contains a temporal quantity. One potential limitation of interval is that on cases where it was produced from a subtraction of two timestamps it won’t keep the original timestamps from which it was computed. That limitation led to the development of some custom temporal types in Hermes @cite vodas2013hermes.
 
 
 The user must have in his mind for using the timestamp data type that PostgreSQL can cast a string to any datatype. For example:
@@ -93,7 +89,7 @@ According to @cite vodas2013hermes spatio-temporal data types are those types th
 
 Trajectory data type in an object containing a sequence of spatio-temporal points ordered in time. In contrast with the previous data types, it has a variable length and is compromised of s sequence of PointST objects ordered by time @cite vodas2013hermes. The different approach to this data type is that we look at the movement of an object as a whole and not as segments in smaller parts. 
 
-# Coordinate Transformation {#data_type_transforamtion}
+# Coordinate Transformation {#data_type_transformation}
 
 As already mention Hermes work on the Euclidean space, meaning it need meaning it needs degrees (lon, lat) to be transformed into meters (x, y). For this transformation the Geographic
 to/from Topocentric conversion (EPSG 9837) was implemented. According to this specification, to do the transformation we only need a reference point (lon, lat) which in (x, y) will be regarded as (0, 0), i.e. the Cartesian center. So, the closer a position is to this reference point the more accurate the transformation will be. Thus, a dataset must have a reference point for transformations @cite vodas2013hermes. This can be achieved by using the `PointXY(point PointLL, LRP PointLL)` and  `PointLL(point PointXY, LRP PointLL)` which are implemented by @ref ll2xy and @ref xy2ll functions.

@@ -36,17 +36,11 @@ Hermes requires:
 
 # Installation on Windows {#installation_windows}
 
-- Download the latest edition of [Ubuntu](http://www.ubuntu.com)
-- Create a [bootable USB stick](http://www.ubuntu.com/download/desktop/create-a-usb-stick-on-windows)
-- ERASE windows
-- Install Ubuntu
-- Follow the instruction of the previous section
-
-Hopefully you wan`t commit suicide after realizing what a big mistake were Windows. Alternative you can use the [Hermes Installer](https://hermes-mod.java.net/Installer/BookVersion/HermesInstaller.zip)
+- You can use the [Hermes Installer](https://hermes-mod.java.net/Installer/BookVersion/HermesInstaller.zip)
 
 # Installation on Mac OS {#installation_mac}
 
-- If you have the money to buy a Mac pay someone that actually knows from computers to install it for you (including me :-P).
+- ???
 
 # Compile from source code on Ubuntu 14.04 {#installation_compile}
 

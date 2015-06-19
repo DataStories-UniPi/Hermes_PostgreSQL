@@ -75,3 +75,40 @@ The enter leave function finds the points where the object entered or left a spe
 
 	SELECT enterPoint , leavePoint FROM enter_leave (array_o f_segm ents [] , box_area ) ;
 	
+# Basic operators # {#operators}
+
+In the following table the basic operators are presented. The operators rely on the methods of the previous section in order to be implemented.(kai oles oi perigrafes einai antigrafi apo tin diplomatiki tou Mariou)
+
+Symbol  Operation                 | Returns | Left Argument | Right Argument
+:---------------:                 | :-----: | :-----------: | :------------:
+@ref operators_overlaps           | boolean | SegmentST     | Period, BoxSP, SegmentSP, BoxST, SegmentST
+@ref operators_contains           | boolean | SegmentST     | Timestamp, Period, PointSP, PointST
+@ref operators_contained          | boolean | SegmentST     | Period, BoxSP, BoxST
+@ref operators_contained_properly | boolean | SegmentST     | BoxST
+@ref operators_within_distance    | boolean | SegmentST     | RangeSP, RangeST
+@ref operators_distance           | number  | SegmentST     | Timestamp, Period, PointSP, SegmentSP, BoxSP   
+
+## && overlaps ## {#operators_overlaps}
+
+The && (overlaps) operator checks if the segment has any common points (or common timespan, in the case of Period) with the object in the right of the operator. When the object in the right is of spatio-temporal type interpolate is used to find if both the spatial and temporal components interact.
+
+## ~ contains  ## {#operators_contains}
+
+The ∼ (contains) operator checks if the segment contains the object in the right argument. When the right argument is PointST then interpolation takes place in order to find the position the segment was at the timestamp that PointST contains and then if the position is the same as the position that PointST contains the operator returns true.
+
+## @ contained   ## {#operators_contained}
+
+The @ (contained) operator checks whether the segment is contained within a BoxSP (or Period, when we only check time) allowing it to touch the perimeter of the box. 
+
+## @! contained properly ## {#operators_contained_properly}
+
+The @! (contained properly) operator differentiates from the @ref operators_contained in that it doesn’t allow the segment to touch the perimeter (thus fully contained).
+
+## -< within distance  ## {#operators_within_distance}
+
+The -<(within distance) operator checks whether the distance of the segment from the center of the RangeSP is less than the radius of the RangeSP object. In the case where the right argument is a RangeST interpolation takes place before evaluating the spatial distance. Specifically, atPeriod method is called on the segment and the Period (Period is the temporal quantity that is represented in the RangeST object).
+
+## <-> distance  ## {#operators_distance}
+
+The <->(distance) operator returns a number, in contrast to the previous operators that return a boolean value, and shows the distance in seconds or meters from the SegmentST to the right argument. If the right argument is a temporal type the operator returns distance in seconds whereas if the argumment is a spatial type it returns in meters.
+	

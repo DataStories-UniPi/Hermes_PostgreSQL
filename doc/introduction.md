@@ -10,5 +10,9 @@ In general, the big picture of Hermes aiming for the efficient management and ex
 According to the above figure, the telecommunications network provides raw unprocessed data (e.g. GPS recordings), which, in turn, is processed and transformed in mobility data (e.g. trajectories of moving objects) stored in MOD systems (in their detailed form) and Data Warehouse systems (in aggregations over detailed information, respectively). The stored information can be queried as well as provide input for advanced analysis, such as multidimensional (OLAP) analysis and data mining, the output of which is appropriately visualized to end users @cite hermes_mod.
 
 
+Hermes builds on PostgreSQL`s underlying functionality and extends it to support trajectory data.
+
+
+
 
 

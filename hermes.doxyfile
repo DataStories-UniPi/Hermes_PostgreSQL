@@ -747,9 +747,12 @@ INPUT = README.md \
 		doc/introduction.md \
 		doc/installation.md \
 		doc/data_types.md \
+		doc/functionality.md \
 		doc/dataset.md \
 		doc/querying.md \
+		doc/similarity.md \
 		doc/clustering.md \
+		doc/visualization.md \
 		doc/documentation.md \
 		Hermes 
 

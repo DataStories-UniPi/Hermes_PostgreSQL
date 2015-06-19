@@ -10,6 +10,11 @@ The algorithm works on two phases. First it partitions the trajectories using th
 
 An example using the TRACLUS algorithm with Hermes is shown below
 
-    SELECT HLoader('imis', 'imis3days'); 
+    SELECT traclusDistance(
+    	SegmentSP(PointSP(2337709, 4163887),PointSP(3228259, 4721671)),
+    	SegmentSP(PointSP(2337709, 4163887),PointSP(3228259, 4721671))
+    ); 
+
+I HAVE NO IDEA WHAT IT RETURNS. SOMEONE SHOULD EXPLAIN MORE.
 
 \see http://hanj.cs.illinois.edu/pdf/sigmod07_jglee.pdf

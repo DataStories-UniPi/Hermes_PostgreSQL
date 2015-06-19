@@ -2,7 +2,7 @@ Instructinos for producing the binary file needed by Doxygen
 
 cd bin
 flex -L -outfile='sql.scanner.cc' ../sql.ll
-mv utfile\=sql.scanner.cc sql.parser.cc
+mv utfile\=sql.scanner.cc sql.scanner.cc
 bison -y -d ../sql.yy --output=sql.parser.cc
 g++ sql.parser.cc sql.scanner.cc -lfl -o SQL2C++
 

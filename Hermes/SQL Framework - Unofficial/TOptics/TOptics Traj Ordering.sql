@@ -107,6 +107,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql STRICT;
 
+-- If no ksi value is given, do not perform cluster extraction
 CREATE FUNCTION TOptics_Traj(DB text, NN_method text, min_trajs integer, ksi double precision DEFAULT -1.0) RETURNS void AS $$
 DECLARE
 	p_obj integer;
@@ -129,22 +130,28 @@ BEGIN
 	EXECUTE 'INSERT INTO TOptics_Traj_db_ids(obj_id, traj_id) SELECT DISTINCT obj_id, traj_id FROM ' || quote_ident(DB) || ';';
 
 	LOOP
+		-- Pick a trajectory
 		SELECT obj_id, traj_id INTO p_obj, p_traj FROM TOptics_Traj_db_ids LIMIT 1;
 		EXIT WHEN NOT FOUND;
 
 		PERFORM TOptics_Traj_neighbors(DB, NN_method, p_obj, p_traj);
 
+		-- Set core distance
 		SELECT distance INTO core_distance_temp FROM TOptics_Traj_neighbors ORDER BY distance ASC LIMIT 1 OFFSET min_trajs - 1;
 		IF NOT FOUND THEN
 			core_distance_temp := NULL;
 		END IF;
 
+		-- Write trajectory to ordered list
 		INSERT INTO TOptics_Traj_ordering(obj_id, traj_id, core_distance) VALUES (p_obj, p_traj, core_distance_temp);
 		DELETE FROM TOptics_Traj_db_ids WHERE (obj_id, traj_id) = (p_obj, p_traj);
-
+		-- Mark as processed
 		TRUNCATE TABLE TOptics_Traj_seeds;
+		-- If core_distance_temp != NULL then this trajectory is eligible for being a core object
 		IF core_distance_temp IS NOT NULL THEN
+			-- Iterate over neighbor trajectories that haven't been processed
 			FOR o IN SELECT obj_id, traj_id, distance FROM TOptics_Traj_neighbors WHERE (obj_id, traj_id) NOT IN (SELECT obj_id, traj_id FROM TOptics_Traj_ordering) LOOP
+				-- Set rechability distance according to the way described it the paper
 				IF core_distance_temp >= o.distance THEN
 					reachability_distance_temp := core_distance_temp;
 				ELSE
@@ -152,9 +159,13 @@ BEGIN
 				END IF;
 
 				SELECT obj_id, traj_id INTO obj_id_temp, traj_id_temp FROM TOptics_Traj_seeds WHERE (obj_id, traj_id) = (o.obj_id, o.traj_id);
+				-- If object reachability distance undefined
 				IF NOT FOUND THEN
+				-- Insert into seeds
 					INSERT INTO TOptics_Traj_seeds(obj_id, traj_id, reachability_distance) VALUES (o.obj_id, o.traj_id, reachability_distance_temp);
+				-- Object already in seeds
 				ELSE
+					-- Update reachability distance when new value is smaller
 					UPDATE TOptics_Traj_seeds
 					SET reachability_distance = reachability_distance_temp
 					WHERE (obj_id, traj_id) = (o.obj_id, o.traj_id) AND reachability_distance > reachability_distance_temp;
@@ -162,21 +173,26 @@ BEGIN
 			END LOOP;
 
 			LOOP
+				-- While seeds not empty
 				SELECT obj_id, traj_id, reachability_distance INTO p_obj, p_traj, reachability_distance_temp FROM TOptics_Traj_seeds ORDER BY reachability_distance ASC;
 				EXIT WHEN NOT FOUND;
 
 				DELETE FROM TOptics_Traj_seeds WHERE (obj_id, traj_id) = (p_obj, p_traj);
 
+				-- Find neighbors
 				PERFORM TOptics_Traj_neighbors(DB, NN_method, p_obj, p_traj);
 
 				SELECT distance INTO core_distance_temp FROM TOptics_Traj_neighbors ORDER BY distance ASC LIMIT 1 OFFSET min_trajs - 1;
+				-- This trajectory cannot be a core object based on min_trajs parameter
 				IF NOT FOUND THEN
 					core_distance_temp := NULL;
 				END IF;
 
+				-- Write into ordered list
 				INSERT INTO TOptics_Traj_ordering(obj_id, traj_id, core_distance, reachability_distance) VALUES (p_obj, p_traj, core_distance_temp, reachability_distance_temp);
+				-- Mark trajectory as processed
 				DELETE FROM TOptics_Traj_db_ids WHERE (obj_id, traj_id) = (p_obj, p_traj);
-
+				-- This trajectory can be a core object of a cluster. Repeat the update of the seeds
 				IF core_distance_temp IS NOT NULL THEN
 					FOR o IN SELECT obj_id, traj_id, distance FROM TOptics_Traj_neighbors WHERE (obj_id, traj_id) NOT IN (SELECT obj_id, traj_id FROM TOptics_Traj_ordering) LOOP
 						IF core_distance_temp >= o.distance THEN

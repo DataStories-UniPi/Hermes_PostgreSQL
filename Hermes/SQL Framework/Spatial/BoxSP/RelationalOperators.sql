@@ -1,7 +1,13 @@
-/*
- * Authors: Marios Vodas (mvodas@gmail.com).
+/**
+ * @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief The implementantion in sql of BoxSP.
+ *
+ * @details BoxSP is a spatial data type used in Hermes
+ *
+ * @see @ref data_types_spatial
+ *
  */
-
 /******************************************************************************/
 CREATE FUNCTION intersects(boxA BoxSP, boxB BoxSP) RETURNS boolean AS
 	'$libdir/Hermes','intersectsBoxSP_BoxSPV1'

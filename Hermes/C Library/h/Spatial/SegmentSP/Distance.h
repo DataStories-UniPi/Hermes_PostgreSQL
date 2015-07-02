@@ -1,7 +1,11 @@
 /*
- * Authors: Marios Vodas (mvodas@gmail.com).
+* @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief File containing the implementation of the SegmentSP data type.
+ *
+ * @see @ref SegmentSP
+ * @see @ref data_types_spatial
  */
-
 #ifndef HE_SEGMENTSP_DISTANCE_H_
 #define HE_SEGMENTSP_DISTANCE_H_
 

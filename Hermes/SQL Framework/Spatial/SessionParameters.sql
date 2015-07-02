@@ -1,5 +1,9 @@
 /*
- * Authors: Marios Vodas (mvodas@gmail.com).
+* @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief File containing the functions for setting the spatial torelance.
+ *
+ * @see @ref data_types_temporal
  */
 
 /******************************************************************************/

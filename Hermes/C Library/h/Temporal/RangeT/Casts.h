@@ -1,5 +1,10 @@
 /*
- * Authors: Marios Vodas (mvodas@gmail.com).
+* @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief File containing the implementation of the RangeT data type.
+ *
+ * @see @ref RangeT
+ * @see @ref data_types_temporal
  */
 
 #ifndef HE_RANGET_CASTS_H_

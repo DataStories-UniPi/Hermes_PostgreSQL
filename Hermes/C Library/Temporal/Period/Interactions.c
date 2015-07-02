@@ -1,5 +1,10 @@
-/*
- * Authors: Marios Vodas (mvodas@gmail.com).
+/**
+ *	@file
+ *	@author Marios Vodas (mvodas@gmail.com).
+ *	@brief The implementantion of Period
+ *
+ *	@details These functions are documented in the @ref Period/Interactions.h
+ *
  */
 
 #include "../../h/Temporal/Period/Interactions.h"

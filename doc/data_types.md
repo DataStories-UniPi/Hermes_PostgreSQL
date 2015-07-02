@@ -10,6 +10,7 @@ Temporal        | [Interval](http://www.postgresql.org/docs/9.4/static/datatype-
 Temporal        | Period (Timestamp initial, Timestamp ending) 
 Temporal        | RangeT (Interval radius, Timestamp center)
 Saptial         | PointSP (number x, number y) 
+Saptial         | LineSP (double A, double B, double C)
 Saptial         | BoxSP (PointSP lower-left, PointSP upper-right)
 Saptial         | SegmentSP (PointSP initial, PointSP ending)
 Saptial         | RangeSP (number radius, PointSP center)
@@ -37,8 +38,14 @@ The user must have in his mind for using the timestamp data type that PostgreSQL
  	2008-12-31 19:29:30
 	(1 row)
 	
+	postgres=# SELECT '1 month'::interval;
+ 	interval 
+	----------
+ 	1 mon
+	(1 row)
+	
 
-A timestamp is given as a string and is cast using “::” to the timestamp data type. This is also possible for the interval data type. Finally Hermes introduced the @ref Period temporal data type.
+A timestamp is given as a string and is cast using “::” to the timestamp data type. This is also possible for the interval data type. Finally Hermes introduced the @ref Period and @ref RangeT temporal data type.
 
 	postgres=# SELECT Period('2008-12-31 23:00:00', '2009-01-01 01:00:00');
                    period                    
@@ -46,10 +53,30 @@ A timestamp is given as a string and is cast using “::” to the timestamp dat
  	'2008-12-31 23:00:00' '2009-01-01 01:00:00'
 	(1 row)
 	
+	postgres=# SELECT RangeT('1 month'::interval, '2008-12-31'::Timestamp) ;
+	            ranget             
+	-------------------------------
+ 	'1 mon' '2008-12-31 00:00:00'
+	(1 row)
+	
+@see @ref Timestamp/RelationalOperators.sql
+
+@see @ref Period/Casts.sql
+@see @ref Period/Definition.sql
+@see @ref Period/Distance.sql
+@see @ref Period/Interactions.sql
+@see @ref Period/Properties.sql
+@see @ref Period/RelationalOperators.sql
+
+@see @ref RangeT/Casts.sql
+@see @ref RangeT/Definition.sql
+
+@see @ref Temporal/SessionParameters.sql
+	
 	
 # Spatial data types {#data_types_spatial}
 
-According to @cite vodas2013hermes spatial data types are those types that model only the spatial dimension of Mobility. Hermes is designed to work with data in the Eyclidean space, which means that a position defined in Riemannian geometry (or any other geometry) can`t be used. Usually the Cartesian system is used and the coordinates are measured in meters. **To be precise due to the fact that intergers are used to represent the main spatial data type, the unit length that must be used is a factor smaller than the precision we want to achieve.**
+According to @cite vodas2013hermes spatial data types are those types that model only the spatial dimension of Mobility. Hermes is designed to work with data in the Eyclidean space, which means that a position defined in Riemannian geometry (or any other geometry) can`t be used. Usually the Cartesian system is used and the coordinates are measured in meters. **To be precise due to the fact that integers are used to represent the main spatial data type, the unit length that must be used is the same with the precision we want to achieve.** So if we want to have a precision of 1 meters we should store in the coordinates in the database in meters, but if we want to achieve a centimeter accuracy, we should store the coordinates in the database as centimeters. 
 
 The main spatial data types are the @ref PointSP and the @ref SegmentSP
 
@@ -80,6 +107,44 @@ Some examples of using the saptial data types are shown below:
 	---------------------------------
  	2337709 4163887 3228259 4721671
 	(1 row)
+	
+	postgres=# SELECT LineSP(0.1,0.1,1);
+    	       linesp           
+	----------------------------
+ 	0.100000 0.100000 1.000000
+	(1 row)
+	
+	
+@see @ref PointSP/Definition.sql
+@see @ref PointSP/Distance.sql
+@see @ref PointSP/RelationalOperators.sql
+@see @ref PointSP/Casts.sql
+
+@see @ref SegmentSP/ArithmeticOperators.sql
+@see @ref SegmentSP/Casts.sql
+@see @ref SegmentSP/Definition.sql
+@see @ref SegmentSP/Distance.sql
+@see @ref SegmentSP/Interactions.sql
+@see @ref SegmentSP/Properties.sql
+@see @ref SegmentSP/RelationalOperators.sql
+
+@see @ref BoxSP/Casts.sql
+@see @ref BoxSP/Definition.sql
+@see @ref BoxSP/Distance.sql
+@see @ref BoxSP/Interactions.sql
+@see @ref BoxSP/Properties.sql
+@see @ref BoxSP/RelationalOperators.sql
+
+@see @ref RangeSP/Casts.sql
+@see @ref RangeSP/Definition.sql
+@see @ref RangeSP/Properties.sql
+
+@see @ref LineSP/ArithmeticOperators.sql
+@see @ref LineSP/Definition.sql
+@see @ref LineSP/Properties.sql
+@see @ref LineSP/RelationalOperators.sql
+
+@see @ref Spatial/SessionParameters.sql
 	
 # Spatio-temporal data types {#data_types_spatio_temp}
 

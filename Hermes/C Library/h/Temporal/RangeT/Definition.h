@@ -1,5 +1,10 @@
 /*
- * Authors: Marios Vodas (mvodas@gmail.com).
+* @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief File containing the implementation of the RangeT data type.
+ *
+ * @see @ref RangeT
+ * @see @ref data_types_temporal
  */
 
 #ifndef HE_RANGET_DEFINITION_H_
@@ -9,9 +14,19 @@
 #include <fmgr.h>
 #include <utils/timestamp.h>
 
+/**
+ * A RangeT is comprised of a timestamp and a Interval
+ *
+ * @see @ref Period/Casts.sql
+ * @see @ref Period/Definition.sql
+ * @see @ref Period/Distance.sql
+ * @see @ref Period/Interactions.sql
+ * @see @ref Period/Properties.sql
+ * @see @ref Period/RelationalOperators.sql
+ */
 typedef struct {
-	Interval r;
-	Timestamp c;
+	Interval r; /**< the interval r  */
+	Timestamp c; /**< the timestamp c  */
 } RangeT;
 
 RangeT *cloneRangeT(const RangeT *range, RangeT *result);

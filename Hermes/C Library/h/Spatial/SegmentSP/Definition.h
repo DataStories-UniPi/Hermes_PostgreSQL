@@ -1,9 +1,10 @@
 /*
 * @file
  * @author Marios Vodas (mvodas@gmail.com).
- * @brief File containing the SegmentSP data type.
+ * @brief File containing the implementation of the SegmentSP data type.
  *
  * @see @ref SegmentSP
+ * @see @ref data_types_spatial
  */
 
 #ifndef HE_SEGMENTSP_DEFINITION_H_
@@ -14,6 +15,15 @@
 /**
  * PointSP is spatial data type and is comprised of
  * two PointSP(i,e) representing the segment (of a line)
+ *
+ * @see @ref SegmentSP/ArithmeticOperators.sql
+ * @see @ref SegmentSP/Casts.sql
+ * @see @ref SegmentSP/Definition.sql
+ * @see @ref SegmentSP/Distance.sql
+ * @see @ref SegmentSP/Interactions.sql
+ * @see @ref SegmentSP/Properties.sql
+ * @see @ref SegmentSP/RelationalOperators.sql
+ *
  */
 typedef struct {
 	PointSP i; /**< the initial point of the segment */

@@ -1,5 +1,10 @@
 /*
- * Authors: Marios Vodas (mvodas@gmail.com).
+* @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief File containing the implementation of the BoxSP data type.
+ *
+ * @see @ref BoxSP
+ * @see @ref data_types_spatial
  */
 
 #ifndef HE_BOXSP_CASTS_H_

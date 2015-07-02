@@ -1,9 +1,11 @@
 /**
  * @file
  * @author Marios Vodas (mvodas@gmail.com).
- * @brief The file implements the interactions functions of the SegmentSP object
+ * @brief The implementantion in sql of SegmentSP.
  *
- * @see @ref methods
+ * @details SegmentSP is a spatial data type used in Hermes
+ *
+ * @see @ref data_types_spatial
  *
  */
 
@@ -44,7 +46,14 @@ CREATE FUNCTION intersection(segmentA SegmentSP, segmentB SegmentSP,
 	'$libdir/Hermes','intersectionSegmentSP_SegmentSPV1'
 LANGUAGE C STABLE STRICT;
 
-/******************************************************************************/
+/** @brief This function takes as input a segment and a point 
+ * and returns the closest point of the segment. 
+ *
+ *	@param[in] segment the segment
+ *	@param[in] point the point
+ *
+ *  @return the closest point of the segment.
+ */
 CREATE FUNCTION closestPoint(segment SegmentSP, point PointSP) RETURNS PointSP AS
 	'$libdir/Hermes','closestPointSegmentSP_PointSPV1'
 LANGUAGE C IMMUTABLE STRICT;

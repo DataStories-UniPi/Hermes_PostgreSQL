@@ -1,5 +1,10 @@
-/*
- * Authors: Marios Vodas (mvodas@gmail.com).
+/**
+ *	@file
+ *	@author Marios Vodas (mvodas@gmail.com).
+ *	@brief The implementantion of SegmentSP
+ *
+ *	@details These functions are documented in the @ref SegmentSP/ArithmeticOperators.h
+ *
  */
 
 #include "../../h/Spatial/SegmentSP/ArithmeticOperators.h"

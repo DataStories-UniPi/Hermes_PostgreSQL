@@ -1,7 +1,13 @@
-/*
- * Authors: Marios Vodas (mvodas@gmail.com).
+/**
+ * @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief The implementantion in sql of PointSP.
+ *
+ * @details PointSP is a spatial data type used in Hermes
+ *
+ * @see @ref data_types_spatial
+ *
  */
-
 /******************************************************************************/
 CREATE FUNCTION PointXY(point PointSP) RETURNS PointXY AS
 	'$libdir/Hermes','PointSP2PointXYV1'

@@ -1,5 +1,9 @@
 /*
- * Authors: Marios Vodas (mvodas@gmail.com).
+* @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief File containing the implementation of the Timestamp data type.
+ *
+ * @see @ref data_types_temporal
  */
 
 #ifndef HE_TIMESTAMP_RELATIONAL_OPERATORS_H_

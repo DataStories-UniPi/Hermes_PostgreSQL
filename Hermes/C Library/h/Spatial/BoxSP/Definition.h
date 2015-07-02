@@ -1,9 +1,10 @@
 /*
 * @file
  * @author Marios Vodas (mvodas@gmail.com).
- * @brief File containing the BoxSP data type.
+ * @brief File containing the implementation of the BoxSP data type.
  *
- * @see @ref SegmentSP
+ * @see @ref BoxSP
+ * @see @ref data_types_spatial
  */
 
 #ifndef HE_BOXSP_DEFINITION_H_
@@ -22,6 +23,13 @@
  *  l     hl        @n
  *
  * This is an axis-aligned box.
+ *
+ * @see @ref BoxSP/Casts.sql
+ * @see @ref BoxSP/Definition.sql
+ * @see @ref BoxSP/Distance.sql
+ * @see @ref BoxSP/Interactions.sql
+ * @see @ref BoxSP/Properties.sql
+ * @see @ref BoxSP/RelationalOperators.sql
  */
 typedef struct {
 	PointSP l; /**< The bottom left point */

@@ -1,6 +1,11 @@
-/*
-* Authors: Marios Vodas (mvodas@gmail.com).
-*/
+/**
+ *	@file
+ *	@author Marios Vodas (mvodas@gmail.com).
+ *	@brief The implementation of Trajectory
+ *
+ *	@details These functions are documented in the @ref Trajectory/Properties.h
+ *
+ */
 
 #include "../../h/SpatioTemporal/Trajectory/Properties.h"
 #include "../../h/SpatioTemporal/Trajectory/Accessors.h"

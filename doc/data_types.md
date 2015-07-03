@@ -73,7 +73,6 @@ A timestamp is given as a string and is cast using “::” to the timestamp dat
 
 @see @ref Temporal/SessionParameters.sql
 	
-	
 # Spatial data types {#data_types_spatial}
 
 According to @cite vodas2013hermes spatial data types are those types that model only the spatial dimension of Mobility. Hermes is designed to work with data in the Eyclidean space, which means that a position defined in Riemannian geometry (or any other geometry) can`t be used. Usually the Cartesian system is used and the coordinates are measured in meters. **To be precise due to the fact that integers are used to represent the main spatial data type, the unit length that must be used is the same with the precision we want to achieve.** So if we want to have a precision of 1 meters we should store in the coordinates in the database in meters, but if we want to achieve a centimeter accuracy, we should store the coordinates in the database as centimeters. 
@@ -119,7 +118,6 @@ Some examples of using the saptial data types are shown below:
 	----------------------------
  	0.100000 0.100000 1.000000
 	(1 row)
-	
 	
 @see @ref PointSP/Definition.sql
 @see @ref PointSP/Distance.sql
@@ -183,9 +181,7 @@ Some examples of using the spatio-temporal data types are shown below:
 	-------------------------------------
  	'1 mon' '2008-12-31 00:00:00' 1 1 1
 	(1 row)
-	
-	
-	
+		
 @see @ref PointST/Aggregates.sql
 @see @ref PointST/Casts.sql
 @see @ref PointST/Definition.sql
@@ -221,10 +217,27 @@ Some examples of using the spatio-temporal data types are shown below:
 
 Trajectory data type in an object containing a sequence of spatio-temporal points ordered in time. In contrast with the previous data types, it has a variable length and is compromised of s sequence of PointST objects ordered by time @cite vodas2013hermes. The different approach to this data type is that we look at the movement of an object as a whole and not as segments in smaller parts. 
 
+	postgres=# SELECT Trajectory(PointST('2008-12-31 19:29:30' :: Timestamp, PointSP(1,1)));
+    	    trajectory         
+	---------------------------
+ 	'2008-12-31 19:29:30' 1 1
+	(1 row)
+	
+@see @ref Trajectory/Accessors.sql
+@see @ref Trajectory/Casts.sql
+@see @ref Trajectory/Constructors.sql
+@see @ref Trajectory/Definition.sql
+@see @ref Trajectory/Editors.sql
+@see @ref Trajectory/Interpolation.sql
+@see @ref Trajectory/Properties.sql
+@see @ref Trajectory/RelationalOperators.sql
+@see @ref Trajectory/SessionParameters.sql
+@see @ref Trajectory/Similarity.sql
+@see @ref Trajectory/Simplification.sql
+
 # Coordinate Transformation {#data_type_transformation}
 
-As already mention Hermes work on the Euclidean space, meaning it need meaning it needs degrees (lon, lat) to be transformed into meters (x, y). For this transformation the Geographic
-to/from Topocentric conversion (EPSG 9837) was implemented. According to this specification, to do the transformation we only need a reference point (lon, lat) which in (x, y) will be regarded as (0, 0), i.e. the Cartesian center. So, the closer a position is to this reference point the more accurate the transformation will be. Thus, a dataset must have a reference point for transformations @cite vodas2013hermes. This can be achieved by using the `PointXY(point PointLL, LRP PointLL)` and  `PointLL(point PointXY, LRP PointLL)` which are implemented by @ref ll2xy and @ref xy2ll functions.
+As already mention Hermes work on the Euclidean space, meaning it needs degrees (lon, lat) to be transformed into meters (x, y). For this transformation the Geographic to/from Topocentric conversion (EPSG 9837) was implemented. According to this specification, to do the transformation we only need a reference point (lon, lat) which in (x, y) will be regarded as (0, 0), i.e. the Cartesian center. So, the closer a position is to this reference point the more accurate the transformation will be. Thus, a dataset must have a reference point for transformations @cite vodas2013hermes. This can be achieved by using the `PointXY(point PointLL, LRP PointLL)` and  `PointLL(point PointXY, LRP PointLL)` which are implemented by @ref ll2xy and @ref xy2ll functions.
 
 	postgres=# SELECT PointLL(PointXY(-240909.991094767,-323271.482666732), PointLL(23.63994,37.9453));
        pointll       

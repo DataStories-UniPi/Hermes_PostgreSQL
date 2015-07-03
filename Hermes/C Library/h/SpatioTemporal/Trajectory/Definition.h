@@ -1,9 +1,10 @@
 /*
  * @file
  * @author Marios Vodas (mvodas@gmail.com).
- * @brief File containing the Trajectory data type.
+ * @brief File containing the implementation of the Trajectory data type.
  *
  * @see @ref Trajectory
+ * @see @ref data_type_trajectory
  */
 
 #ifndef HE_TRAJECTORY_H_
@@ -26,6 +27,18 @@
  * Trajectory is a spatio-temporal data type and is
  * compromised of a sequence of PointST objects
  * ordered by time
+ *
+ * @see @ref Trajectory/Accessors.sql
+ * @see @ref Trajectory/Casts.sql
+ * @see @ref Trajectory/Constructors.sql
+ * @see @ref Trajectory/Definition.sql
+ * @see @ref Trajectory/Editors.sql
+ * @see @ref Trajectory/Interpolation.sql
+ * @see @ref Trajectory/Properties.sql
+ * @see @ref Trajectory/RelationalOperators.sql
+ * @see @ref Trajectory/SessionParameters.sql
+ * @see @ref Trajectory/Similarity.sql
+ * @see @ref Trajectory/Simplification.sql
  *
  */
 typedef struct {

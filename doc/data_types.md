@@ -20,7 +20,7 @@ Spatio-temporal | PointST (Timestamp t, PointSP p)
 Spatio-temporal | BoxST (PeriodT period, BoxSP box)
 Spatio-temporal | SegmentST (PeriodT period, SegmentSP segment)
 Spatio-temporal | RangeST (RangeT t-range, RangeSP sp-range)
-Spatio-temporal | Trajectory (to be entered)
+Spatio-temporal | Trajectory (PointST[]) 
 
 ![Hermes Data Types](data_types.png)
 @image latex data_types.png "Hermes Data Types" 

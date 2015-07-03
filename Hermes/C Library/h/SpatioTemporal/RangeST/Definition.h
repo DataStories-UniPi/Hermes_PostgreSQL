@@ -1,5 +1,10 @@
 /*
- * Authors: Marios Vodas (mvodas@gmail.com).
+* @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief File containing the implementation of the RangeST data type.
+ *
+ * @see @ref RangeST
+ * @see @ref data_types_spatio_temp
  */
 
 #ifndef HE_RANGEST_DEFINITION_H_
@@ -8,6 +13,15 @@
 #include "../../Temporal/RangeT/Definition.h"
 #include "../../Spatial/RangeSP/Definition.h"
 
+/**
+ * RangeST is a spatio-temporal data type and is
+ * compromised of a Timestamp "t" and a RangeSP "sp"
+ * Consider it a range in time and space
+ *
+ * @see @ref RangeST/Casts.sql
+ * @see @ref RangeST/Definition.sql
+ *
+ */
 typedef struct {
 	RangeT t;
 	RangeSP sp;

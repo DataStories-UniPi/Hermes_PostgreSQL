@@ -1,5 +1,10 @@
 /*
- * Authors: Marios Vodas (mvodas@gmail.com).
+* @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief File containing the implementation of the RangeST data type.
+ *
+ * @see @ref RangeST
+ * @see @ref data_types_spatio_temp
  */
 
 #ifndef HE_RANGEST_CASTS_H_

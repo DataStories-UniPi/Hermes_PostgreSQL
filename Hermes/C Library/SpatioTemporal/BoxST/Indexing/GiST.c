@@ -1,5 +1,8 @@
-/*
- * Authors: Marios Vodas (mvodas@gmail.com).
+/**
+ *	@file
+ *	@author Marios Vodas (mvodas@gmail.com).
+ *	@brief The implementantion of BoxST
+ *
  */
 
 #include "../../../h/SpatioTemporal/BoxST/Interactions.h"

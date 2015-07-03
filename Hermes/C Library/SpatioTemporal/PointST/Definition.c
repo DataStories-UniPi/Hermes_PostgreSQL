@@ -1,7 +1,11 @@
-/*
- * Authors: Marios Vodas (mvodas@gmail.com).
+/**
+ *	@file
+ *	@author Marios Vodas (mvodas@gmail.com).
+ *	@brief The implementation of PointST
+ *
+ *	@details These functions are documented in the @ref PointST/Definition.h
+ *
  */
-
 #include "../../h/SpatioTemporal/PointST/Definition.h"
 #include "../../h/Utilities/Utilities.h"
 #include <libpq/pqformat.h>

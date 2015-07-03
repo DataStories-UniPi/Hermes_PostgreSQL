@@ -1,10 +1,10 @@
 /**
  * @file
  * @author Marios Vodas (mvodas@gmail.com).
- * @brief The file implements the properties of the SegmentST object
+ * @brief File containing the implementation of the SegmentST data type.
  *
- * @see @ref methods
- *
+ * @see @ref SegmentST
+ * @see @ref data_types_spatio_temp
  */
 
 CREATE FUNCTION isStopped(segment SegmentST, tolerance double precision DEFAULT HSpatialTolerance()) RETURNS boolean AS

@@ -1,5 +1,10 @@
 /*
- * Authors: Marios Vodas (mvodas@gmail.com).
+* @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief File containing the implementation of the PointST data type.
+ *
+ * @see @ref PointST
+ * @see @ref data_types_spatio_temp
  */
 
 #ifndef HE_POINTST_CASTS_H_

@@ -1,5 +1,10 @@
-/*
- * Authors: Marios Vodas (mvodas@gmail.com).
+/**
+ *	@file
+ *	@author Marios Vodas (mvodas@gmail.com).
+ *	@brief The implementation of RangeST
+ *
+ *	@details These functions are documented in the @ref RangeST/Casts.h
+ *
  */
 
 #include "../../h/SpatioTemporal/RangeST/Casts.h"

@@ -108,6 +108,12 @@ Some examples of using the saptial data types are shown below:
  	2337709 4163887 3228259 4721671
 	(1 row)
 	
+	postgres=# SELECT RangeSP(1,1,1);
+ 		rangesp 
+	---------
+ 	1 1 1
+	(1 row)
+	
 	postgres=# SELECT LineSP(0.1,0.1,1);
     	       linesp           
 	----------------------------
@@ -149,6 +155,67 @@ Some examples of using the saptial data types are shown below:
 # Spatio-temporal data types {#data_types_spatio_temp}
 
 According to @cite vodas2013hermes spatio-temporal data types are those types that model both the temporal and spatial dimension of Mobility in a unified manner. The main spatio-temporal data types are @ref PointST, @ref SegmentST and @ref BoxST
+
+Some examples of using the spatio-temporal data types are shown below:
+
+	postgres=# SELECT PointST('2008-12-31 19:29:30' :: Timestamp, PointSP(1,1));
+    	      pointst          
+	---------------------------
+ 	'2008-12-31 19:29:30' 1 1
+	(1 row)
+	
+	postgres=# SELECT BoxST(Period('2008-12-31 23:00:00', '2009-01-01 01:00:00'), 
+		BoxSP(PointSP(2337709, 4163887),PointSP(3228259, 4721671)));                                    
+			boxst		                                    
+	-----------------------------------------------------------------------------
+ 	'2008-12-31 23:00:00' '2009-01-01 01:00:00' 2337709 4163887 3228259 4721671
+	(1 row)
+	
+	
+	postgres=# SELECT SegmentST('2008-12-31 19:29:30' :: Timestamp,1,1,'2008-12-31 19:29:31' :: Timestamp,2,2);
+                      segmentst                      
+	-----------------------------------------------------
+ 	'2008-12-31 19:29:30' 1 1 '2008-12-31 19:29:31' 2 2
+	(1 row)
+
+	postgres=# SELECT RangeST(RangeT('1 month'::interval, '2008-12-31'::Timestamp),RangeSP(1,1,1));
+               rangest               
+	-------------------------------------
+ 	'1 mon' '2008-12-31 00:00:00' 1 1 1
+	(1 row)
+	
+	
+	
+@see @ref PointST/Aggregates.sql
+@see @ref PointST/Casts.sql
+@see @ref PointST/Definition.sql
+
+@see @ref BoxST/Casts.sql
+@see @ref BoxST/Definition.sql
+@see @ref BoxST/Editors.sql
+@see @ref BoxST/Interactions.sql
+@see @ref BoxST/Properties.sql
+@see @ref BoxST/PseudoDistance.sql
+@see @ref BoxST/PseudoRelationalOperators.sql
+@see @ref BoxST/RelationalOperators.sql
+@see @ref BoxST/Indexing/GiST.sql
+
+@see @ref SegmentST/Accessors.sql
+@see @ref SegmentST/Casts.sql
+@see @ref SegmentST/Definition.sql
+@see @ref SegmentST/Interpolation.sql
+@see @ref SegmentST/Properties.sql
+@see @ref SegmentST/PseudoDistance.sql
+@see @ref SegmentST/PseudoRelationalOperators.sql
+@see @ref SegmentST/RelationalOperators.sql
+@see @ref SegmentST/Similarity.sql
+@see @ref SegmentST/Indexing/GiST.sql
+@see @ref SegmentST/Indexing/S2T.sql
+@see @ref EnterLeave.sql
+
+@see @ref RangeST/Casts.sql
+@see @ref RangeST/Definition.sql
+
 
 # Trajectory type {#data_type_trajectory}
 

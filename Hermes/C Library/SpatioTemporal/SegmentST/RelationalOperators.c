@@ -1,5 +1,10 @@
-/*
- * Authors: Marios Vodas (mvodas@gmail.com).
+/**
+ *	@file
+ *	@author Marios Vodas (mvodas@gmail.com).
+ *	@brief The implementation of SegmentST
+ *
+ *	@details These functions are documented in the @ref SegmentST/RelationalOperators.h
+ *
  */
 
 #include "../../h/SpatioTemporal/SegmentST/RelationalOperators.h"

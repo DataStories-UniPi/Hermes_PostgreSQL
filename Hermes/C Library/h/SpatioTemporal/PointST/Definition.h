@@ -1,9 +1,10 @@
 /*
 * @file
  * @author Marios Vodas (mvodas@gmail.com).
- * @brief File containing the PointST data type.
+ * @brief File containing the implementation of the PointST data type.
  *
  * @see @ref PointST
+ * @see @ref data_types_spatio_temp
  */
 
 #ifndef HE_POINTST_DEFINITION_H_
@@ -16,6 +17,10 @@
  * PointST is a spatio-temporal data type and is
  * compromised of a Timestamp "t" and a PointSP "sp"
  * Consider it a point in time and space
+ *
+ * @see @ref PointST/Aggregates.sql
+ * @see @ref PointST/Casts.sql
+ * @see @ref PointST/Definition.sql
  *
  */
 typedef struct {

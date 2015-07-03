@@ -250,3 +250,14 @@ As already mention Hermes work on the Euclidean space, meaning it needs degrees 
 	-------------------------------
  	-240909.991095 -323271.482667
 	(1 row)
+	
+	
+Alternative if you have installed the PostGIS you could use the [ST_Transform](http://postgis.org/docs/ST_Transform.html) function to do the transformations.
+
+	postgres=# SELECT  ST_AsText( ST_Transform(ST_GeomFromText('POINT(23.65298 37.94176)', 4326), 2100));
+                st_astext                 
+	------------------------------------------
+ 	POINT(469358.735448916 4199122.03221326)
+	(1 row)
+
+

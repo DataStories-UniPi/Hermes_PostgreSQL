@@ -373,13 +373,13 @@ The SQL script that answers this question is listed below:
 		contains(SE.s_area, getSp(START_END.start)) AND
 		contains(SE.e_area, getSp(START_END.end));
 
-I DONT HAVE THE DATA TO TEST THE QUERY
-
 The process for addressing the query is:
 
 - spatial information about the locations of 100+ Greek ports is loaded (in table greek_ports);
 - the two ports of interest, Piraeus and Heraklion, are selected and, foreach, a surrounding area of ± 1 km distance is defined around the point locations, called s_area and e_area, respectively;
 - using these two areas and two appropriate operations, @ref operators_overlaps operator and method contains(), the trajectory dataset is pruned to find those trajectories that, on the one hand, overlap the two areas and, on the other hand, have their starting and ending points contained in the respective areas, the port of Piraeus and the port of Heraklion, respectively.
+
+@see [Greek ports file](https://gunet2.cs.unipi.gr/modules/document/file.php/TMF103/%CE%95%CF%81%CE%B3%CE%B1%CF%83%CF%84%CE%AE%CF%81%CE%B9%CE%B1/Hermes/greek_ports.txt)
 
 
 # Cross-tab queries # {#queries_cross_tab}
@@ -429,7 +429,7 @@ The SQL script that answers this question is listed below:
 	
 
 In detail, we first create all 300 spatio-temporal cells, according to the following rule: triple \f$ (t_{id} , x_{id} , y_{id} )\f$ , \f$ 1 \leq t_{id} \leq 3 \f$ ,
-\f$ 1 \leq x_{id} \f$,\f$ y_{id} \leq 10 \f$, corresponds to one of the 3 days and one of the 100 spatial cells, e.g. triple (2, 5, 8) corresponds to values t in the 2 nd day, x in interval \f$ (x_{min} + 4 \cdot (x_{max} − x_{min}), x_{min} + 5 \cdot (x_{max} − x_{min}))\f$, and y in interval \f$ (y_{min}+ 7 \cdot (y_{max} − y_{min}), y_{min} + 8 \cdot (y_{max} − y_{min})) \f$. Having set the partitioning, for each spatio-temporal cell, we execute a range query utilizing the operator @ref operators_overlaps in order to find the ships that were located in the specific spatial area during the specific temporal interval @cite vodas2013hermes. Some of the results of the query are shown below:
+\f$ 1 \leq x_{id} \f$,\f$ y_{id} \leq 10 \f$, corresponds to one of the 3 days and one of the 100 spatial cells, e.g. triple (2, 5, 8) corresponds to values t in the 2 nd day, x in interval \f$ (x_{min} + 4 \cdot (x_{max} - x_{min}), x_{min} + 5 \cdot (x_{max} - x_{min}))\f$, and y in interval \f$ (y_{min}+ 7 \cdot (y_{max} - y_{min}), y_{min} + 8 \cdot (y_{max} - y_{min})) \f$. Having set the partitioning, for each spatio-temporal cell, we execute a range query utilizing the operator @ref operators_overlaps in order to find the ships that were located in the specific spatial area during the specific temporal interval @cite vodas2013hermes. Some of the results of the query are shown below:
 
 	 t_id | x_id | y_id | count 
 		------+------+------+-------

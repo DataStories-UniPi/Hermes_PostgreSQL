@@ -1,10 +1,10 @@
-# Functionality # {#functionality}
+# Query functionality # {#functionality}
 
 In this section we elaborate on the functionality of Hermes in terms of SQL functions and the algorithms that implements.
 
-# Methods # {#methods}
+# Object methods # {#methods}
 
-The following methods can be used interchangeably either on Segments (e.g. SegmentST) or Trajectory objects, but in each case a different interpolation model is assumed (to be ckecked !!!) @cite vodas2013hermes. According to @ cite vodas2013hermes in the case of segments a uniform linear motion model is assumed and in the case of a trajectory object a non-uniform linear motion with constant non-zero acceleration between two points is used. An assumption is made on the initial speed of the object: the speed of the object at the first point of the trajectory is considered equal to the speed at the second point, in other words, the acceleration at the first segment of the trajectory is zero.
+The following methods can be used interchangeably either on Segments (e.g. SegmentST) or Trajectory objects, but in each case a different interpolation model is assumed (to be ckecked !!!) @cite vodas2013hermes. According to @cite vodas2013hermes in the case of segments a [uniform linear motion model](https://en.wikipedia.org/wiki/Linear_motion) is assumed and in the case of a trajectory object a non-uniform linear motion with constant non-zero acceleration between two points is used. An assumption is made on the initial speed of the object: the speed of the object at the first point of the trajectory is considered equal to the speed at the second point, in other words, the acceleration at the first segment of the trajectory is zero.
 
 In the following, there is example code segments for the segment model mainly (kai oles oi perigrafes einai antigrafi apo tin diplomatiki tou Mariou)
 
@@ -94,7 +94,7 @@ The && (overlaps) operator checks if the segment has any common points (or commo
 
 ## ~ contains  ## {#operators_contains}
 
-The ∼ (contains) operator checks if the segment contains the object in the right argument. When the right argument is PointST then interpolation takes place in order to find the position the segment was at the timestamp that PointST contains and then if the position is the same as the position that PointST contains the operator returns true.
+The \latexonly ~ \endlatexonly  \htmlonly ~ \endhtmlonly (contains) operator checks if the segment contains the object in the right argument. When the right argument is PointST then interpolation takes place in order to find the position the segment was at the timestamp that PointST contains and then if the position is the same as the position that PointST contains the operator returns true.
 
 ## @ contained   ## {#operators_contained}
 

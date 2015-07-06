@@ -1,10 +1,10 @@
 # Loading datasets {#datasets}
 
-Hermes is possible to host diverse datasets of moving vehicles. For example, it is
-possible to host two diverse datasets one of moving vehicles and another one
-of traveling vessels in the same database.
+In this section we present the meta data schema of hermes and provide an example of how to load datasets from text files.
 
-# Database Schema {#database_schema}
+# Metadata Schema {#database_schema}
+
+## hdataset table ## {#database_hdataset}
 
 This section describes the structure of the database that was designed to be
 able to host multiple datasets. That metadata infrastructure takes the form of a table named hdataset. The structure of the hdataset table is as follows @cite vodas2013hermes :
@@ -51,10 +51,14 @@ columns:
 According to @cite vodas2013hermes the objects table and the trajectories table must have data in contrast with segments table. The “traj” column in trajectories table could be empty if
 trajectories are stored in the segments table. It is always possible to build a trajectory object from its corresponding segments that we can find in the segments table on the fly using aggregate functions. That allows us to use advanced methods that Hermes provides for its “Trajectory” type.
 
+## hparameters table ## {#database_hparameters}
+
 Finally there is an hparameters table, with extra parameters for ??? and the structure of the table is as follows:
 
 - **key** contains a text ???
 - **value** contains a text ???
+
+## Statistics ## {#database_statistics}
 
 The statistics for each dataset are stored in the table hdatasets_statistics. The statistics about the dataset that can be kept in this table are:
 - bounds of the dataset (tmin, tmax, lx, ly, hx, hy, llon, llat, hlon, hlat).
@@ -173,12 +177,13 @@ The structure of the table is described below:
 - **stddev_segment_average_speed** is a double precision number
 - **median_segment_average_speed** is a double precision number
 
-In the figure below @cite vodas2013hermes is shown an older schema of the database:
+## Overall Schema ## {#database_schema}
 
-![Database schema](database_schema.png)
-@image latex database_schema.png "Database schema" 
+sximataki
 
-# AIS Dataset {#dataset_ais}
+# Example Dataset {#dataset_ais}
+
+## Loading Dataset ## {#dataset_loading}
 
 In these pages you will find some examples of the Hermes MOD. These examples use the [IMIS3days Dataset](http://chorochronos.datastories.org/?q=node/8), which has been kindly provided by the IMIS HELLAS. According to \cite pelekis2014mobility the dataset covers almost 3 days of informations about ships sailing at Greek Seas. The “IMIS 3 Days” dataset spawns from “2008-12-31 19:29:30” to “2009-01-02 17:10:06” and contains positions reports for 933 ships. It is spatially constrained in the Aegean Sea and covers an area of 496736 km 2 , from (21,35)-lowest to (29,39)-highest longitude-latitude point @cite vodas2013hermes .
 
@@ -261,7 +266,7 @@ Line 4 creates an index of type 3D R-tree on the dataset.
 By default, the dataset is hosted in "imis_seg" table, according to a segment-oriente storage model. The list of attributes of “imis_seg” is as follows: <obj_id, traj_id, seg_id, seg>, where obj_id corresponds to object’s identifier (in our case, the MMSI of the ship), traj_id corresponds to a unique identifier of object’s trajectory, seg_id corresponds to a unique identifier object’s trajectory segment, and seg is the geometry of the trajectory segment, of type SegmentST @cite pelekis2014mobility.
 
 	
-# Deleting the dataset {#dataset_deleting}
+## Deleting the dataset ## {#dataset_deleting}
 
 If someone wants to delete the dataset, he should execute the below command:
 

@@ -9,13 +9,13 @@ Temporal        | [Timestamp](http://www.postgresql.org/docs/9.4/static/datatype
 Temporal        | [Interval](http://www.postgresql.org/docs/9.4/static/datatype-datetime.html)  
 Temporal        | Period (Timestamp initial, Timestamp ending) 
 Temporal        | RangeT (Interval radius, Timestamp center)
-Saptial         | PointSP (number x, number y) 
-Saptial         | LineSP (double A, double B, double C)
-Saptial         | BoxSP (PointSP lower-left, PointSP upper-right)
-Saptial         | SegmentSP (PointSP initial, PointSP ending)
-Saptial         | RangeSP (number radius, PointSP center)
-Saptial         | PointLL (float8 lon, float8 lat)
-Saptial         | PointXY (float8 x, float8 y)
+Spatial         | PointSP (number x, number y) 
+Spatial         | LineSP (double A, double B, double C)
+Spatial         | BoxSP (PointSP lower-left, PointSP upper-right)
+Spatial         | SegmentSP (PointSP initial, PointSP ending)
+Spatial         | RangeSP (number radius, PointSP center)
+Spatial         | PointLL (float8 lon, float8 lat)
+Spatial         | PointXY (float8 x, float8 y)
 Spatio-temporal | PointST (Timestamp t, PointSP p)
 Spatio-temporal | BoxST (PeriodT period, BoxSP box)
 Spatio-temporal | SegmentST (PeriodT period, SegmentSP segment)
@@ -237,7 +237,15 @@ Trajectory data type in an object containing a sequence of spatio-temporal point
 
 # Coordinate Transformation {#data_type_transformation}
 
-As already mention Hermes work on the Euclidean space, meaning it needs degrees (lon, lat) to be transformed into meters (x, y). For this transformation the Geographic to/from Topocentric conversion (EPSG 9837) was implemented. According to this specification, to do the transformation we only need a reference point (lon, lat) which in (x, y) will be regarded as (0, 0), i.e. the Cartesian center. So, the closer a position is to this reference point the more accurate the transformation will be. Thus, a dataset must have a reference point for transformations @cite vodas2013hermes. This can be achieved by using the `PointXY(point PointLL, LRP PointLL)` and  `PointLL(point PointXY, LRP PointLL)` which are implemented by @ref ll2xy and @ref xy2ll functions.
+As already mention Hermes work on the Euclidean space, meaning it needs degrees (lon, lat) to be transformed into meters (x, y). If you have installed the PostGIS you could use the [ST_Transform](http://postgis.org/docs/ST_Transform.html) function to do the transformations.
+
+	postgres=# SELECT  ST_AsText( ST_Transform(ST_GeomFromText('POINT(23.65298 37.94176)', 4326), 2100));
+                st_astext                 
+	------------------------------------------
+ 	POINT(469358.735448916 4199122.03221326)
+	(1 row)
+
+Alternative the transformation of Geographic to/from Topocentric conversion (EPSG 9837) was implemented. According to this specification, to do the transformation we only need a reference point (lon, lat) which in (x, y) will be regarded as (0, 0), i.e. the Cartesian center. So, the closer a position is to this reference point the more accurate the transformation will be. Thus, a dataset must have a reference point for transformations @cite vodas2013hermes. This can be achieved by using the `PointXY(point PointLL, LRP PointLL)` and  `PointLL(point PointXY, LRP PointLL)` which are implemented by @ref ll2xy and @ref xy2ll functions.
 
 	postgres=# SELECT PointLL(PointXY(-240909.991094767,-323271.482666732), PointLL(23.63994,37.9453));
        pointll       
@@ -252,12 +260,6 @@ As already mention Hermes work on the Euclidean space, meaning it needs degrees 
 	(1 row)
 	
 	
-Alternative if you have installed the PostGIS you could use the [ST_Transform](http://postgis.org/docs/ST_Transform.html) function to do the transformations.
 
-	postgres=# SELECT  ST_AsText( ST_Transform(ST_GeomFromText('POINT(23.65298 37.94176)', 4326), 2100));
-                st_astext                 
-	------------------------------------------
- 	POINT(469358.735448916 4199122.03221326)
-	(1 row)
 
 

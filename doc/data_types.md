@@ -215,13 +215,58 @@ Some examples of using the spatio-temporal data types are shown below:
 
 # Trajectory type {#data_type_trajectory}
 
-Trajectory data type in an object containing a sequence of spatio-temporal points ordered in time. In contrast with the previous data types, it has a variable length and is compromised of s sequence of PointST objects ordered by time @cite vodas2013hermes. The different approach to this data type is that we look at the movement of an object as a whole and not as segments in smaller parts. 
+Trajectory data type is an object containing a sequence of spatio-temporal points ordered in time. In contrast with the previous data types, it has a variable length and is compromised of sequence of PointST objects ordered by time @cite vodas2013hermes. The different approach to this data type is that we look at the movement of an object as a whole and not as segments in smaller parts. 
 
-	postgres=# SELECT Trajectory(PointST('2008-12-31 19:29:30' :: Timestamp, PointSP(1,1)));
-    	    trajectory         
-	---------------------------
- 	'2008-12-31 19:29:30' 1 1
+Trajectory is a dynamic data type consisted of several PointST. For this reason constructing  trajectory is not a straightforward procedure.
+
+	postgres=# SELECT TrajCache_Allocate(3);
+ 	trajcache_allocate 
+	--------------------
+    	              0
 	(1 row)
+
+Initially the appropriate space in memory is allocated by using the TrajCache_Allocate() function which takes as input the number of PointSTs that the trajectory is consisted of and gives as output an integer which is an identifier of the current allocation. Then we have to reset the index of the current allocation and set it at the beginning of the TrajCache allocation by using the TrajCache_ResetIndex() funcion which takes as input the identifier of the TrajCache allocation(which is the ooutput of the TrajCache_Allocate() function).
+
+	postgres=# SELECT TrajCache_ResetIndex(0);
+ 	trajcache_resetindex 
+	----------------------
+ 	
+	(1 row)
+	
+Subsequently, by employing the TrajCache_Append() function we append the PointSTs to the trajectory one by one. This function takes as input the identifier of the current allocation and the PointST to be added.
+
+	postgres=# SELECT TrajCache_Append(0, PointST('2008-12-31 19:29:30' :: Timestamp, PointSP(1,1)));
+	 trajcache_append 
+	------------------
+ 	
+	(1 row)
+	
+	postgres=# SELECT TrajCache_Append(0, PointST('2008-12-31 19:29:34' :: Timestamp, PointSP(1,2)));
+ 	trajcache_append 
+	------------------
+ 	
+	(1 row)
+	
+Finally with the trajcache2trajectory() function we materialize the trajectory. This function takes as input the identifier of the current allocation and returns the actual trajectory.
+	
+	postgres=# SELECT trajcache2trajectory(0);
+                             trajcache2trajectory                              
+	-------------------------------------------------------------------------------
+ 	'2008-12-31 19:29:30' 1 1,'2008-12-31 19:29:32' 1 3,'2008-12-31 19:29:34' 1 2
+	(1 row)
+
+Alternative someone can use the constructor with an array of PointST. An example is shown below:
+	
+	postgres=# SELECT Trajectory(ARRAY[PointST('2008-12-31 19:29:31' :: Timestamp, PointSP(2,2)),PointST('2008-12-31 19:30:30' :: Timestamp, PointSP(3,3))]);
+                     trajectory                      
+	-----------------------------------------------------
+ 	'2008-12-31 19:29:31' 2 2,'2008-12-31 19:30:30' 3 3
+	(1 row)
+	
+For inserting the trajectory in a database an INSERT query must be used. An example is shown below:
+
+	INSERT INTO imis_traj(obj_id, traj_id, traj) VALUES (210671000, 1000, (SELECT trajcache2trajectory(0)))
+
 	
 @see @ref Trajectory/Accessors.sql
 @see @ref Trajectory/Casts.sql
@@ -237,7 +282,7 @@ Trajectory data type in an object containing a sequence of spatio-temporal point
 
 # Coordinate Transformation {#data_type_transformation}
 
-As already mention Hermes work on the Euclidean space, meaning it needs degrees (lon, lat) to be transformed into meters (x, y). If you have installed the PostGIS you could use the [ST_Transform](http://postgis.org/docs/ST_Transform.html) function to do the transformations.
+As already mention Hermes works on the Euclidean space, meaning it needs degrees (lon, lat) to be transformed into meters (x, y). If you have installed the PostGIS you could use the [ST_Transform](http://postgis.org/docs/ST_Transform.html) function to do the transformations.
 
 	postgres=# SELECT  ST_AsText( ST_Transform(ST_GeomFromText('POINT(23.65298 37.94176)', 4326), 2100));
                 st_astext                 
@@ -245,7 +290,7 @@ As already mention Hermes work on the Euclidean space, meaning it needs degrees 
  	POINT(469358.735448916 4199122.03221326)
 	(1 row)
 
-Alternative the transformation of Geographic to/from Topocentric conversion (EPSG 9837) was implemented. According to this specification, to do the transformation we only need a reference point (lon, lat) which in (x, y) will be regarded as (0, 0), i.e. the Cartesian center. So, the closer a position is to this reference point the more accurate the transformation will be. Thus, a dataset must have a reference point for transformations @cite vodas2013hermes. This can be achieved by using the `PointXY(point PointLL, LRP PointLL)` and  `PointLL(point PointXY, LRP PointLL)` which are implemented by @ref ll2xy and @ref xy2ll functions.
+Alternatively the transformation of Geographic to/from Topocentric conversion (EPSG 9837) was implemented. According to this specification, to do the transformation we only need a reference point (lon, lat) which in (x, y) will be regarded as (0, 0), i.e. the Cartesian center. So, the closer a position is to this reference point the more accurate the transformation will be. Thus, a dataset must have a reference point for transformations @cite vodas2013hermes. This can be achieved by using the `PointXY(point PointLL, LRP PointLL)` and  `PointLL(point PointXY, LRP PointLL)` which are implemented by @ref ll2xy and @ref xy2ll functions.
 
 	postgres=# SELECT PointLL(PointXY(-240909.991094767,-323271.482666732), PointLL(23.63994,37.9453));
        pointll       

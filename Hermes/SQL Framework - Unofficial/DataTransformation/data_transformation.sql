@@ -1,4 +1,4 @@
-﻿CREATE OR REPLACE FUNCTION data_transformation (traj_file text, transf_method text, rate float, distance float, traj_num integer)
+﻿CREATE OR REPLACE FUNCTION data_transformation (traj_file text, transf_method text, rate float DEFAULT 0.1, distance float DEFAULT 0.0, traj_num integer  DEFAULT 1, save boolean DEFAULT True)
   RETURNS integer
 AS $$
 	import random
@@ -53,5 +53,5 @@ AS $$
 	return 1
 $$ LANGUAGE plpython3u;
 
---SELECT data_transformation('trajectory.txt', 'dec_sr', 0.8, 0.5, 2);
+--SELECT data_transformation('trajectory.txt', 'dec_sr', 0.8, 0.1, 1, False);
 --DROP FUNCTION data_transformation(text,text,double precision,double precision,integer)

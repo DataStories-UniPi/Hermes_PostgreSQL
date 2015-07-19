@@ -1,5 +1,10 @@
 /*
- * Authors: Marios Vodas (mvodas@gmail.com).
+ * @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief File containing the implementation of the Trajectory data type.
+ *
+ * @see @ref Trajectory
+ * @see @ref data_type_trajectory
  */
 
 #ifndef HE_TRAJECTORY_H_
@@ -18,14 +23,29 @@
 //#pragma pack(push)
 //#pragma pack(1)
 
+/**
+ * Trajectory is a spatio-temporal data type and is
+ * compromised of a sequence of PointST objects
+ * ordered by time
+ *
+ * @see @ref Trajectory/Accessors.sql
+ * @see @ref Trajectory/Casts.sql
+ * @see @ref Trajectory/Constructors.sql
+ * @see @ref Trajectory/Definition.sql
+ * @see @ref Trajectory/Editors.sql
+ * @see @ref Trajectory/Interpolation.sql
+ * @see @ref Trajectory/Properties.sql
+ * @see @ref Trajectory/RelationalOperators.sql
+ * @see @ref Trajectory/SessionParameters.sql
+ * @see @ref Trajectory/Similarity.sql
+ * @see @ref Trajectory/Simplification.sql
+ *
+ */
 typedef struct {
-	char vl_len_[4];
-
-	int32 NrPoints;
-
-	float8 samplingPeriod;
-
-	PointST points[0];
+	char vl_len_[4];        /**< i have no idea */
+	int32 NrPoints;         /**< the number of PointST */
+	float8 samplingPeriod;  /**< the time interval between sampling */
+	PointST points[0];		/**< the actual points */
 } Trajectory;
 
 //#pragma pack(pop)

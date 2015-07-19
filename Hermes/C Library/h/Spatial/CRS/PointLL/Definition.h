@@ -1,5 +1,9 @@
 /*
- * Authors: Marios Vodas (mvodas@gmail.com).
+* @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief File containing the PointLL data type.
+ *
+ * @see @ref PointLL
  */
 
 #ifndef HE_POINTLL_DEFINITION_H_
@@ -8,9 +12,14 @@
 #include <postgres.h>
 #include <fmgr.h>
 
+ /**
+  * PointLL is auxiliary spatial data type which is
+  * used to represent points in longitude and latitude
+  * so that we can later transform them to eyclidean space
+  */
 typedef struct {
-	float8 lon;
-	float8 lat;
+	float8 lon; /**< the longitude coordinate */
+	float8 lat; /**< the latitude coordinate */
 } PointLL;
 
 PointLL *clonePointLL(const PointLL *point, PointLL *result);

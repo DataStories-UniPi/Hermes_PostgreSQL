@@ -1,5 +1,10 @@
-/*
- * Authors: Marios Vodas (mvodas@gmail.com).
+/**
+ * @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief File containing the implementation of the SegmentST data type.
+ *
+ * @see @ref SegmentST
+ * @see @ref data_types_spatio_temp
  */
 
 /******************************************************************************/
@@ -20,6 +25,7 @@ LANGUAGE C IMMUTABLE STRICT;
 CREATE FUNCTION send(SegmentST) RETURNS bytea AS
 	'$libdir/Hermes','sendSegmentST'
 LANGUAGE C IMMUTABLE STRICT;
+
 
 CREATE TYPE SegmentST (
 	INPUT = inSegmentST,
@@ -95,14 +101,40 @@ CREATE FUNCTION getEy(segment SegmentST) RETURNS integer AS
 LANGUAGE C IMMUTABLE STRICT;
 
 /******************************************************************************/
+
+/** @brief The function returns a SegmentST data type
+ *
+ *	@param[in] ti the initial timestamp
+ *	@param[in] ix the initial x coordinate
+ *	@param[in] iy the initial y coordinate
+ *	@param[in] te the ending timestamp
+ *	@param[in] ex the ending x coordinate
+ *	@param[in] ey the ending y coordinate
+ *
+ *  @return a SegmentST data type
+ */
 CREATE FUNCTION SegmentST(ti timestamp, ix integer, iy integer, te timestamp, ex integer, ey integer) RETURNS SegmentST AS
 	'$libdir/Hermes','constructorSegmentSTV1'
 LANGUAGE C IMMUTABLE STRICT;
 
+/** @brief The function returns a SegmentST data type
+ *
+ *	@param[in] i the initial PointST
+ *	@param[in] e the initial PointST
+ *
+ *  @return a SegmentST data type
+ */
 CREATE FUNCTION SegmentST(i PointST, e PointST) RETURNS SegmentST AS
 	'$libdir/Hermes','constructorHighSegmentSTV1'
 LANGUAGE C IMMUTABLE STRICT;
 
+/** @brief The function copy a SegmentST data type to a 
+ * 	new position in the memory
+ *
+ *	@param[in] segment the segment to be cloned
+ *
+ *  @return the new segment in the memory
+ */
 CREATE FUNCTION clone(segment SegmentST) RETURNS SegmentST AS
 	'$libdir/Hermes','cloneSegmentSTV1'
 LANGUAGE C IMMUTABLE STRICT;

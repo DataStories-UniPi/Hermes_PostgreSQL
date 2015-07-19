@@ -1,5 +1,10 @@
 /*
- * Authors: Marios Vodas (mvodas@gmail.com).
+* @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief File containing the implementation of the RangeSP data type.
+ *
+ * @see @ref RangeSP
+ * @see @ref data_types_spatial
  */
 
 #ifndef HE_RANGESP_DEFINITION_H_
@@ -7,9 +12,18 @@
 
 #include "../PointSP/Definition.h"
 
+/**
+ * RangeSP is spatial data type and is comprised of
+ * one PointSP() representing a circle with center
+ * the point and radius r
+ *
+ * @see @ref RangeSP/Casts.sql
+ * @see @ref RangeSP/Definition.sql
+ * @see @ref RangeSP/Properties.sql
+ */
 typedef struct {
-	int32 r;
-	PointSP c;
+	int32 r;   /**< the radius of the circle */
+	PointSP c; /**< the center of the circle */
 } RangeSP;
 
 RangeSP *cloneRangeSP(const RangeSP *range, RangeSP *result);

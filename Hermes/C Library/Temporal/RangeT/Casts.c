@@ -1,5 +1,10 @@
-/*
- * Authors: Marios Vodas (mvodas@gmail.com).
+/**
+ *	@file
+ *	@author Marios Vodas (mvodas@gmail.com).
+ *	@brief The implementantion of RangeT
+ *
+ *	@details These functions are documented in the @ref RangeT/Casts.h
+ *
  */
 
 #include "../../h/Temporal/RangeT/Casts.h"

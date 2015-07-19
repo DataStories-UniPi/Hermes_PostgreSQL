@@ -1,5 +1,10 @@
-/*
- * Authors: Marios Vodas (mvodas@gmail.com).
+/**
+ *	@file
+ *	@author Marios Vodas (mvodas@gmail.com).
+ *	@brief The implementation of BoxSP
+ *
+ *	@details These functions are documented in the @ref BoxSP/Casts.h
+ *
  */
 
 #include "../../h/Spatial/BoxSP/Casts.h"

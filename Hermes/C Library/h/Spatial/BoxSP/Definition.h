@@ -1,5 +1,10 @@
 /*
- * Authors: Marios Vodas (mvodas@gmail.com).
+* @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief File containing the implementation of the BoxSP data type.
+ *
+ * @see @ref BoxSP
+ * @see @ref data_types_spatial
  */
 
 #ifndef HE_BOXSP_DEFINITION_H_
@@ -7,119 +12,121 @@
 
 #include "../PointSP/Definition.h"
 
-/*
- * lh ___ h
- *   |   |
- *   |___|
- *  l     hl
+/**
+ * BoxSP is spatial data type and is comprised of
+ * two PointSP(i,e) components where “l” is the low left
+ * point and “h” is the high right point
+ *
+ * lh ___ h         @n
+ *   |   |          @n
+ *   |___|          @n
+ *  l     hl        @n
  *
  * This is an axis-aligned box.
+ *
+ * @see @ref BoxSP/Casts.sql
+ * @see @ref BoxSP/Definition.sql
+ * @see @ref BoxSP/Distance.sql
+ * @see @ref BoxSP/Interactions.sql
+ * @see @ref BoxSP/Properties.sql
+ * @see @ref BoxSP/RelationalOperators.sql
  */
 typedef struct {
-	PointSP l; //The bottom left point
-	PointSP h; //The top right point
+	PointSP l; /**< The bottom left point */
+	PointSP h; /**<  The top right point */
 } BoxSP;
 
 BoxSP *cloneBoxSP(const BoxSP *box, BoxSP *result);
 PGDLLEXPORT Datum cloneBoxSPV1(PG_FUNCTION_ARGS);
 
-/*
- *	constructorBoxSP()	-	Constructs a spatial box from x and y coordinates.
+/** @brief Constructs a spatial box from x and y coordinates.
  *
- *	Input parameters
- *		lx	-	lowest x
- *		ly	-	lowest y
- *		hx	-	highest x
- *		hy	-	highest y
- *
- *	Output parameters
- *		result	-	The box to update.
- *		error	-	Error message, if any.
- *
- *	Return value
- *		Pointer to a BoxSP or null pointer if an error has occurred.
- *		You should check if the returned pointer is NULL before you deallocate it with pfree()!
- *
- *	Correct examples (best practices)
+ *  Correct examples (best practices)
  *		1.	BoxSP box; constructorBoxSP(0,0, 1,1, &box, NULL);
  *		2.	char *error = NULL; BoxSP *box = constructorBoxSP(0,0, 1,1, NULL, &error);
  *
  *	Wrong examples (common mistakes)
  *		1.	BoxSP *box = constructorBoxSP(1,1, 0,0, NULL, NULL); pfree(box);
+ *
+ *
+ *  @memberof BoxSP
+ *
+ *	@param[in] lx lowest x
+ *	@param[in] ly lowest y
+ *	@param[in] hx highest x
+ *	@param[in] hy highest y
+ *	@param[out] result the box to update.
+ *	@param[out] error error message, if any.
+ *
+ *	@return Pointer to a BoxSP or null pointer if an error has occurred. You should
+ *	check if the returned pointer is NULL before you deallocate it with pfree()!
+ *
  */
 BoxSP *constructorBoxSP(int32 lx, int32 ly, int32 hx, int32 hy, BoxSP *result, char **error);
 PGDLLEXPORT Datum constructorBoxSPV1(PG_FUNCTION_ARGS);
 
-/*
- *	constructorHighBoxSP()	-	Constructs a spatial box from the low and high points.
+/** @brief Constructs a spatial box from the low and high points.
  *
- *	Input parameters
- *		l	-	lowest point
- *		h	-	highest point
+ *  @memberof BoxSP
  *
- *	Output parameters
- *		result	-	Same as constructorBoxSP().
- *		error	-	Same as constructorBoxSP().
+ *	@param[in] l lowest point
+ *	@param[in] h highest point
+ *	@param[out] result same as constructorBoxSP().
+ *	@param[out] error same as constructorBoxSP().
  *
- *	Return value
- *		Same as constructorBoxSP().
+ *	@return same as @ref constructorBoxSP().
  */
 BoxSP *constructorHighBoxSP(const PointSP *l, const PointSP *h, BoxSP *result, char **error);
 PGDLLEXPORT Datum constructorHighBoxSPV1(PG_FUNCTION_ARGS);
 
-/*
- *	inBoxSP()	-	Constructs a spatial box from the text representation of the object.
+/** @brief Constructs a spatial box from the text representation of the object.
  *
- *	Input parameters
- *		str	-	text representation
- *			The format is "((lx, ly), (hx, hy))".
+ *	@memberof BoxSP
  *
- *	Output parameters
- *		result	-	Same as constructorBoxSP().
- *		error	-	Same as constructorBoxSP().
+ *	@param[in] str text representation and the format is "((lx, ly), (hx, hy))".
+ *	@param[out] result same as constructorBoxSP().
+ *	@param[out]	error same as constructorBoxSP().
  *
- *	Return value
- *		Same as constructorBoxSP().
+ *	@return same as constructorBoxSP().
  */
 BoxSP *inBoxSP(const char *str, BoxSP *result, char **error);
 PGDLLEXPORT Datum inBoxSPV1(PG_FUNCTION_ARGS);
 
-/*
- *	outBoxSP()	-	Constructs the text representation of a spatial box.
+/** @brief Constructs the text representation of a spatial box.
  *
- *	Input parameters
- *		box	-	Pointer to a BoxSP object.
+ *	@memberof BoxSP
  *
- *	Return value
- *		The text representation of the box.
+ *	@param[in] box pointer to a BoxSP object.
+ *
+ *	@return the text representation of the box.
  */
 char *outBoxSP(const BoxSP *box);
 PGDLLEXPORT Datum outBoxSPV1(PG_FUNCTION_ARGS);
 
 PGDLLEXPORT Datum recvBoxSP(PG_FUNCTION_ARGS);
 
-/*
- *	BoxSP2Bytea()	-	Gives the byte array of a spatial box.
+/** @brief Gives the byte array of a spatial box.
  *
- *	Input parameters
- *		box	-	Pointer to a BoxSP object.
+ *	@memberof BoxSP
  *
- *	Return value
- *		The byte array.
+ *	@param[in] box pointer to a BoxSP object.
+ *
+ *	@return The byte array.
+ *
  */
 bytea *BoxSP2Bytea(const BoxSP *box);
 PGDLLEXPORT Datum sendBoxSP(PG_FUNCTION_ARGS);
 PGDLLEXPORT Datum hashBoxSP(PG_FUNCTION_ARGS);
 
-/*
- *	equalsBoxSP()	-	Checks if the two boxes are equal.
+/** @brief Checks if the two boxes are equal.
  *
- *	Input parameters
- *		boxA	-	Pointer to the first BoxSP object.
- *		boxB	-	Pointer to the second BoxSP object.
+ *	@memberof BoxSP
  *
- *	Return value
- *		True if they are equal. False otherwise.
+ *	@param[in] boxA	pointer to the first BoxSP object.
+ *	@param[in] boxB	pointer to the second BoxSP object.
+ *
+ *	@return True if they are equal. False otherwise.
+ *
  */
 bool equalsBoxSP(const BoxSP *boxA, const BoxSP *boxB);
 PGDLLEXPORT Datum equalsBoxSPV1(PG_FUNCTION_ARGS);

@@ -1,5 +1,10 @@
-/*
- * Authors: Marios Vodas (mvodas@gmail.com).
+/**
+ *	@file
+ *	@author Marios Vodas (mvodas@gmail.com).
+ *	@brief The implementantion of BoxST
+ *
+ *	@details These functions are documented in the @ref BoxST/Definition.h
+ *
  */
 
 #include "../../h/SpatioTemporal/BoxST/Definition.h"

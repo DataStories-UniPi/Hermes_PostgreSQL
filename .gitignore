@@ -156,3 +156,7 @@ $RECYCLE.BIN/
 /OS X
 Hermes/PostgreSQL 9.4/
 PostgreSQL 9.4/
+
+# Exclude build from doxygen
+
+doc/bin/*

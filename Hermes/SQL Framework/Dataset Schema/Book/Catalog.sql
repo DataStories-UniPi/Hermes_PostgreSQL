@@ -1,8 +1,15 @@
-/*
- * Authors: Marios Vodas (mvodas@gmail.com).
+/**
+ * @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief The file implements the loading functions of datasets
+ *
+ * @see @ref dataset_ais
+ *
  */
 
-/******************************************************************************/
+/** @brief This function create the necessary tables for the Hermes MOD 
+ *
+ */
 CREATE TABLE HDatasets (
 	id serial NOT NULL,
 	"name" text NOT NULL,
@@ -34,16 +41,39 @@ CREATE TABLE HDatasets (
 	CHECK ((NOT semantics_enabled) OR (semantics_enabled AND subtrajectory_storage))
 );
 
-/******************************************************************************/
+/** @brief This function returns the ID of the dataset
+ *
+ *	@param[in] name the name of the dataset
+ *
+ *  @return the id of the dataset
+ * 
+ */
 CREATE FUNCTION HDatasetID(name text) RETURNS integer AS
 	'SELECT id FROM HDatasets WHERE name = $1;'
 LANGUAGE SQL STABLE STRICT;
 
+/** @brief This function returns the name of the dataset
+ *
+ *	@param[in] dataset the id of the dataset
+ *
+ *  @return the name of the dataset
+ * 
+ */
 CREATE FUNCTION HDatasetName(dataset integer DEFAULT HCurrentDatasetID()) RETURNS text AS
 	'SELECT name FROM HDatasets WHERE id = $1;'
 LANGUAGE SQL STABLE STRICT;
 
-/******************************************************************************/
+/** @brief This function transform a PointSP to pointLL
+ *
+ *	@param[in] poi the PointSP for transformation
+ *	@param[in] datasetID the id of the dataset that we will use to transform the point
+ *
+ *  @return the meters
+ *   
+ * Normally this function should have been inside PointLL declaration file 
+ * but I am too bored to test the consequences of moving this function.
+ * 
+ */
 CREATE FUNCTION PointLL(poi PointSP, datasetID integer DEFAULT HCurrentDatasetID()) RETURNS PointLL AS $$
 DECLARE
 	tmpLRP PointLL;
@@ -62,6 +92,17 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql STABLE STRICT;
 
+/** @brief This function transform a PointLL to pointSP
+ *
+ *	@param[in] poi the PointLL for transformation
+ *	@param[in] datasetID the id of the dataset that we will use to transform the point
+ *
+ *  @return the meters
+ *   
+ * Normally this function should have been inside PointLL declaration file 
+ * but I am too bored to test the consequences of moving this function.
+ * 
+ */
 CREATE FUNCTION PointSP(poi PointLL, datasetID integer DEFAULT HCurrentDatasetID()) RETURNS PointSP AS $$
 DECLARE
 	tmpLRP PointLL;
@@ -80,7 +121,11 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql STABLE STRICT;
 
-/******************************************************************************/
+/** @brief This function deletes the dataset from the Hermes MOD
+ *
+ *	@param[in] dataset_name the name of the dataset
+ *
+ */
 CREATE FUNCTION HDatasetsDrop(dataset_name text) RETURNS boolean AS $$
 DECLARE
 	dataset_segment_storage boolean;
@@ -316,7 +361,12 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-/******************************************************************************/
+/** @brief This function renames the dataset name
+ * 
+ *	@param[in] dataset_name the name of the dataset
+ *	@param[in] dataset_name_new the new name of the dataset
+ *
+ */
 CREATE FUNCTION HDatasetsRename(dataset_name text, dataset_name_new text) RETURNS boolean AS $$
 DECLARE
 	dataset_segment_storage boolean;

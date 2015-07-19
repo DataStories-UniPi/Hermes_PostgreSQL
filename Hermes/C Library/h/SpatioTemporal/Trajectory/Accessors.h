@@ -1,6 +1,12 @@
 /*
- * Authors: Marios Vodas (mvodas@gmail.com).
+ * @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief File containing the implementation of the Trajectory data type.
+ *
+ * @see @ref Trajectory
+ * @see @ref data_type_trajectory
  */
+
 
 #ifndef HE_TRAJECTORY_ACCESSORS_H_
 #define	HE_TRAJECTORY_ACCESSORS_H_

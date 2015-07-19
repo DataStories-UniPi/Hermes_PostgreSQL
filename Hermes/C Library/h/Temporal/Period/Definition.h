@@ -1,5 +1,10 @@
 /*
- * Authors: Marios Vodas (mvodas@gmail.com).
+* @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief File containing the implementation of the Period data type.
+ *
+ * @see @ref Period
+ * @see @ref data_types_temporal
  */
 
 #ifndef HE_PERIOD_DEFINITION_H_
@@ -9,9 +14,22 @@
 #include <fmgr.h>
 #include <utils/timestamp.h>
 
+
+/**
+ * A period is comprised of two timestamps (i, e),
+ * meaning initial and ending, thus an interval can be
+ * computed from of a period.
+ *
+ * @see @ref Period/Casts.sql
+ * @see @ref Period/Definition.sql
+ * @see @ref Period/Distance.sql
+ * @see @ref Period/Interactions.sql
+ * @see @ref Period/Properties.sql
+ * @see @ref Period/RelationalOperators.sql
+ */
 typedef struct {
-	Timestamp i;
-	Timestamp e;
+	Timestamp i; /**< the initial timestimamp */
+	Timestamp e; /**< the ending timestimamp */
 } Period;
 
 Period *clonePeriod(const Period *period, Period *result);

@@ -1,8 +1,25 @@
-/*
- * Authors: Marios Vodas (mvodas@gmail.com).
+/**
+ * @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief The file implements the enter-leave functions of the SegmentSP object
+ *
+ * @see @ref methods
+ * @see @ref methods_enter_leave_points
+ *
  */
 
-/******************************************************************************/
+/** @brief The enter leave function finds the points where the object entered 
+ * or left a specific region. It takes an array of segments and a box as parameters.
+ * The function returns two columns one for the enter and one for the leave point. 
+ * If one of them doesn’t exist then it returns NULL to the corresponding column.
+ *
+ *	@param[in] traj the array of segment
+ *	@param[in] box the box
+ *
+ *  @return  the points where the object entered or left a specific region
+ * 
+ * 	@see @ref methods_enter_leave_points
+ */
 CREATE FUNCTION enter_leave(traj SegmentST[], box_area BoxSP,
 	OUT enterPoint PointST, OUT leavePoint PointST
 ) AS $$

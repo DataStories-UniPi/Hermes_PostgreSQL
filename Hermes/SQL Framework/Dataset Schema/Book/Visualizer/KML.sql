@@ -1,8 +1,21 @@
-/*
- * Authors: Marios Vodas (mvodas@gmail.com).
+/**
+ * @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief The file implements the exporting functions of datasets
+ *
+ * @see @ref visualization
+ *
  */
 
-/******************************************************************************/
+/** @brief This function constructs the KML document
+ *
+ *	@param[in] text the text to be include
+ *	@param[in] colors no idea. Ask marios
+ *	@param[in] widths no idea. Ask marios
+ *
+ *  @return the name of the dataset
+ * 
+ */
 CREATE FUNCTION KMLDocument(content text, colors hstore DEFAULT 'polygon=>16000000, track=>ffffffff, STOP=>ff0000ff, MOVE=>ffffffff', widths hstore DEFAULT 'track=>1, STOP=>1, MOVE=>1') RETURNS text AS $$
 DECLARE
 	kml text;
@@ -17,13 +30,31 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql IMMUTABLE STRICT;
 
+/** @brief This function encloses aggregated points under one KML folder element.
+ *
+ *	@param[in] folderName the folder name
+ *	@param[in] content the content
+ *
+ *	@return KML folder element.
+ * 
+ */
 CREATE FUNCTION KMLFolder(folderName text, content text) RETURNS text AS $$
 BEGIN
 	RETURN '<Folder><name>' || folderName || '</name>' || content || '</Folder>';
 END;
 $$ LANGUAGE plpgsql IMMUTABLE STRICT;
 
-/******************************************************************************/
+/** @brief This function returns a string that gives a KML point placemark 
+ * 	element (with each point having the object and trajectory identifiers 
+ * 	in its description)
+ *
+ *	@param[in] description the description
+ *	@param[in] point the point
+ *	@param[in] dataset the dataset
+ *
+ *  @return a string that gives a KML point placemark element
+ * 
+ */
 CREATE FUNCTION KMLPoint(description text, point PointSP, dataset integer DEFAULT HCurrentDatasetID()) RETURNS text AS $$
 DECLARE
 	poiWGS PointLL;

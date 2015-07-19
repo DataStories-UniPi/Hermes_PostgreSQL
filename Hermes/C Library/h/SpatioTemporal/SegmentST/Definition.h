@@ -1,5 +1,10 @@
 /*
- * Authors: Marios Vodas (mvodas@gmail.com).
+ * @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief File containing the implementation of the SegmentST data type.
+ *
+ * @see @ref SegmentST
+ * @see @ref data_types_spatio_temp
  */
 
 #ifndef HE_SEGMENTST_DEFINITION_H_
@@ -9,9 +14,27 @@
 #include "../../Spatial/SegmentSP/Definition.h"
 #include "../PointST/Definition.h"
 
+/**
+ * SegmentST is a spatio-temporal data type and is
+ * compromised of a Period and a SegmentSP
+ *
+ * @see @ref SegmentST/Accessors.sql
+ * @see @ref SegmentST/Casts.sql
+ * @see @ref SegmentST/Definition.sql
+ * @see @ref SegmentST/Interpolation.sql
+ * @see @ref SegmentST/Properties.sql
+ * @see @ref SegmentST/PseudoDistance.sql
+ * @see @ref SegmentST/PseudoRelationalOperators.sql
+ * @see @ref SegmentST/RelationalOperators.sql
+ * @see @ref SegmentST/Similarity.sql
+ * @see @ref SegmentST/Indexing/GiST.sql
+ * @see @ref SegmentST/Indexing/S2T.sql
+ * @see @ref EnterLeave.sql
+ *
+ */
 typedef struct {
-	Period t;
-	SegmentSP sp;
+	Period t;      /**< period for the segment to be created */
+	SegmentSP sp; /**< the segment created at the particular period */
 } SegmentST;
 
 SegmentST *cloneSegmentST(const SegmentST *segment, SegmentST *result);

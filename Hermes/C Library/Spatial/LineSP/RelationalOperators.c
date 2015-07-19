@@ -1,5 +1,10 @@
-/*
- * Authors: Marios Vodas (mvodas@gmail.com).
+/**
+ *	@file
+ *	@author Marios Vodas (mvodas@gmail.com).
+ *	@brief The implementation of LineSP
+ *
+ *	@details These functions are documented in the @ref LineSP/RelationalOperators.h
+ *
  */
 
 #include "../../h/Spatial/LineSP/RelationalOperators.h"

@@ -1,5 +1,8 @@
-/*
- * Authors: Marios Vodas (mvodas@gmail.com).
+/**
+ *	@file
+ *	@author Marios Vodas (mvodas@gmail.com).
+ *	@brief The implementation of SegmentST
+ *
  */
 
 #include "../../../h/SpatioTemporal/SegmentST/Indexing/S2T.h"

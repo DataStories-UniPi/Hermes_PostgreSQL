@@ -1,7 +1,11 @@
-/*
-* Authors: Marios Vodas (mvodas@gmail.com).
-*/
-
+/**
+ *	@file
+ *	@author Marios Vodas (mvodas@gmail.com).
+ *	@brief The implementation of Trajectory
+ *
+ *	@details These functions are documented in the @ref Trajectory/Definition.h
+ *
+ */
 #include "../../h/SpatioTemporal/Trajectory/Definition.h"
 #include "../../h/Utilities/Utilities.h"
 #include <libpq/pqformat.h>

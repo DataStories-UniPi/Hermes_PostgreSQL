@@ -1,5 +1,12 @@
-/*
- * Authors: Marios Vodas (mvodas@gmail.com).
+/**
+ * @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief The implementantion in sql of Period.
+ *
+ * @details Period is a temporal data type used in Hermes
+ *
+ * @see @ref data_types_temporal
+ *
  */
 
 /******************************************************************************/

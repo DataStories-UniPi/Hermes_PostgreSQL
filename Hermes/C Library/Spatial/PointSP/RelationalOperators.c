@@ -1,5 +1,10 @@
-/*
- * Authors: Marios Vodas (mvodas@gmail.com).
+/**
+ *	@file
+ *	@author Marios Vodas (mvodas@gmail.com).
+ *	@brief The implementantion of PointSP
+ *
+ *	@details These functions are documented in the @ref PointSP/RelationalOperators.h
+ *
  */
 
 #include "../../h/Spatial/PointSP/RelationalOperators.h"

@@ -1,5 +1,9 @@
-/*
- * Authors: Marios Vodas (mvodas@gmail.com).
+/**
+ *	@file
+ *	@author Marios Vodas (mvodas@gmail.com).
+ *	@brief The implementation of PointST
+ *
+ *
  */
 
 #include "../../h/SpatioTemporal/PointST/Definition.h"

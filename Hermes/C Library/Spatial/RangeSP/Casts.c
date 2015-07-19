@@ -1,5 +1,10 @@
-/*
- * Authors: Marios Vodas (mvodas@gmail.com).
+/**
+ *	@file
+ *	@author Marios Vodas (mvodas@gmail.com).
+ *	@brief The implementantion of RangeSP
+ *
+ *	@details These functions are documented in the @ref RangeSP/Casts.h
+ *
  */
 
 #include "../../h/Spatial/RangeSP/Casts.h"

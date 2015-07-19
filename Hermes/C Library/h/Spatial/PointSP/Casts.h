@@ -1,5 +1,10 @@
 /*
- * Authors: Marios Vodas (mvodas@gmail.com).
+* @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief File containing the implementation of the PointSP data type.
+ *
+ * @see @ref PointSP
+ * @see @ref data_types_spatial
  */
 
 #ifndef HE_POINTSP_CASTS_H_

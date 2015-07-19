@@ -1,5 +1,10 @@
-/*
- * Authors: Marios Vodas (mvodas@gmail.com).
+/**
+ *	@file
+ *	@author Marios Vodas (mvodas@gmail.com).
+ *	@brief The implementantion of PointSP
+ *
+ *	@details This function is documented in the @ref PointSP/Definition.h
+ *
  */
 
 #include "../../h/Spatial/PointSP/Definition.h"

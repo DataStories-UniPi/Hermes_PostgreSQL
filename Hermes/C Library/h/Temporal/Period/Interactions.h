@@ -1,5 +1,10 @@
 /*
- * Authors: Marios Vodas (mvodas@gmail.com).
+* @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief File containing the implementation of the Period data type.
+ *
+ * @see @ref Period
+ * @see @ref data_types_temporal
  */
 
 #ifndef HE_PERIOD_INTERACTIONS_H_

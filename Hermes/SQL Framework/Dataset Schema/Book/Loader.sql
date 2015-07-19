@@ -1,12 +1,24 @@
-/*
- * Authors: Marios Vodas (mvodas@gmail.com).
+/**
+ * @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief The file implements the loading function of datasets
+ *
+ * @see @ref dataset_ais
+ *
  */
 
 /******************************************************************************/
 --How to update where cursor is when cursor is opened on a dynamic SQL query:
 --EXECUTE 'UPDATE ' || quote_ident(dataset_name || '_input_data')::regclass || ' SET var = val WHERE CURRENT OF ' || quote_ident(c::text) || ';';
-
 /******************************************************************************/
+
+/** @brief The function loads dataset in the database from a file
+ *
+ *	@param[in] dataset_name the name of the database
+ *	@param[in] csv_file the name of the file that the data resides 
+ *	@param[in] keep_input_data boolean value showing if the input data will remain
+ *
+ */
 CREATE FUNCTION HDatasetsLoad(dataset_name text, csv_file text DEFAULT '', keep_input_data boolean DEFAULT false) RETURNS TABLE(operation text) AS $$
 DECLARE
 	dataset_id integer;

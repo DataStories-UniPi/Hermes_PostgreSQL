@@ -1,7 +1,11 @@
-/*
- * Authors: Marios Vodas (mvodas@gmail.com).
+/**
+ *	@file
+ *	@author Marios Vodas (mvodas@gmail.com).
+ *	@brief The implementantion of BoxST
+ *
+ *	@details These functions are documented in the @ref BoxST/Interactions.h
+ *
  */
-
 #include "../../h/SpatioTemporal/BoxST/Interactions.h"
 
 BoxST *intersectionBoxST_BoxST(const BoxST *boxA, const BoxST *boxB, BoxST *result) {

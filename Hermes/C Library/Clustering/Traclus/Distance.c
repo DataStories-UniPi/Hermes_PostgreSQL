@@ -1,5 +1,10 @@
-/*
- * Authors: Marios Vodas (mvodas@gmail.com).
+/**
+ *	@file
+ *	@author Marios Vodas (mvodas@gmail.com).
+ *	@brief The implementantion of TRACLUS algorithm.
+ *
+ *	@details This function is documented in the @ref Distance.h
+ *
  */
 
 #include "../../h/Clustering/Traclus/Distance.h"

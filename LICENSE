@@ -1,0 +1,24 @@
+Hermes License
+Version 1.0, September 2010
+
+TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+1. Definitions.
+
+"Software" is defined as the software project Hermes (http://infolab.cs.unipi.gr/hermes - http://java.net/projects/hermes-mod) that is developed on top of PostgreSQL (http://www.postgresql.org/) as well as the software project HermesUI that relies on the previously mentioned software project Hermes.
+
+"License" is defined as the terms and conditions for use, reproduction,and distribution as defined by Sections 1 through 5 of this document.
+
+"Licensor" is defined as four specific individuals the first of whom is Nikos Pelekis (npelekis@unipi.gr), the second one is Yannis Theodoridis (ytheod@unipi.gr), the third one is Marios Vodas (mvodas@gmail.com), and the fourth one is Panagiotis Tampakis (panosbp@gmail.com). Only Nikos Pelekis, Yannis Theodoridis, Marios Vodas, and Panagiotis Tampakis can be referred as, and be, a Licensor.
+
+"You" (or "Your") is defined as an individual or legal entity exercising permissions granted by this License.
+
+2. Grant of Use. Subject to the terms and conditions of this License You are obliged to have the express written prior approval of the Licensor in order to use the Software.
+
+3. Grant of Reproduction. Subject to the terms and conditions of this License You are obliged to have the express written prior approval of the Licensor in order to reproduce the Software and the License.
+
+4. Grant of Distribution. Subject to the terms and conditions of this License You are obliged to have the express written prior approval of the Licensor in order to distribute the Software.
+
+5. Disclaimer of Warranty. Licensor provides the Software on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. You are solely responsible for determining the appropriateness of using the Software and assume any risks associated with Your exercise of permissions under this License.
+
+END OF TERMS AND CONDITIONS

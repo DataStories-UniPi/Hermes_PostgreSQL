@@ -50,6 +50,9 @@ AS $$
 		decrease_sampling_rate(original_trajectory, generated_trajectories, rate, traj_num)
 	else:
 		pass
+
+	if save:
+		pass
 	return 1
 $$ LANGUAGE plpython3u;
 

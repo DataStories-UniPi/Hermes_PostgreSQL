@@ -1,6 +1,7 @@
 ﻿CREATE OR REPLACE FUNCTION data_transformation (traj_file text, transf_method text, rate float DEFAULT 0.1, distance float DEFAULT 0.0, traj_num integer  DEFAULT 1, save boolean DEFAULT True)
   RETURNS integer
 AS $$
+	-- Returns 1 if succesfull, 1 otherwise
 	import random
 	import os
 	def load_data_to_list(traj_file):

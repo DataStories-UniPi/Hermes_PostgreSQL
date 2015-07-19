@@ -1,7 +1,7 @@
 ﻿CREATE OR REPLACE FUNCTION data_transformation (traj_file text, transf_method text, rate float DEFAULT 0.1, distance float DEFAULT 0.0, traj_num integer  DEFAULT 1, save boolean DEFAULT True)
   RETURNS integer
 AS $$
-	-- Returns 1 if succesfull, 1 otherwise
+	"""Returns 1 if succesfull, -1 otherwise"""
 	import random
 	import os
 	def load_data_to_list(traj_file):
@@ -39,23 +39,32 @@ AS $$
 			incremented_id += 1
 		generated_trajectories.close()
 		return
-
-	original_trajectory = load_data_to_list(traj_file)
+		
+	try:
+		original_trajectory = load_data_to_list(traj_file)
+	except(IOError, OSError):
+		return -1
 	
 
 	# File to be returned
 	generated_trajectories = open('new_traj.txt', 'w')
-	generated_trajectories.write('objectID,trajectoryID,t,lon,lat\n')
 
+	generated_trajectories.write('objectID,trajectoryID,t,lon,lat\n')
 	if transf_method == "dec_sr":
 		decrease_sampling_rate(original_trajectory, generated_trajectories, rate, traj_num)
 	else:
 		pass
 
-	if save:
-		pass
+	if save == True:
+		plpy.execute("SELECT HLoader('transformed', 'Tranformed trajectories')")
+		plpy.execute("SELECT HLoaderCSV_II('transformed', 'new_traj.txt')")
+		plpy.execute("SELECT HDatasetsOfflineStatistics('transformed')")
+		plpy.execute("CREATE INDEX ON transformed_seg USING gist (seg) WITH (FILLFACTOR = 100)")
+
 	return 1
 $$ LANGUAGE plpython3u;
 
---SELECT data_transformation('trajectory.txt', 'dec_sr', 0.8, 0.1, 1, False);
+--SELECT data_transformation('trajectory.txt', 'dec_sr', 0.3, 0.1, 1, True);
 --DROP FUNCTION data_transformation(text,text,double precision,double precision,integer)
+--SELECT HLoaderCSV_II('lol', 'imis3days.txt');
+--select * from transformed_seg;

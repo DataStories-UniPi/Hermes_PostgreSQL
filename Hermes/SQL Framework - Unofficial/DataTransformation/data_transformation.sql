@@ -4,6 +4,8 @@ AS $$
 	"""Returns 1 if succesfull, -1 otherwise"""
 	import random
 	import os
+	
+#-----------------------------Helper Library-------------------------------------------
 	def load_data_to_list(traj_file):
 		"""	
 		Input: A file containing a trajectory
@@ -40,6 +42,7 @@ AS $$
 		generated_trajectories.close()
 		return
 		
+#--------------------------Main Function---------------------------------------------
 	if not save and not csv_file:
 		try:
 			os.remove('new_traj.txt')

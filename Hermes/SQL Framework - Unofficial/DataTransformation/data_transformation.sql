@@ -1,4 +1,4 @@
-﻿CREATE OR REPLACE FUNCTION data_transformation (traj_file text, transf_method text, rate float DEFAULT 0.1, distance float DEFAULT 0.0, traj_num integer  DEFAULT 1, save boolean DEFAULT True)
+﻿CREATE OR REPLACE FUNCTION data_transformation (traj_file text, transf_method text, rate float DEFAULT 0.1, distance float DEFAULT 0.0, traj_num integer  DEFAULT 1, save boolean DEFAULT True, csv_file boolean DEFAULT True)
   RETURNS integer
 AS $$
 	"""Returns 1 if succesfull, -1 otherwise"""
@@ -40,6 +40,9 @@ AS $$
 		generated_trajectories.close()
 		return
 		
+	if not save and not csv_file:
+		return 1
+		
 	try:
 		original_trajectory = load_data_to_list(traj_file)
 	except(IOError, OSError):
@@ -61,10 +64,13 @@ AS $$
 		plpy.execute("SELECT HDatasetsOfflineStatistics('transformed')")
 		plpy.execute("CREATE INDEX ON transformed_seg USING gist (seg) WITH (FILLFACTOR = 100)")
 
+	if not csv_file:
+		os.remove('new_traj.txt')
+
 	return 1
 $$ LANGUAGE plpython3u;
 
---SELECT data_transformation('trajectory.txt', 'dec_sr', 0.3, 0.1, 1, True);
---DROP FUNCTION data_transformation(text,text,double precision,double precision,integer)
+SELECT data_transformation('trajectory.txt', 'dec_sr', 0.6, 0.1, 1, True, True);
+--DROP FUNCTION data_transformation(text,text,double precision,double precision,integer,boolean)
 --SELECT HLoaderCSV_II('lol', 'imis3days.txt');
 --select * from transformed_seg;

@@ -2,11 +2,13 @@
  * Authors: Kiriakos Velissariou (kir.velissariou@gmail.com)
  */
 
-CREATE OR REPLACE FUNCTION trajectory_transformation (dataset text, transf_method text, rate float DEFAULT 0.2, distance float DEFAULT 0.0, save boolean DEFAULT True, csv_file boolean DEFAULT True, tstamps_file text DEFAULT 'None')
+CREATE OR REPLACE FUNCTION trajectory_transformation (dataset text, transf_method text, rate float DEFAULT 0.2, distance float DEFAULT 0.0, save boolean DEFAULT True, csv_file boolean DEFAULT True, start_date text DEFAULT 'None', end_date text DEFAULT 'None', step integer DEFAULT 0)
 RETURNS integer
 AS $$
 	import random
 	import os
+	from datetime import datetime
+	from datetime import timedelta
 
 #-------------------------helper functions----------------------------------
 	def load_tstamps_file_to_list(tstamps_file):
@@ -36,24 +38,35 @@ AS $$
 		generated_trajectories.close()
 		return
 
-	def given_tstamp_sampling_rate(dataset, generated_trajectories, tstamps_file):
-		tstamps_list = load_tstamps_file_to_list(tstamps_file)
+	def given_tstamp_sampling_rate(dataset, generated_trajectories, start_date, end_date, step):
+		start_date = datetime.strptime(start_date, '%Y-%m-%d %H:%M:%S')
+		end_date = datetime.strptime(end_date, '%Y-%m-%d %H:%M:%S')
+
 		traj_qry = "SELECT * FROM " + dataset + "_traj"
 		traj_result = plpy.execute(traj_qry)
 		for i in range(0, len(traj_result)):
 			seg_qry = "SELECT * FROM " + dataset + "_seg WHERE obj_id =" + str(traj_result[i]['obj_id']) + "AND traj_id =" + str(traj_result[i]['traj_id'])
 			seg_result = plpy.execute(seg_qry)
-			for j in range(0, len(seg_result)):
+			j = 0
+			date_searching = start_date
+			while j < len(seg_result) and date_searching <= end_date:
 				traj_stripped = seg_result[j]['seg'].split(" '")
 				traj_stripped = traj_stripped[0].rstrip()
 				traj_stripped = traj_stripped.replace("'", '')
 				traj_stripped = traj_stripped.split()
-				for tstamp in tstamps_list:
-					tstamp2 = traj_stripped[0] + " " + traj_stripped[1]
-					tstamp2 = tstamp2.rstrip()
-					if tstamp == tstamp2:
-						point_to_write = traj_stripped	[0] + " " + traj_stripped[1] + "," + traj_stripped[2] + "," + traj_stripped[3]
-						generated_trajectories.write("%d,%d,%s\n" % (seg_result[j]['obj_id'], seg_result[j]['traj_id'], point_to_write))
+				point_date = traj_stripped[0] + " " + traj_stripped[1]
+				point_date = datetime.strptime(point_date, '%Y-%m-%d %H:%M:%S')
+
+				if point_date == date_searching:
+					point_to_write = traj_stripped	[0] + " " + traj_stripped[1] + "," + traj_stripped[2] + "," + traj_stripped[3]
+					generated_trajectories.write("%d,%d,%s\n" % (seg_result[j]['obj_id'], seg_result[j]['traj_id'], point_to_write))
+					j += 1
+					date_searching = date_searching + timedelta(seconds = step)
+				elif point_date < date_searching:
+					j += 1
+				else:
+					date_searching = date_searching + timedelta(seconds = step)
+
 		generated_trajectories.close()
 		return
 
@@ -65,7 +78,7 @@ AS $$
 	if transf_method == 'dec_sr':
 		decrease_sampling_rate(dataset, generated_trajectories, rate)
 	elif transf_method == 'time_sr':
-		given_tstamp_sampling_rate(dataset, generated_trajectories, tstamps_file)
+		given_tstamp_sampling_rate(dataset, generated_trajectories, start_date, end_date, step)
 	else:
 		pass
 

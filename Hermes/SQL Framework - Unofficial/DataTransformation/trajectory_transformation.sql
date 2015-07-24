@@ -95,7 +95,7 @@ AS $$
 		
 $$ LANGUAGE plpython3u;
 
-SELECT trajectory_transformation('test_dataset', 'time_sr', 0.5, 0.3, True, True, 'timestamps.txt');
+SELECT trajectory_transformation('test_dataset', 'time_sr', 0.5, 0.3, True, True, '2008-12-31 19:29:30', '2008-12-31 19:29:42', 3);
 
 --SELECT * FROM test_dataset_seg;
 --DROP FUNCTION trajectory_transformation(text, text, float, float, boolean, boolean);

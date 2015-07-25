@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Authors: Kiriakos Velissariou (kir.velissariou@gmail.com)
  */
 
@@ -9,16 +9,19 @@ AS $$
 	import os
 	from datetime import datetime
 	from datetime import timedelta
+	from random import randrange
 
 #-------------------------helper functions----------------------------------
-	def load_tstamps_file_to_list(tstamps_file):
-		tstamps_list = []
-		inputfile = open(tstamps_file, 'r')
-		for line in inputfile:
-			line = line.rstrip()
-			tstamps_list.append(line)
-		inputfile.close()
-		return tstamps_list
+	def date_between(start, end):
+		"""
+		This function will return a random datetime between two datetime 
+		objects.
+		"""
+		delta = end - start
+		int_delta = (delta.days * 24 * 60 * 60) + delta.seconds
+		random_second = randrange(int_delta)
+		return start + timedelta(seconds=random_second)
+
 #-------------------------transformation functions----------------------------------
 	def decrease_sampling_rate(dataset, generated_trajectories, rate):
 		traj_qry = "SELECT * FROM " + dataset + "_traj"
@@ -44,7 +47,41 @@ AS $$
 		for i in range(0, len(traj_result)):
 			seg_qry = "SELECT * FROM " + dataset + "_seg WHERE obj_id =" + str(traj_result[i]['obj_id']) + "AND traj_id =" + str(traj_result[i]['traj_id'])
 			seg_result = plpy.execute(seg_qry)
-			for j in range(0, len(seg_result)):
+			for j in range(0, len(seg_result) - 1):
+				traj_stripped = seg_result[j]['seg'].split(" '")
+				traj_stripped = traj_stripped[0]
+				traj_stripped = traj_stripped.replace("'", '')
+				traj_stripped = traj_stripped.split()
+				start_timestamp = traj_stripped[0] + " " + traj_stripped[1]
+				traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + traj_stripped[2] + "," + traj_stripped[3]
+				generated_trajectories.write("%d,%d,%s\n" % (seg_result[j]['obj_id'], seg_result[j]['traj_id'], traj_stripped))
+				x1 = (traj_stripped[2])
+				y1 = (traj_stripped[3])
+
+				add_possibility = random.random()
+				if add_possibility <= rate:
+					next_traj_stripped = seg_result[j + 1]['seg'].split(" '")
+					next_traj_stripped = next_traj_stripped[0]
+					next_traj_stripped = next_traj_stripped.replace("'", '')
+					next_traj_stripped = next_traj_stripped.split()
+					end_timestamp = next_traj_stripped[0] + " " + next_traj_stripped[1]
+					x2 = (next_traj_stripped[2])
+					y2 = (next_traj_stripped[3])
+
+					start_timestamp = datetime.strptime(start_timestamp, '%Y-%m-%d %H:%M:%S')
+					end_timestamp = datetime.strptime(end_timestamp, '%Y-%m-%d %H:%M:%S')
+					new_timestamp = date_between(start_timestamp, end_timestamp)
+					new_timestamp = new_timestamp.strftime('%Y-%m-%d %H:%M:%S')
+					start_timestamp = start_timestamp.strftime('%Y-%m-%d %H:%M:%S')
+					end_timestamp = end_timestamp.strftime('%Y-%m-%d %H:%M:%S')
+					at_instant_qry = "SELECT atInstant(SegmentST(" + "'" +  start_timestamp  + "'" + "," + x1 + "," + y1 + "," + "'" + end_timestamp + "'" + "," + x2 + "," + y2 + "), " + "'" + new_timestamp + "'" + ");" 
+					interpolation = plpy.execute(at_instant_qry)
+
+					interpolation = interpolation.replace("'", '')
+					interpolation = interpolation.split()
+					interpolation = interpolation[0] + " " + interpolation[1] + "," + interpolation[2] + "," + interpolation[3]
+					generated_trajectories.write("%d,%d,%s\n" % (seg_result[j]['obj_id'], seg_result[j]['traj_id'], interpolation))
+
 
 	def given_tstamp_sampling_rate(dataset, generated_trajectories, start_date, end_date, step):
 		start_date = datetime.strptime(start_date, '%Y-%m-%d %H:%M:%S')
@@ -105,7 +142,7 @@ AS $$
 		
 $$ LANGUAGE plpython3u;
 
-SELECT trajectory_transformation('test_dataset', 'time_sr', 0.5, 0.3, True, True, '2008-12-31 19:29:30', '2008-12-31 19:29:42', 3);
-
+SELECT trajectory_transformation('data', 'inc_sr', 0.5, 0.3, True, True, '2008-12-31 19:29:30', '2008-12-31 19:29:42', 3);
+--DROP FUNCTION trajectory_transformation(text, text, float, float, boolean, boolean);
 --SELECT * FROM test_dataset_seg;
 --DROP FUNCTION trajectory_transformation(text, text, float, float, boolean, boolean);

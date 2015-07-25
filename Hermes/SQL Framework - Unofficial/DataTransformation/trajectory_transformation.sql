@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Authors: Kiriakos Velissariou (kir.velissariou@gmail.com)
  */
 
@@ -37,6 +37,14 @@ AS $$
 					generated_trajectories.write("%d,%d,%s\n" % (seg_result[j]['obj_id'], seg_result[j]['traj_id'], traj_stripped))
 		generated_trajectories.close()
 		return
+
+	def increase_sampling_rate(dataset, generated_trajectories, rate):
+		traj_qry = "SELECT * FROM " + dataset + "_traj"
+		traj_result = plpy.execute(traj_qry)
+		for i in range(0, len(traj_result)):
+			seg_qry = "SELECT * FROM " + dataset + "_seg WHERE obj_id =" + str(traj_result[i]['obj_id']) + "AND traj_id =" + str(traj_result[i]['traj_id'])
+			seg_result = plpy.execute(seg_qry)
+			for j in range(0, len(seg_result)):
 
 	def given_tstamp_sampling_rate(dataset, generated_trajectories, start_date, end_date, step):
 		start_date = datetime.strptime(start_date, '%Y-%m-%d %H:%M:%S')
@@ -77,6 +85,8 @@ AS $$
 	generated_trajectories.write('objectID,trajectoryID,t,lon,lat\n')
 	if transf_method == 'dec_sr':
 		decrease_sampling_rate(dataset, generated_trajectories, rate)
+	elif transf_method == 'inc_sr':
+		increase_sampling_rate(dataset, generated_trajectories, rate)
 	elif transf_method == 'time_sr':
 		given_tstamp_sampling_rate(dataset, generated_trajectories, start_date, end_date, step)
 	else:

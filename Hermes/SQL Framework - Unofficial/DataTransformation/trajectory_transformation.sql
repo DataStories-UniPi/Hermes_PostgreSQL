@@ -77,6 +77,7 @@ AS $$
 					at_instant_qry = "SELECT atInstant(SegmentST(" + "'" +  start_timestamp  + "'" + "," + x1 + "," + y1 + "," + "'" + end_timestamp + "'" + "," + x2 + "," + y2 + "), " + "'" + new_timestamp + "'" + ");" 
 					interpolation = plpy.execute(at_instant_qry)
 
+					interpolation = interpolation[0]['atinstant']
 					interpolation = interpolation.replace("'", '')
 					interpolation = interpolation.split()
 					interpolation = interpolation[0] + " " + interpolation[1] + "," + interpolation[2] + "," + interpolation[3]
@@ -142,7 +143,7 @@ AS $$
 		
 $$ LANGUAGE plpython3u;
 
-SELECT trajectory_transformation('data', 'inc_sr', 0.5, 0.3, True, True, '2008-12-31 19:29:30', '2008-12-31 19:29:42', 3);
+SELECT trajectory_transformation('test', 'inc_sr', 0.5, 0.3, True, True, '2008-12-31 19:29:30', '2008-12-31 19:29:42', 3);
 --DROP FUNCTION trajectory_transformation(text, text, float, float, boolean, boolean);
 --SELECT * FROM test_dataset_seg;
 --DROP FUNCTION trajectory_transformation(text, text, float, float, boolean, boolean);

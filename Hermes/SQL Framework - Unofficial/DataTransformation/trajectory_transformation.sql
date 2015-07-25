@@ -53,10 +53,11 @@ AS $$
 				traj_stripped = traj_stripped.replace("'", '')
 				traj_stripped = traj_stripped.split()
 				start_timestamp = traj_stripped[0] + " " + traj_stripped[1]
+				x1 = traj_stripped[2]
+				y1 = traj_stripped[3]
 				traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + traj_stripped[2] + "," + traj_stripped[3]
 				generated_trajectories.write("%d,%d,%s\n" % (seg_result[j]['obj_id'], seg_result[j]['traj_id'], traj_stripped))
-				x1 = (traj_stripped[2])
-				y1 = (traj_stripped[3])
+				
 
 				add_possibility = random.random()
 				if add_possibility <= rate:
@@ -143,7 +144,7 @@ AS $$
 		
 $$ LANGUAGE plpython3u;
 
-SELECT trajectory_transformation('test', 'inc_sr', 0.5, 0.3, True, True, '2008-12-31 19:29:30', '2008-12-31 19:29:42', 3);
+SELECT trajectory_transformation('ei', 'inc_sr', 1, 0.3, True, True, '2008-12-31 19:29:30', '2008-12-31 19:29:42', 3);
 --DROP FUNCTION trajectory_transformation(text, text, float, float, boolean, boolean);
 --SELECT * FROM test_dataset_seg;
 --DROP FUNCTION trajectory_transformation(text, text, float, float, boolean, boolean);

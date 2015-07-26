@@ -18,7 +18,13 @@ CREATE FUNCTION intersects(segmentA SegmentSP, segmentB SegmentSP) RETURNS boole
 	'$libdir/Hermes','intersectsSegmentSP_SegmentSPV1'
 LANGUAGE C STABLE STRICT;
 
-/******************************************************************************/
+/** @brief This function checks if an object contains an another object.
+ *
+ *	@param[in] segment the SegmentSP
+ *	@param[in] point the PointSP
+ *
+ *  @return true or false
+ */
 CREATE FUNCTION contains(segment SegmentSP, point PointSP) RETURNS boolean AS
 	'$libdir/Hermes','containsSegmentSP_PointSPV1'
 LANGUAGE C STABLE STRICT;

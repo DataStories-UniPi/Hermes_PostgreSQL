@@ -4,34 +4,60 @@ In this section we elaborate on the functionality of Hermes in terms of SQL func
 
 # Object methods # {#methods}
 
-The following methods can be used interchangeably either on Segments (e.g. SegmentST) or Trajectory objects, but in each case a different interpolation model is assumed (to be ckecked !!!) @cite vodas2013hermes. According to @cite vodas2013hermes in the case of segments a [uniform linear motion model](https://en.wikipedia.org/wiki/Linear_motion) is assumed and in the case of a trajectory object a non-uniform linear motion with constant non-zero acceleration between two points is used. An assumption is made on the initial speed of the object: the speed of the object at the first point of the trajectory is considered equal to the speed at the second point, in other words, the acceleration at the first segment of the trajectory is zero.
+The following methods can be used interchangeably either on Segments (e.g. SegmentST) or Trajectory objects, but in each case a different interpolation model is assumed @cite vodas2013hermes. According to @cite vodas2013hermes in the case of segments a [uniform linear motion model](https://en.wikipedia.org/wiki/Linear_motion) is assumed and in the case of a trajectory object a non-uniform linear motion with constant non-zero acceleration between two points is used. An assumption is made on the initial speed of the object: the speed of the object at the first point of the trajectory is considered equal to the speed at the second point, in other words, the acceleration at the first segment of the trajectory is zero.
 
-In the following, there is example code segments for the segment model mainly (kai oles oi perigrafes einai antigrafi apo tin diplomatiki tou Mariou)
+In the following, there is example code segments for the segment model mainly
+
+
+@see @ref SegmentSP/Interpolation.sql
+
+@see @ref SegmentST/Interpolation.sql
+@see @ref SegmentST/Properties.sql
+@see @ref SegmentST/RelationalOperators.sql
+
+@see @ref Trajectory/Properties.sql
+@see @ref Trajectory/Interpolation.sql
+@see @ref Trajectory/Properties.sql
+@see @ref Trajectory/RelationalOperators.sql
 
 ## Average speed ## {#methods_average}
 
 This function takes a segment or a trajectory as a parameter and returns the
 average speed.
 
-		SELECT averageSpeed(SegmentST('1970-1-1 0:0:0',0,0,'1970-1-1 0:0:4',0,4));
- 		averagespeed 
-		--------------
-        		    1
-		(1 row)
-
+	SELECT averageSpeed(SegmentST('1970-1-1 0:0:0',0,0,'1970-1-1 0:0:4',0,4));
+ 	averagespeed 
+	--------------
+        	    1
+	(1 row)
+		
+	SELECT averageSpeed(Trajectory(ARRAY[PointST('2008-12-31 19:29:31' :: Timestamp, PointSP(2,2)),PointST('2008-12-31 19:30:30' :: Timestamp, PointSP(3,3))]));
+	    averagespeed    
+	--------------------
+ 	0.0239697213961542
+	(1 row)
+	
+	
 ## At instant ## {#methods_instant}
 
-This function takes a segment and a timestamp as parameters and returns the point where the object was found at the given timestamp.
+This function takes a segment (or a trajectory) and a timestamp as parameters and returns the point where the object was found at the given timestamp.
 
-		SELECT atInstant(SegmentST('1970-1-1 0:0:0',0,0,'1970-1-1 	0:0:4',0,4),'1970-1-1 0:0:2');
-       atinstant         
-		---------------------------
- 		'1970-01-01 00:00:02' 0 2
-		(1 row) 
+	SELECT atInstant(SegmentST('1970-1-1 0:0:0',0,0,'1970-1-1 	0:0:4',0,4),'1970-1-1 0:0:2');
+      atinstant         
+	---------------------------
+ 	'1970-01-01 00:00:02' 0 2
+	(1 row) 
+		
+	SELECT atinstant(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(2,2)),PointST('2008-12-31 19:30:30' :: Timestamp, PointSP(3,3))]),'2008-12-31 19:30:00');
+    atinstant         
+	---------------------------
+ 	'2008-12-31 19:30:00' 2 2
+	(1 row)
+		
 		
 ## At point ## {#methods_atpoint}
 
-This function takes a segment and a point as parameters and returns the timestamp at which the object was found at the given point. The point has to be on the segment, otherwise the function returns NULL.
+This function takes a segment (or a trajectory) and a point as parameters and returns the timestamp at which the object was found at the given point. The point has to be on the segment, otherwise the function returns NULL.
 
 	SELECT atPoint(SegmentST('1970-1-1 0:0:0',0,0,'1970-1-1 0:0:4',0,4),PointSP(0,0));
           atpoint          
@@ -39,24 +65,47 @@ This function takes a segment and a point as parameters and returns the timestam
  	'1970-01-01 00:00:00' 0 0
 	(1 row)
 	
+	SELECT atPoint(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:30' :: Timestamp, PointSP(3,3))]),PointSP(2,2));
+          atpoint          
+	---------------------------
+ 	'2008-12-31 19:30:01' 2 2
+	(1 row)
+
+	
 ## At period ## {#methods_atperiod}
 
-This function takes a segment and a period as parameters and returns the part of the segment that corresponds to the given period. The segment might have only one timestamp in common with the period so in that case the function returns a point instead of a segment. This is why the function returns three columns (n, s, p) where n is the number of common points, s is the segment within the period (if n is 2) and p is the point that the segment was within the period (if n is 1).
+This function takes a segment (or a trajectory) and a period as parameters and returns the part of the segment that corresponds to the given period. 
 
 	SELECT n,s,p FROM atPeriod(SegmentST('1970-1-1 0:0:0',0,0,'1970-1-1 4:0:0',4,4),Period('1970-1-1 1:0:0','1970-1-1 2:0:0'));
  	n |                          s                          | p 
 	---+-----------------------------------------------------+---
  	2 | '1970-01-01 01:00:00' 1 1 '1970-01-01 02:00:00' 2 2 | 
 	(1 row)
+	
+The segment might have only one timestamp in common with the period so in that case the function returns a point instead of a segment. This is why the function returns three columns (n, s, p) where n is the number of common points, s is the segment within the period (if n is 2) and p is the point that the segment was within the period (if n is 1).
+	
+	SELECT * FROM atPeriod(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:30' :: Timestamp, PointSP(3,3))]),Period('2008-12-31 19:29:32','2008-12-31 19:30:0'));
+                      atperiod                       
+	-----------------------------------------------------
+ 	'2008-12-31 19:29:32' 1 1,'2008-12-31 19:30:00' 2 2
+	(1 row)
+
+In the case of the trajectory also a trajectory is returned. 
 
 ## At box ## {#methods_atbox}
 	
-This function takes a segment and a box as parameters and returns the part of the segment that resides within the box. The n, s, and p have the same meaning as in @ref methods_atperiod.
+This function takes a segment and a box as parameters and returns the part of the segment that resides within the box. The parameters have the same meaning as in @ref methods_atperiod.
 
 	SELECT n,s,p FROM atBox(SegmentST('1970-1-1 0:0:0',0,0,'1970-1-1 4:0:0',4,4),BoxSP(1,1,2,2));
  	n |                          s                          | p 
 	---+-----------------------------------------------------+---
  	2 | '1970-01-01 01:00:00' 1 1 '1970-01-01 02:00:00' 2 2 | 
+	(1 row)
+	
+	SELECT * FROM atBox(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:30' :: Timestamp, PointSP(3,3))]),BoxSP(1,1,2,2));
+                         tr                          
+	-----------------------------------------------------
+ 	'2008-12-31 19:29:32' 1 1,'2008-12-31 19:30:01' 2 2
 	(1 row)
 
 ## Intersection ## {#methods_intersection}
@@ -71,7 +120,7 @@ This function takes a spatial segment and a spatial box as parameters and return
 	
 ## Contain ## {#methods_contains}
 
-This function check if an object contains an another object.
+This function checks if an object contains an another object.
 
 	postgres=# SELECT Contains(BoxSP(2337709, 4163887,3228259, 4721671),PointSP(1,1));
  	contains 
@@ -79,10 +128,102 @@ This function check if an object contains an another object.
  	f
 	(1 row)
 	
+## Duration ## {#methods_duration}
+
+This function returns the duration of a trajectory.
+
+	SELECT duration(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:30' :: Timestamp, PointSP(3,3))]));
+	 duration 
+	----------
+ 	00:00:58
+	(1 row)	
+
+## Length ## {#methods_length}
+
+This function returns the length of a trajectory.
+
+	SELECT length(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:30' :: Timestamp, PointSP(3,3))]));
+      length      
+	------------------
+ 	2.82842712474619
+	(1 row)
+
+## Displacement ## {#methods_displacement}
+
+This function returns the displacement of a trajectory. (Ποια η διαφορά με το length οεο??)
+
+	SELECT displacement(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:30' :: Timestamp, PointSP(3,3))]));
+   	displacement   
+	------------------
+ 	2.82842712474619
+	(1 row)
+
+## Centroid ## {#methods_centroid}
+
+This function returns the centroid of a trajectory.
+
+	SELECT centroid(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:30' :: Timestamp, PointSP(3,3))]));
+         centroid          
+	---------------------------
+ 	'2008-12-31 19:30:01' 2 2
+	(1 row)
+
+## Masscenter ## {#methods_masscenter}
+
+This function returns the masscenter of a trajectory. (Ποια η διαφορά με το centroid ???)
+
+	SELECT masscenter(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:30' :: Timestamp, PointSP(3,3))]));
+ 	masscenter 
+	------------
+ 	2 2
+	(1 row)
+
+
+## Gyradius ## {#methods_gyradius}
+
+This function returns the [radius of gyration](https://en.wikipedia.org/wiki/Radius_of_gyration) of a trajectory. Δεν έχω ιδέα τί είναι !!!
 	
+	SELECT gyradius(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:30' :: Timestamp, PointSP(3,3))]));
+    gyradius     
+	-----------------
+ 	1.4142135623731
+	(1 row)
+
+
+## anglexxavg ## 
+
+This function returns the average direction of a trajectory.
+
+	SELECT anglexxavg(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:30' :: Timestamp, PointSP(3,3))]));
+    anglexxavg     
+	-------------------
+ 	0.785398163397448
+	(1 row)
+
+
+## anglexx ##
+
+Ποια η διαφορά με την πιο πάνω ;;;
+
+	SELECT anglexx(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:30' :: Timestamp, PointSP(3,3))]));
+      anglexx      
+	-------------------
+ 	0.785398163397448
+	(1 row)
+
+## normalizedsamplingrate ##
+
+Δεν έχω ιδέα τί είναι !!!
+
+	SELECT normalizedSamplingRate(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:30' :: Timestamp, PointSP(3,3))]));
+ 	normalizedsamplingrate 
+	------------------------
+     0.0344827586206897
+	(1 row)
+
 # Functions & Operators # {#operators}
 
-In the following table the basic operators are presented. The operators rely on the methods of the previous section in order to be implemented.(kai oles oi perigrafes einai antigrafi apo tin diplomatiki tou Mariou)
+In the following table the basic operators are presented. The operators rely on the methods of the previous section in order to be implemented.
 
 Symbol  Operation                 | Returns | Left Argument | Right Argument
 :---------------:                 | :-----: | :-----------: | :------------:
@@ -521,9 +662,11 @@ We simulate cross operator by appropriately combining enter and leave operators.
 	    146 | '2009-01-02 02:37:03' 2091776 3898443 | '2009-01-02 13:48:29' 2091505 3898443
 	    159 | '2009-01-01 17:38:43' 2094036 3898443 | '2009-01-01 18:19:15' 2096228 3906319
 	    
-# Advanced queries # {#queries_cross_tab}
+# Advanced queries # {#queries_advanecd}
 
 Cross-tab queries are, in general, more complex and more expensive than the previous ones. Nevertheless, they are very useful for analysis purposes since they provide deeper insight into the dataset under examination.
+
+## Grid partinioning ## {#queries_grid}
 
 ## Perform equi-sized homogeneous partitioning in space and in time (e.g. a 10x10 grid in space and a 1-day interval in time) and count the number of ships per cell ##
 
@@ -596,6 +739,8 @@ In detail, we first create all 300 spatio-temporal cells, according to the follo
 @see [PostgreSQL date/time functions](http://www.postgresql.org/docs/9.4/static/functions-datetime.html)
 @see [PostgreSQL set returning functions](http://www.postgresql.org/docs/9.4/static/functions-srf.html)
 @see [PostgreSQL window functions](http://www.postgresql.org/docs/9.4/static/functions-window.html)
+
+## Origin-destination matrix ## {#queries_od_matrix}
     
 ## Find the Origin-Destination Matrix between 4 large areas of the Greek territory. ##
 
@@ -659,5 +804,28 @@ The results of the query are shown below:
  	Piraeus         | North Aegean    |         3
 	(10 rows)
 	
-
 	
+##  Trajectory Buffer Query (TBQ) ## {#queries_tbq}
+
+TBQ takes as as input a trajectory and a set of trajectories and returns a voting vector. 
+Each element of this vector corresponds to the voting that a specific element has received, for example the ith element of the voting vector correspond to the voting of the ith segment. 
+More specifically, it takes as input a trajectory, calculates its trajectory buffer (i.e. its spatial enlargement in space), returns the segments of all other trajectories that overlap with it and calculates its voting.
+
+	﻿SET enable_seqscan = off;--Forcing the system to use the index. We need this because TBQ is index based
+
+	SELECT S2T_TemporalBufferSize('00:00:00'); --Setting the Temporal Buffer Size (00:00:00 since we use the trapezoidal distance function)
+	SELECT S2T_SpatialBufferSize(10000); --Setting the Spatial Buffer Size
+	SELECT S2T_Sigma(10000); --Setting Sigma. Sigma shows how fast the function of the "voting influence” decreases with distance.
+	SELECT S2T_VotingMethod('Trapezoidal'); --Setting the distance function
+
+	SELECT 1
+	FROM ONLY imis_seg
+	WHERE seg &&& 
+	(
+		SELECT trajectory_agg(seg ORDER BY getTi(seg) ASC) FROM imis_seg WHERE (obj_id, traj_id) = (215171000, 2)--i, j are the object_id and trajectory_id respectively of the input trajectory. 
+	);
+
+	SELECT array_agg(normalized_voting ORDER BY ordinality ASC)
+	FROM S2T_VotingSignal() WITH ORDINALITY;
+	
+@see http://infolab.cs.unipi.gr/technical_reports/TR-2013-02.pdf

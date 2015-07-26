@@ -28,7 +28,13 @@ CREATE OPERATOR && (
 	RIGHTARG = SegmentST
 );
 
-/******************************************************************************/
+/** @brief This function checks if an object contains an another object.
+ *
+ *	@param[in] segment the segment
+ *	@param[in] point the PointST
+ *
+ *  @return true if the segment is contained
+ */
 CREATE FUNCTION contains(segment SegmentST, point PointST) RETURNS boolean AS
 	'$libdir/Hermes','containsSegmentST_PointSTV1'
 LANGUAGE C STABLE STRICT;

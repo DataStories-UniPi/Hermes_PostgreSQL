@@ -179,6 +179,25 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql STRICT;
 
+/** @brief This function created the necessary tables that will
+ * 	host the dateset
+ *
+ *	@param[in] dataset_name the short name of the dataset
+ *	@param[in] dataset_long_name the description fo the dataset
+ *	@param[in] dataset_LRP is a PointLL column that is the reference point for coordinate transformation
+ *	@param[in] dataset_SRID is an integer column that contains the EPSG code of the projected reference system in which the dataset is stored in Hermes
+ *	@param[in] dataset_segment_storage a boolean value that shows whether the segment storage is in use
+ *	@param[in] dataset_trajectory_storage a boolean value shows whether the trajectory storage is in use
+ *	@param[in] dataset_subtrajectory_storage 
+ *	@param[in] dataset_semantics_enabled 
+ *	@param[in] dataset_partitioning_t_range is not currently in use
+ *	@param[in] dataset_partitioning_x_range is not currently in use
+ *	@param[in] dataset_partitioning_y_range is not currently in use
+ *	
+ *	@return if the function was succesfull
+ *
+ *	@see @ref database_hdataset
+ */
 CREATE FUNCTION HDatasetsRegister(
 	dataset_name text,
 	dataset_name_long text,

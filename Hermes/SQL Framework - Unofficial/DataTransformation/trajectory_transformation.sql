@@ -19,7 +19,7 @@ AS $$
 		"""
 		delta = end - start
 		int_delta = (delta.days * 24 * 60 * 60) + delta.seconds
-		random_second = randrange(int_delta)
+		random_second = randrange(1, int_delta)
 		return start + timedelta(seconds=random_second)
 
 #-------------------------transformation functions----------------------------------
@@ -38,7 +38,6 @@ AS $$
 					traj_stripped = traj_stripped.split()
 					traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + traj_stripped[2] + "," + traj_stripped[3]
 					generated_trajectories.write("%d,%d,%s\n" % (seg_result[j]['obj_id'], seg_result[j]['traj_id'], traj_stripped))
-		generated_trajectories.close()
 		return
 
 	def increase_sampling_rate(dataset, generated_trajectories, rate):
@@ -84,6 +83,14 @@ AS $$
 					interpolation = interpolation[0] + " " + interpolation[1] + "," + interpolation[2] + "," + interpolation[3]
 					generated_trajectories.write("%d,%d,%s\n" % (seg_result[j]['obj_id'], seg_result[j]['traj_id'], interpolation))
 
+			traj_stripped = seg_result[len(seg_result) - 1]['seg'].split(" '")
+			traj_stripped = traj_stripped[1]
+			traj_stripped = traj_stripped.replace("'", '')
+			traj_stripped = traj_stripped.split()
+			start_timestamp = traj_stripped[0] + " " + traj_stripped[1]
+			traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + traj_stripped[2] + "," + traj_stripped[3]
+			generated_trajectories.write("%d,%d,%s\n" % (seg_result[j]['obj_id'], seg_result[j]['traj_id'], traj_stripped))
+
 
 	def given_tstamp_sampling_rate(dataset, generated_trajectories, start_date, end_date, step):
 		start_date = datetime.strptime(start_date, '%Y-%m-%d %H:%M:%S')
@@ -113,8 +120,6 @@ AS $$
 					j += 1
 				else:
 					date_searching = date_searching + timedelta(seconds = step)
-
-		generated_trajectories.close()
 		return
 
 
@@ -140,6 +145,7 @@ AS $$
 	if not csv_file:
 		os.remove('new_traj.txt')
 		
+	generated_trajectories.close()
 	return 1
 		
 $$ LANGUAGE plpython3u;

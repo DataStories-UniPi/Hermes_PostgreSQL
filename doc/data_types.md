@@ -29,7 +29,6 @@ Spatio-temporal | Trajectory (PointST[])
 
 According to @cite vodas2013hermes temporal data types are those types that model only the temporal dimension of Mobility. The main type for temporal data type is introduced by PostrgreSQL and Hermes encapsulates it in its data model. An example of a timestamp is ‘2012-09-20 08:05:46’. Another encapsulated data type is the Interval which is used to store information like ‘1 second’ or ‘05:30:5’ (which means 5 hours 30 minutes and 5 seconds) hence contains a temporal quantity. One potential limitation of interval is that on cases where it was produced from a subtraction of two timestamps it won’t keep the original timestamps from which it was computed. That limitation led to the development of some custom temporal types in Hermes @cite vodas2013hermes.
 
-
 The user must have in his mind for using the timestamp data type that PostgreSQL can cast a string to any datatype. For example:
 
 	postgres=# SELECT '2008-12-31 19:29:30' :: Timestamp ;
@@ -44,7 +43,6 @@ The user must have in his mind for using the timestamp data type that PostgreSQL
  	1 mon
 	(1 row)
 	
-
 A timestamp is given as a string and is cast using “::” to the timestamp data type. This is also possible for the interval data type. Finally Hermes introduced the @ref Period and @ref RangeT temporal data type.
 
 	postgres=# SELECT Period('2008-12-31 23:00:00', '2009-01-01 01:00:00');
@@ -89,6 +87,18 @@ The previous data types do not have a surface. In contrast, the @ref BoxSP data 
 
 Some examples of using the saptial data types are shown below:
 
+	postgres=# SELECT PointSP(2247569,4792246);
+     		pointsp     
+	-----------------
+ 	2247569 4792246
+	(1 row)
+	
+	postgres=# SELECT '2247569 4792246'::pointsp;
+     		pointsp     
+	-----------------
+ 	2247569 4792246
+	(1 row)
+
 	postgres=# SELECT BoxSP(2337709, 4163887,3228259, 4721671) ;
 			boxsp              
 	---------------------------------
@@ -101,6 +111,12 @@ Some examples of using the saptial data types are shown below:
  	2337709 4163887 3228259 4721671
 	(1 row)
 	
+	postgres=# SELECT '2247569 4792246 2246943 4782504'::segmentsp;
+            segmentsp            
+	---------------------------------
+ 	2247569 4792246 2246943 4782504
+	(1 row)
+
 	postgres=# SELECT BoxSP(PointSP(2337709, 4163887),PointSP(3228259, 4721671)) ;
               boxsp              
 	---------------------------------
@@ -168,7 +184,6 @@ Some examples of using the spatio-temporal data types are shown below:
 	-----------------------------------------------------------------------------
  	'2008-12-31 23:00:00' '2009-01-01 01:00:00' 2337709 4163887 3228259 4721671
 	(1 row)
-	
 	
 	postgres=# SELECT SegmentST('2008-12-31 19:29:30' :: Timestamp,1,1,'2008-12-31 19:29:31' :: Timestamp,2,2);
                       segmentst                      
@@ -303,8 +318,3 @@ Alternatively the transformation of Geographic to/from Topocentric conversion (E
 	-------------------------------
  	-240909.991095 -323271.482667
 	(1 row)
-	
-	
-
-
-

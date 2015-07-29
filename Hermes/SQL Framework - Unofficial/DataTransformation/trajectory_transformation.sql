@@ -22,6 +22,22 @@ AS $$
 		random_second = randrange(1, int_delta)
 		return start + timedelta(seconds=random_second)
 
+	def xy_lanlot(x, y, srid):
+		"Returns the given points converted from the given srid to 4326"
+
+		def helper_xy_lanlot(x, y, srid):
+			qry = "SELECT ST_AsText(ST_Transform(ST_GeomFromText('POINT(" + x + " " + y + ")'," + srid + "), 4326))"
+			a = plpy.execute(qry)
+			return a
+
+		a = helper_xy_lanlot(x, y, srid)
+		result = a[0]['st_astext']
+		result = result.strip('POINT')
+		result = result.strip('(')
+		result = result.strip(')')
+		return result
+
+
 #-------------------------transformation functions----------------------------------
 	def decrease_sampling_rate(dataset, generated_trajectories, rate):
 		traj_qry = "SELECT * FROM " + dataset + "_traj"
@@ -36,8 +52,20 @@ AS $$
 					traj_stripped = traj_stripped[0]
 					traj_stripped = traj_stripped.replace("'", '')
 					traj_stripped = traj_stripped.split()
-					traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + traj_stripped[2] + "," + traj_stripped[3]
+					coords = xy_lanlot(traj_stripped[2], traj_stripped[3], "3857")
+					coords = coords.split(' ')
+					traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + coords[0] + "," + coords[1]
 					generated_trajectories.write("%d,%d,%s\n" % (seg_result[j]['obj_id'], seg_result[j]['traj_id'], traj_stripped))
+
+			traj_stripped = seg_result[len(seg_result) - 1]['seg'].split(" '")
+			traj_stripped = traj_stripped[1]
+			traj_stripped = traj_stripped.replace("'", '')
+			traj_stripped = traj_stripped.split()
+			coords = xy_lanlot(traj_stripped[2], traj_stripped[3], "3857")
+			coords = coords.split(' ')
+			traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + coords[0] + "," + coords[1]
+			generated_trajectories.write("%d,%d,%s\n" % (seg_result[j]['obj_id'], seg_result[j]['traj_id'], traj_stripped))
+
 		return
 
 	def increase_sampling_rate(dataset, generated_trajectories, rate):
@@ -136,21 +164,23 @@ AS $$
 	else:
 		pass
 
-	#if save == True:
-	#	plpy.execute("SELECT HLoader('transformed', 'Tranformed trajectories')")
-	#	plpy.execute("SELECT HLoaderCSV_II('transformed', 'new_traj.txt')")
-	#	plpy.execute("SELECT HDatasetsOfflineStatistics('transformed')")
-	#	plpy.execute("CREATE INDEX ON transformed_seg USING gist (seg) WITH (FILLFACTOR = 100)")
+	generated_trajectories.close()
+
+	if save == True:
+		plpy.execute("SELECT HLoader('transformed', 'Tranformed trajectories')")
+		plpy.execute("SELECT HLoaderCSV_II('transformed', 'new_traj.txt')")
+		plpy.execute("SELECT HDatasetsOfflineStatistics('transformed')")
+		plpy.execute("CREATE INDEX ON transformed_seg USING gist (seg) WITH (FILLFACTOR = 100)")
 
 	if not csv_file:
 		os.remove('new_traj.txt')
 		
-	generated_trajectories.close()
 	return 1
 		
 $$ LANGUAGE plpython3u;
 
-SELECT trajectory_transformation('ei', 'inc_sr', 1, 0.3, True, True, '2008-12-31 19:29:30', '2008-12-31 19:29:42', 3);
+SELECT trajectory_transformation('lol', 'dec_sr', 0.9, 0.3, True, False, '2008-12-31 19:29:30', '2008-12-31 19:29:42', 3);
 --DROP FUNCTION trajectory_transformation(text, text, float, float, boolean, boolean);
 --SELECT * FROM test_dataset_seg;
+--select * from transformed_seg;
 --DROP FUNCTION trajectory_transformation(text, text, float, float, boolean, boolean);

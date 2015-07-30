@@ -74,22 +74,24 @@ AS $$
 		for i in range(0, len(traj_result)):
 			seg_qry = "SELECT * FROM " + dataset + "_seg WHERE obj_id =" + str(traj_result[i]['obj_id']) + "AND traj_id =" + str(traj_result[i]['traj_id'])
 			seg_result = plpy.execute(seg_qry)
-			for j in range(0, len(seg_result) - 1):
+			for j in range(0, len(seg_result)):
 				traj_stripped = seg_result[j]['seg'].split(" '")
 				traj_stripped = traj_stripped[0]
 				traj_stripped = traj_stripped.replace("'", '')
 				traj_stripped = traj_stripped.split()
+				coords = xy_lanlot(traj_stripped[2], traj_stripped[3], "3857")
+				coords = coords.split(' ')
 				start_timestamp = traj_stripped[0] + " " + traj_stripped[1]
 				x1 = traj_stripped[2]
 				y1 = traj_stripped[3]
-				traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + traj_stripped[2] + "," + traj_stripped[3]
+				traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + coords[0] + "," + coords[1]
 				generated_trajectories.write("%d,%d,%s\n" % (seg_result[j]['obj_id'], seg_result[j]['traj_id'], traj_stripped))
 				
 
 				add_possibility = random.random()
 				if add_possibility <= rate:
-					next_traj_stripped = seg_result[j + 1]['seg'].split(" '")
-					next_traj_stripped = next_traj_stripped[0]
+					next_traj_stripped = seg_result[j]['seg'].split(" '")
+					next_traj_stripped = next_traj_stripped[1]
 					next_traj_stripped = next_traj_stripped.replace("'", '')
 					next_traj_stripped = next_traj_stripped.split()
 					end_timestamp = next_traj_stripped[0] + " " + next_traj_stripped[1]
@@ -108,15 +110,19 @@ AS $$
 					interpolation = interpolation[0]['atinstant']
 					interpolation = interpolation.replace("'", '')
 					interpolation = interpolation.split()
-					interpolation = interpolation[0] + " " + interpolation[1] + "," + interpolation[2] + "," + interpolation[3]
+					coords = xy_lanlot(interpolation[2], interpolation[3], "3857")
+					coords = coords.split(' ')
+					interpolation = interpolation[0] + " " + interpolation[1] + "," + coords[0] + "," + coords[1]
 					generated_trajectories.write("%d,%d,%s\n" % (seg_result[j]['obj_id'], seg_result[j]['traj_id'], interpolation))
 
 			traj_stripped = seg_result[len(seg_result) - 1]['seg'].split(" '")
 			traj_stripped = traj_stripped[1]
 			traj_stripped = traj_stripped.replace("'", '')
 			traj_stripped = traj_stripped.split()
+			coords = xy_lanlot(traj_stripped[2], traj_stripped[3], "3857")
+			coords = coords.split(' ')
 			start_timestamp = traj_stripped[0] + " " + traj_stripped[1]
-			traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + traj_stripped[2] + "," + traj_stripped[3]
+			traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + coords[0] + "," + coords[1]
 			generated_trajectories.write("%d,%d,%s\n" % (seg_result[j]['obj_id'], seg_result[j]['traj_id'], traj_stripped))
 
 
@@ -140,7 +146,9 @@ AS $$
 				point_date = datetime.strptime(point_date, '%Y-%m-%d %H:%M:%S')
 
 				if point_date == date_searching:
-					point_to_write = traj_stripped	[0] + " " + traj_stripped[1] + "," + traj_stripped[2] + "," + traj_stripped[3]
+					coords = xy_lanlot(traj_stripped[2], traj_stripped[3], "3857")
+					coords = coords.split(' ')
+					point_to_write = traj_stripped	[0] + " " + traj_stripped[1] + "," + coords[0] + "," + coords[1]
 					generated_trajectories.write("%d,%d,%s\n" % (seg_result[j]['obj_id'], seg_result[j]['traj_id'], point_to_write))
 					j += 1
 					date_searching = date_searching + timedelta(seconds = step)
@@ -179,7 +187,7 @@ AS $$
 		
 $$ LANGUAGE plpython3u;
 
-SELECT trajectory_transformation('lol', 'dec_sr', 0.9, 0.3, True, False, '2008-12-31 19:29:30', '2008-12-31 19:29:42', 3);
+SELECT trajectory_transformation('interval', 'inc_sr', 0.5, 0.3, True, False, '2008-12-31 19:29:30', '2008-12-31 19:29:42', 3);
 --DROP FUNCTION trajectory_transformation(text, text, float, float, boolean, boolean);
 --SELECT * FROM test_dataset_seg;
 --select * from transformed_seg;

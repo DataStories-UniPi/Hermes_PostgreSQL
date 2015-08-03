@@ -1,6 +1,6 @@
 # Documentantion  {#documentation}
 
-The documentation of the Hermes MOD was done using [Doxygen](http://www.doxygen.nl/). Doxygen is the de facto tool for generating documentation for many programming languages and this page we describe the shortcomings of the currents documentations and how to create the documentation using the doxygen.
+The documentation of the Hermes MOD was done using [Doxygen](http://www.doxygen.nl/). Doxygen is the de facto tool for generating documentation for many programming languages and this page describes the shortcomings of the currents documentations and how to create the documentation using the doxygen.
 
 # Creating the documentation  
 
@@ -14,7 +14,7 @@ which changes the current directory to the Hermes MOD source. Generally someone 
 
 	doxygen hermes.doxyfile
 	
-and the documentation is generated in the doc/bin/ folder. The html folder contains the files needed by a web server and the only need to be move to a public web server and the latex file contains the file needed for a pdf to be produced. The easier way of doing it is by calling the make command and the refman.pdf is created containg the documentation.
+and the documentation is generated in the doc/bin/ folder. The html folder contains the files needed by a web server and the only that remains to be done is move them to a public web server. The latex folder contains the files needed for a pdf to be produced. The easier way of doing it is by calling the make command and the refman.pdf is created containing the documentation.
 
 # Known shortcoming of doxygen
 

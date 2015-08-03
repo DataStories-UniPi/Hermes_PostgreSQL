@@ -3,7 +3,7 @@
  *	@author Marios Vodas (mvodas@gmail.com).
  *	@brief The implementantion of TRACLUS algorithm.
  *
- *	@details This function is documented in the @ref Distance.h
+ *	@details This function is documented in the @ref Traclus/Distance.h
  *
  */
 

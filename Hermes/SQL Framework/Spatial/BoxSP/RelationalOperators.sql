@@ -13,11 +13,24 @@ CREATE FUNCTION intersects(boxA BoxSP, boxB BoxSP) RETURNS boolean AS
 	'$libdir/Hermes','intersectsBoxSP_BoxSPV1'
 LANGUAGE C IMMUTABLE STRICT;
 
-/******************************************************************************/
+/** @brief This function checks if an object contains an another object.
+ *
+ *	@param[in] box the BoxSP
+ *	@param[in] point the PointST
+ *
+ *  @return true or false
+ */
 CREATE FUNCTION contains(box BoxSP, point PointSP) RETURNS boolean AS
 	'$libdir/Hermes','containsBoxSP_PointSPV1'
 LANGUAGE C IMMUTABLE STRICT;
 
+/** @brief This function checks if an object contains an another object.
+ *
+ *	@param[in] boxA the BoxSP
+ *	@param[in] boxB the BoxSP
+ *
+ *  @return true or false
+ */
 CREATE FUNCTION contains(boxA BoxSP, boxB BoxSP) RETURNS boolean AS
 	'$libdir/Hermes','containsBoxSP_BoxSPV1'
 LANGUAGE C IMMUTABLE STRICT;

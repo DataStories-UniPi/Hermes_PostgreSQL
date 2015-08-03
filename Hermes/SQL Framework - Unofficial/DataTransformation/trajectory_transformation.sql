@@ -1,8 +1,22 @@
-﻿/*
- * Authors: Kiriakos Velissariou (kir.velissariou@gmail.com)
+﻿/**
+ * @file
+ * @author Kiriakos Velissariou (kir.velissariou@gmail.com).
+ * @brief The file implements six different trajectory transformation functions
+ * 
+ *
  */
 
-
+/** @brief This function performs trajectory transformation with decreased sampling rate to the selected dataset
+ *
+ *	@param[in] dataset Name of the dataset
+ *	@param[in] rate Percentage of points to be deleted, 0 ≤ rate ≤ 1
+ *	@param[in] save Boolean which indicates whether the new dataset will be saved in Hermes
+ *	@param[in] new_dataset_name The name with which the transformed dataset will be stored in Hermes
+ *	@param[in] csv_file Boolean which indicates whether the new dataset will exported in a cvs format (traj_new.txt)
+ *
+ *  @return Interger 1 to indicate succesfull completion
+ * 
+ */
 CREATE OR REPLACE FUNCTION trajectory_transformation_dec_sr (dataset text, rate float, save boolean DEFAULT True, new_dataset_name text DEFAULT 'transformed', csv_file boolean DEFAULT True)
 RETURNS integer
 AS $$
@@ -81,6 +95,17 @@ AS $$
 	return 1
 $$ LANGUAGE plpython3u;
 
+/** @brief This function performs trajectory transformation with increased sampling rate to the selected dataset
+ *
+ *	@param[in] dataset Name of the dataset
+ *	@param[in] rate Percentage of points to be added, 0 ≤ rate ≤ 1
+ *	@param[in] save Boolean which indicates whether the new dataset will be saved in Hermes
+ *	@param[in] new_dataset_name The name with which the transformed dataset will be stored in Hermes
+ *	@param[in] csv_file Boolean which indicates whether the new dataset will exported in a cvs format (traj_new.txt)
+ *
+ *  @return Interger 1 to indicate succesfull completion
+ * 
+ */
 CREATE OR REPLACE FUNCTION trajectory_transformation_inc_sr (dataset text, rate float, save boolean DEFAULT True, new_dataset_name text DEFAULT 'transformed', csv_file boolean DEFAULT True)
 RETURNS integer
 AS $$
@@ -190,6 +215,20 @@ AS $$
 	return 1
 $$ LANGUAGE plpython3u;	
 
+
+/** @brief This function performs trajectory transformation within a specified time period, with a specified step
+ *
+ *	@param[in] dataset Name of the dataset
+ *	@param[in] start_date Initial timestamp
+ *	@param[in] end_date Last timestamp
+ *	@param[in] step The step to be used in the search measured in seconds
+ *	@param[in] save Boolean which indicates whether the new dataset will be saved in Hermes
+ *	@param[in] new_dataset_name The name with which the transformed dataset will be stored in Hermes
+ *	@param[in] csv_file Boolean which indicates whether the new dataset will exported in a cvs format (traj_new.txt)
+ *
+ *  @return Interger 1 to indicate succesfull completion
+ * 
+ */
 CREATE OR REPLACE FUNCTION trajectory_transformation_time_sr (dataset text, start_date text, end_date text, step integer,save boolean DEFAULT True, new_dataset_name text DEFAULT 'transformed', csv_file boolean DEFAULT True)
 RETURNS integer
 AS $$
@@ -273,6 +312,18 @@ AS $$
 $$ LANGUAGE plpython3u;	
 
 
+/** @brief This function performs trajectory transformation by adding noise points (outliers) to the initial trajectory
+ *
+ *	@param[in] dataset Name of the dataset
+ *	@param[in] rate Percentage of points to be added, 0 ≤ rate ≤ 1
+ *	@param[in] distance Float which indicates the maximum distance of the outlier from the trajectory
+ *	@param[in] save Boolean which indicates whether the new dataset will be saved in Hermes
+ *	@param[in] new_dataset_name The name with which the transformed dataset will be stored in Hermes
+ *	@param[in] csv_file Boolean which indicates whether the new dataset will exported in a cvs format (traj_new.txt)
+ *
+ *  @return Interger 1 to indicate succesfull completion
+ * 
+ */
 CREATE OR REPLACE FUNCTION trajectory_transformation_add_noise (dataset text, rate float, distance float, save boolean DEFAULT True, new_dataset_name text DEFAULT 'transformed', csv_file boolean DEFAULT True)
 RETURNS integer
 AS $$
@@ -392,6 +443,18 @@ AS $$
 	return 1
 $$ LANGUAGE plpython3u;	
 
+/** @brief This function performs trajectory transformation by shifting randomly rate % points
+ *
+ *	@param[in] dataset Name of the dataset
+ *	@param[in] rate Percentage of points to be shifted, 0 ≤ rate ≤ 1
+ *	@param[in] distance Float which indicates the maximum distance of the shifted point from the initial one
+ *	@param[in] save Boolean which indicates whether the new dataset will be saved in Hermes
+ *	@param[in] new_dataset_name The name with which the transformed dataset will be stored in Hermes
+ *	@param[in] csv_file Boolean which indicates whether the new dataset will exported in a cvs format (traj_new.txt)
+ *
+ *  @return Interger 1 to indicate succesfull completion
+ * 
+ */
 CREATE OR REPLACE FUNCTION trajectory_transformation_random_shift (dataset text, rate float, distance float, save boolean DEFAULT True, new_dataset_name text DEFAULT 'transformed', csv_file boolean DEFAULT True)
 RETURNS integer
 AS $$
@@ -479,7 +542,18 @@ AS $$
 	return 1
 $$ LANGUAGE plpython3u;	
 
-
+/** @brief This function performs trajectory transformation by shifting, in a synced manner, rate % points
+ *
+ *	@param[in] dataset Name of the dataset
+ *	@param[in] rate Percentage of points to be shifted, 0 ≤ rate ≤ 1
+ *	@param[in] distance Float which indicates the maximum distance of the shifted points from the initial ones
+ *	@param[in] save Boolean which indicates whether the new dataset will be saved in Hermes
+ *	@param[in] new_dataset_name The name with which the transformed dataset will be stored in Hermes
+ *	@param[in] csv_file Boolean which indicates whether the new dataset will exported in a cvs format (traj_new.txt)
+ *
+ *  @return Interger 1 to indicate succesfull completion
+ * 
+ */
 CREATE OR REPLACE FUNCTION trajectory_transformation_synced_shift (dataset text, rate float, distance float, save boolean DEFAULT True, new_dataset_name text DEFAULT 'transformed', csv_file boolean DEFAULT True)
 RETURNS integer
 AS $$
@@ -566,11 +640,8 @@ AS $$
 		
 	return 1
 $$ LANGUAGE plpython3u;	
--------------------------Tests--------------------------------------------------------------
 
---SELECT trajectory_transformation_dec_sr('lol', 0.5, True, 'lllllll', True);
---SELECT trajectory_transformation_inc_sr('lol', 0.5, True, 'ddddddddd', True);
---SELECT trajectory_transformation_time_sr('lol','2008-12-31 19:29:30', '2008-12-31 19:29:42', 20, True, 'aaaaanew', True); 
---SELECT trajectory_transformation_add_noise('interval', 0.5, 5000000, True, 'noisy', True);
-SELECT trajectory_transformation_synced_shift('gmaps', 1, 1000, True, 'synced', True);
+
+-------------------------Tests--------------------------------------------------------------
+--SELECT trajectory_transformation_synced_shift('gmaps', 1, 1000, True, 'synced', True);
 

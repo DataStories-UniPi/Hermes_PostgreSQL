@@ -85,10 +85,10 @@ AS $$
 	generated_trajectories.close()
 
 	if save:
-		plpy.execute("SELECT HLoader('" + new_dataset_name + "', 'Tranformed trajectories')")
-		plpy.execute("SELECT HLoaderCSV_II('" + new_dataset_name + "', '" + csv_name + "')")
-		plpy.execute("SELECT HDatasetsOfflineStatistics('" + new_dataset_name + "')")
-		plpy.execute("CREATE INDEX ON " + new_dataset_name + "_seg USING gist (seg) WITH (FILLFACTOR = 100)")
+		plpy.execute("SELECT HLoader('" + new_dataset_name + "_dec_sr" + "', 'Tranformed trajectories')")
+		plpy.execute("SELECT HLoaderCSV_II('" + new_dataset_name + "_dec_sr" + "', '" + csv_name + "')")
+		plpy.execute("SELECT HDatasetsOfflineStatistics('" + new_dataset_name + "_dec_sr" + "')")
+		plpy.execute("CREATE INDEX ON " + new_dataset_name + "_dec_sr" + "_seg USING gist (seg) WITH (FILLFACTOR = 100)")
 
 	if not csv_file:
 		os.remove(csv_name)
@@ -206,10 +206,10 @@ AS $$
 	generated_trajectories.close()
 
 	if save:
-		plpy.execute("SELECT HLoader('" + new_dataset_name + "', 'Tranformed trajectories')")
-		plpy.execute("SELECT HLoaderCSV_II('" + new_dataset_name + "', '" + csv_name + "')")
-		plpy.execute("SELECT HDatasetsOfflineStatistics('" + new_dataset_name + "')")
-		plpy.execute("CREATE INDEX ON " + new_dataset_name + "_seg USING gist (seg) WITH (FILLFACTOR = 100)")
+		plpy.execute("SELECT HLoader('" + new_dataset_name + "_inc_sr" + "', 'Tranformed trajectories')")
+		plpy.execute("SELECT HLoaderCSV_II('" + new_dataset_name + "_inc_sr" + "', '" + csv_name + "')")
+		plpy.execute("SELECT HDatasetsOfflineStatistics('" + new_dataset_name + "_inc_sr" + "')")
+		plpy.execute("CREATE INDEX ON " + new_dataset_name + "_inc_sr" + "_seg USING gist (seg) WITH (FILLFACTOR = 100)")
 
 	if not csv_file:
 		os.remove(csv_name)
@@ -305,10 +305,10 @@ AS $$
 	generated_trajectories.close()
 
 	if save:
-		plpy.execute("SELECT HLoader('" + new_dataset_name + "', 'Tranformed trajectories')")
-		plpy.execute("SELECT HLoaderCSV_II('" + new_dataset_name + "', '" + csv_name + "')")
-		plpy.execute("SELECT HDatasetsOfflineStatistics('" + new_dataset_name + "')")
-		plpy.execute("CREATE INDEX ON " + new_dataset_name + "_seg USING gist (seg) WITH (FILLFACTOR = 100)")
+		plpy.execute("SELECT HLoader('" + new_dataset_name + "_time_sr" + "', 'Tranformed trajectories')")
+		plpy.execute("SELECT HLoaderCSV_II('" + new_dataset_name + "_time_sr" + "', '" + csv_name + "')")
+		plpy.execute("SELECT HDatasetsOfflineStatistics('" + new_dataset_name + "_time_sr" + "')")
+		plpy.execute("CREATE INDEX ON " + new_dataset_name + "_time_sr" + "_seg USING gist (seg) WITH (FILLFACTOR = 100)")
 
 	if not csv_file:
 		os.remove(csv_name)
@@ -438,10 +438,10 @@ AS $$
 	generated_trajectories.close()
 
 	if save:
-		plpy.execute("SELECT HLoader('" + new_dataset_name + "', 'Tranformed trajectories')")
-		plpy.execute("SELECT HLoaderCSV_II('" + new_dataset_name + "', '" + csv_name + "')")
-		plpy.execute("SELECT HDatasetsOfflineStatistics('" + new_dataset_name + "')")
-		plpy.execute("CREATE INDEX ON " + new_dataset_name + "_seg USING gist (seg) WITH (FILLFACTOR = 100)")
+		plpy.execute("SELECT HLoader('" + new_dataset_name + "_add_noise" +"', 'Tranformed trajectories')")
+		plpy.execute("SELECT HLoaderCSV_II('" + new_dataset_name + "_add_noise" + "', '" + csv_name + "')")
+		plpy.execute("SELECT HDatasetsOfflineStatistics('" + new_dataset_name + "_add_noise" + "')")
+		plpy.execute("CREATE INDEX ON " + new_dataset_name + "_add_noise" + "_seg USING gist (seg) WITH (FILLFACTOR = 100)")
 
 	if not csv_file:
 		os.remove(csv_name)
@@ -538,10 +538,10 @@ AS $$
 	generated_trajectories.close()
 
 	if save:
-		plpy.execute("SELECT HLoader('" + new_dataset_name + "', 'Tranformed trajectories')")
-		plpy.execute("SELECT HLoaderCSV_II('" + new_dataset_name + "', '" + csv_name + "')")
-		plpy.execute("SELECT HDatasetsOfflineStatistics('" + new_dataset_name + "')")
-		plpy.execute("CREATE INDEX ON " + new_dataset_name + "_seg USING gist (seg) WITH (FILLFACTOR = 100)")
+		plpy.execute("SELECT HLoader('" + new_dataset_name + "_random_shift" + "', 'Tranformed trajectories')")
+		plpy.execute("SELECT HLoaderCSV_II('" + new_dataset_name + "_random_shift" + "', '" + csv_name + "')")
+		plpy.execute("SELECT HDatasetsOfflineStatistics('" + new_dataset_name + "_random_shift" + "')")
+		plpy.execute("CREATE INDEX ON " + new_dataset_name + "_random_shift" + "_seg USING gist (seg) WITH (FILLFACTOR = 100)")
 
 	if not csv_file:
 		os.remove(csv_name)
@@ -638,10 +638,10 @@ AS $$
 	generated_trajectories.close()
 
 	if save:
-		plpy.execute("SELECT HLoader('" + new_dataset_name + "', 'Tranformed trajectories')")
-		plpy.execute("SELECT HLoaderCSV_II('" + new_dataset_name + "', '" + csv_name + "')")
-		plpy.execute("SELECT HDatasetsOfflineStatistics('" + new_dataset_name + "')")
-		plpy.execute("CREATE INDEX ON " + new_dataset_name + "_seg USING gist (seg) WITH (FILLFACTOR = 100)")
+		plpy.execute("SELECT HLoader('" + new_dataset_name + "_synced_shift" + "" + "', 'Tranformed trajectories')")
+		plpy.execute("SELECT HLoaderCSV_II('" + new_dataset_name + "_synced_shift" + "', '" + csv_name + "')")
+		plpy.execute("SELECT HDatasetsOfflineStatistics('" + new_dataset_name + "_synced_shift" + "')")
+		plpy.execute("CREATE INDEX ON " + new_dataset_name + "_synced_shift" + "_seg USING gist (seg) WITH (FILLFACTOR = 100)")
 
 	if not csv_file:
 		os.remove(csv_name)
@@ -651,7 +651,7 @@ $$ LANGUAGE plpython3u;
 
 
 -------------------------Tests--------------------------------------------------------------
---SELECT trajectory_transformation_dec_sr('gmaps', 0.5, True, 'next', True)
+--SELECT trajectory_transformation_inc_sr('gmaps', 0.5, True, 'lol', True)
 --SELECT trajectory_transformation_add_noise('gmaps', 0.5, 1000)
 --SELECT trajectory_transformation_random_shift('gmaps', 0.4, 1000)
 --SELECT trajectory_transformation_synced_shift('gmaps', 0.8, 500, True, 'newdataset', True)

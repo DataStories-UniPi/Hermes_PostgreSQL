@@ -53,7 +53,8 @@ AS $$
 		return result
 
 #---------------------------Main--------------------------------------------
-	generated_trajectories = open('new_traj.txt', 'w')
+	csv_name = dataset + '_transformed' + '_decsr_' + str(rate) + ".txt"
+	generated_trajectories = open(csv_name, 'w')
 	generated_trajectories.write('objectID,trajectoryID,t,lon,lat\n')
 	traj_qry = "SELECT * FROM " + dataset + "_traj"
 	traj_result = plpy.execute(traj_qry)
@@ -85,12 +86,12 @@ AS $$
 
 	if save:
 		plpy.execute("SELECT HLoader('" + new_dataset_name + "', 'Tranformed trajectories')")
-		plpy.execute("SELECT HLoaderCSV_II('" + new_dataset_name + "', 'new_traj.txt')")
+		plpy.execute("SELECT HLoaderCSV_II('" + new_dataset_name + "', '" + csv_name + "')")
 		plpy.execute("SELECT HDatasetsOfflineStatistics('" + new_dataset_name + "')")
 		plpy.execute("CREATE INDEX ON " + new_dataset_name + "_seg USING gist (seg) WITH (FILLFACTOR = 100)")
 
 	if not csv_file:
-		os.remove('new_traj.txt')
+		os.remove(csv_name)
 		
 	return 1
 $$ LANGUAGE plpython3u;
@@ -142,7 +143,8 @@ AS $$
 		return result
 
 #---------------------------Main--------------------------------------------
-	generated_trajectories = open('new_traj.txt', 'w')
+	csv_name = dataset + '_transformed' + '_incsr_' + str(rate) + ".txt"
+	generated_trajectories = open(csv_name, 'w')
 	generated_trajectories.write('objectID,trajectoryID,t,lon,lat\n')
 
 	traj_qry = "SELECT * FROM " + dataset + "_traj"
@@ -205,12 +207,12 @@ AS $$
 
 	if save:
 		plpy.execute("SELECT HLoader('" + new_dataset_name + "', 'Tranformed trajectories')")
-		plpy.execute("SELECT HLoaderCSV_II('" + new_dataset_name + "', 'new_traj.txt')")
+		plpy.execute("SELECT HLoaderCSV_II('" + new_dataset_name + "', '" + csv_name + "')")
 		plpy.execute("SELECT HDatasetsOfflineStatistics('" + new_dataset_name + "')")
 		plpy.execute("CREATE INDEX ON " + new_dataset_name + "_seg USING gist (seg) WITH (FILLFACTOR = 100)")
 
 	if not csv_file:
-		os.remove('new_traj.txt')
+		os.remove(csv_name)
 		
 	return 1
 $$ LANGUAGE plpython3u;	
@@ -265,7 +267,10 @@ AS $$
 		return result
 
 #---------------------------Main--------------------------------------------
-	generated_trajectories = open('new_traj.txt', 'w')
+	start_date_name = start_date.replace(':', '_')
+	end_date_name = end_date.replace(':', '_')
+	csv_name = dataset + '_transformed' + '__timesr__' + start_date_name + "__" + end_date_name + "__" + str(step) + ".txt"
+	generated_trajectories = open(csv_name, 'w')
 	generated_trajectories.write('objectID,trajectoryID,t,lon,lat\n')
 	new_start_date = datetime.strptime(start_date, '%Y-%m-%d %H:%M:%S')
 	new_end_date = datetime.strptime(end_date, '%Y-%m-%d %H:%M:%S')
@@ -301,12 +306,12 @@ AS $$
 
 	if save:
 		plpy.execute("SELECT HLoader('" + new_dataset_name + "', 'Tranformed trajectories')")
-		plpy.execute("SELECT HLoaderCSV_II('" + new_dataset_name + "', 'new_traj.txt')")
+		plpy.execute("SELECT HLoaderCSV_II('" + new_dataset_name + "', '" + csv_name + "')")
 		plpy.execute("SELECT HDatasetsOfflineStatistics('" + new_dataset_name + "')")
 		plpy.execute("CREATE INDEX ON " + new_dataset_name + "_seg USING gist (seg) WITH (FILLFACTOR = 100)")
 
 	if not csv_file:
-		os.remove('new_traj.txt')
+		os.remove(csv_name)
 		
 	return 1
 $$ LANGUAGE plpython3u;	
@@ -361,7 +366,8 @@ AS $$
 		return result
 
 #---------------------------Main--------------------------------------------
-	generated_trajectories = open('new_traj.txt', 'w')
+	csv_name = dataset + '_transformed' + '_addnoise_' + str(rate) + "_" + str(int(distance)) + ".txt"
+	generated_trajectories = open(csv_name, 'w')
 	generated_trajectories.write('objectID,trajectoryID,t,lon,lat\n')
 
 	traj_qry = "SELECT * FROM " + dataset + "_traj"
@@ -433,12 +439,12 @@ AS $$
 
 	if save:
 		plpy.execute("SELECT HLoader('" + new_dataset_name + "', 'Tranformed trajectories')")
-		plpy.execute("SELECT HLoaderCSV_II('" + new_dataset_name + "', 'new_traj.txt')")
+		plpy.execute("SELECT HLoaderCSV_II('" + new_dataset_name + "', '" + csv_name + "')")
 		plpy.execute("SELECT HDatasetsOfflineStatistics('" + new_dataset_name + "')")
 		plpy.execute("CREATE INDEX ON " + new_dataset_name + "_seg USING gist (seg) WITH (FILLFACTOR = 100)")
 
 	if not csv_file:
-		os.remove('new_traj.txt')
+		os.remove(csv_name)
 		
 	return 1
 $$ LANGUAGE plpython3u;	
@@ -482,7 +488,8 @@ AS $$
 		return result
 
 #---------------------------Main--------------------------------------------
-	generated_trajectories = open('new_traj.txt', 'w')
+	csv_name = dataset + '_transformed' + '_randomshift_' + str(rate) + "_" + str(int(distance)) + ".txt"
+	generated_trajectories = open(csv_name, 'w')
 	generated_trajectories.write('objectID,trajectoryID,t,lon,lat\n')
 
 	traj_qry = "SELECT * FROM " + dataset + "_traj"
@@ -532,12 +539,12 @@ AS $$
 
 	if save:
 		plpy.execute("SELECT HLoader('" + new_dataset_name + "', 'Tranformed trajectories')")
-		plpy.execute("SELECT HLoaderCSV_II('" + new_dataset_name + "', 'new_traj.txt')")
+		plpy.execute("SELECT HLoaderCSV_II('" + new_dataset_name + "', '" + csv_name + "')")
 		plpy.execute("SELECT HDatasetsOfflineStatistics('" + new_dataset_name + "')")
 		plpy.execute("CREATE INDEX ON " + new_dataset_name + "_seg USING gist (seg) WITH (FILLFACTOR = 100)")
 
 	if not csv_file:
-		os.remove('new_traj.txt')
+		os.remove(csv_name)
 		
 	return 1
 $$ LANGUAGE plpython3u;	
@@ -581,7 +588,8 @@ AS $$
 		return result
 
 #---------------------------Main--------------------------------------------
-	generated_trajectories = open('new_traj.txt', 'w')
+	csv_name = dataset + '_transformed' + '_syncedshift_' + str(rate) + "_" + str(int(distance)) + ".txt"
+	generated_trajectories = open(csv_name, 'w')
 	generated_trajectories.write('objectID,trajectoryID,t,lon,lat\n')
 
 	traj_qry = "SELECT * FROM " + dataset + "_traj"
@@ -631,17 +639,22 @@ AS $$
 
 	if save:
 		plpy.execute("SELECT HLoader('" + new_dataset_name + "', 'Tranformed trajectories')")
-		plpy.execute("SELECT HLoaderCSV_II('" + new_dataset_name + "', 'new_traj.txt')")
+		plpy.execute("SELECT HLoaderCSV_II('" + new_dataset_name + "', '" + csv_name + "')")
 		plpy.execute("SELECT HDatasetsOfflineStatistics('" + new_dataset_name + "')")
 		plpy.execute("CREATE INDEX ON " + new_dataset_name + "_seg USING gist (seg) WITH (FILLFACTOR = 100)")
 
 	if not csv_file:
-		os.remove('new_traj.txt')
+		os.remove(csv_name)
 		
 	return 1
 $$ LANGUAGE plpython3u;	
 
 
 -------------------------Tests--------------------------------------------------------------
---SELECT trajectory_transformation_synced_shift('gmaps', 1, 1000, True, 'synced', True);
+--SELECT trajectory_transformation_dec_sr('gmaps', 0.5, True, 'next', True)
+--SELECT trajectory_transformation_add_noise('gmaps', 0.5, 1000)
+--SELECT trajectory_transformation_random_shift('gmaps', 0.4, 1000)
+--SELECT trajectory_transformation_synced_shift('gmaps', 0.8, 500, True, 'newdataset', True)
+--SELECT trajectory_transformation_time_sr('gmaps', '2008-12-31 19:30:30', '2008-12-31 20:00:30', 600)
+--SELECT * FROM next_dec_sr_seg;
 

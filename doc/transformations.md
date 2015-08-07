@@ -8,7 +8,7 @@ initial one. The user has the options of save the generated datasets to the
 engine, export them to a csv file, or both.
 
 Each one of the six different transformation functions is further described
-below.
+below, followed by a hands on example.
 
 ## Decreased Sampling Rate Transformation {#decreased_sr}
 **trajectory\_transformation\_dec\_sr (dataset, rate, \[save\], \[new\_dataset\_name\], \[csv_file\])**

@@ -23,7 +23,7 @@ Optional requirements:
       $ wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
       $ sudo apt-get update      
       $ sudo apt-get upgrade
-      $ sudo apt-get install postgresql-9.4 
+      $ sudo apt-get install postgresql-9.4 postgresql-contrib-9.4 postgresql-server-dev-9.4
 
 	
 - Copy the shared object (Hermes.so) file to your pgsql library directory. If you don't know where that is, check it out using: 

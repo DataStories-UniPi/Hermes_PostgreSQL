@@ -102,16 +102,16 @@ The structure of the table is described below:
 - **duration** is an interval showing the duration of the dataset
 - **area** is a bigint showing the area of the dataset
 - **normalized_sampling_rate** is a double precision number showing the normalized sampling rate
-- **min_object_trajectories** is a bigint showing the minimum number of trajectories in _traj table
-- **max_object_trajectories** is a bigint showing the maximum number of trajectories in _traj table
-- **avg_object_trajectories** is a double precision number showing the average number of trajectories in _traj table
-- **stddev_object_trajectories** is a double precision number showing the standard deviation of trajectories in _traj table
-- **median_object_trajectories** is a double precision number showing the median number of trajectories in _traj table
-- **min_object_normalized_sampling_rate** is a bigint showing the minumum normalized number of trajectories in _traj table
-- **max_object_normalized_sampling_rate** is a bigintshowing the maximum normalized number of trajectories in _traj table
-- **avg_object_normalized_sampling_rate** is a double precision number showing the average normalized number of trajectories in _traj table
-- **stddev_object_normalized_sampling_rate** is a double precision number showing the standard deviation of trajectories in _traj table
-- **median_object_normalized_sampling_rate** is a double precision number showing the median normalized number of trajectories in _traj table
+- **min_object_trajectories** is a bigint showing the minimum number of ojbects per trajectory in _traj table
+- **max_object_trajectories** is a bigint showing the maximum number of ojbects per trajectory in _traj table
+- **avg_object_trajectories** is a double precision number showing the average number of ojbects per trajectory in _traj table
+- **stddev_object_trajectories** is a double precision number showing the standard deviation of ojbects per trajectory in _traj table
+- **median_object_trajectories** is a double precision number showing the median number of ojbects per trajectory in _traj table
+- **min_object_normalized_sampling_rate** is a bigint showing the minumum normalized number of ojbects per trajectory in _traj table
+- **max_object_normalized_sampling_rate** is a bigint showing the maximum normalized number of of ojbects per trajectory in _traj table
+- **avg_object_normalized_sampling_rate** is a double precision number showing the average normalized number of ojbects per trajectory in _traj table
+- **stddev_object_normalized_sampling_rate** is a double precision number showing the standard deviation of ojbects per trajectory in _traj table
+- **median_object_normalized_sampling_rate** is a double precision number showing the median normalized number of ojbects per trajectory in _traj table
 - **min_trajectory_points** is a bigint number showing the minimum number of points in a trajectory in _traj table
 - **max_trajectory_points** is a bigint number showing the maximum number of points in a trajectory in _traj table
 - **avg_trajectory_points** is a double precision number number showing the average number of points in a trajectory in _traj table
@@ -192,7 +192,7 @@ In these pages you will find some examples of the Hermes MOD. These examples use
 ![Overview of the IMIS 3 Days dataset](imis_overview.png)
 @image latex imis_overview.png "Overview of the IMIS 3 Days dataset" 
 
-Loading the datatset into Hermes MOD is simple, due to a module called "Hermes-Loader", which automates the creation and feeding of the respective database table as well as the transformation of coordinates from degrees (lon/lat to meters (x/y) @cite pelekis2014mobility.
+Loading the dataset into Hermes MOD is simple, due to a module called "Hermes-Loader", which automates the creation and feeding of the respective database table as well as the transformation of coordinates from degrees (lon/lat to meters (x/y) @cite pelekis2014mobility.
 
 Before loading the AIS data in PostgreSql, one needs to save the data files in the PostgreSQL directory in a file type of csv with a header for column names with the following structure: <obj_id, traj_id, t, lon, lat>. You can find the directory by executing the below command in the database:
 
@@ -241,7 +241,7 @@ If we want to enable and the trajectory storage model instead of the above comma
 	
 This command enables both the trajectory and segment storage. By default only the segment storage is enabled.	
 	
-In the execution of the second line there might be some warning but there is no reason for worrying (ask marios for more informations)
+In the execution of the second line there might be some warning but there is no reason for worrying
 
 	postgres=# SELECT HLoaderCSV_II('imis', 'imis3days.txt');
 	NOTICE:  table "imis_input_data" does not exist, skipping

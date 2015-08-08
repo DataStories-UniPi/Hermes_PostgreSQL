@@ -1,5 +1,8 @@
-/*
- * Authors: Marios Vodas (mvodas@gmail.com).
+/**
+ * @file
+ * @author Marios Vodas (mvodas@gmail.com).
+ * @brief File containing utilities functions used by the Hermes Mod.
+ *
  */
 
 #include "../h/Utilities/Utilities.h"
@@ -12,6 +15,7 @@
 #ifdef WIN32
 #include <processthreadsapi.h>
 #endif
+
 
 int asprintfHermes(char **ptr, const char *frm, ...) {
 	va_list ap;
@@ -51,6 +55,12 @@ Timestamp epoch() {
 	return DatumGetTimestamp(DirectFunctionCall3(timestamp_in, CStringGetDatum("epoch"), PointerGetDatum(0), Int32GetDatum(-1))) ;
 }
 
+/** @brief Function converting the interval to seconds
+ *
+ *	@param[in] interval constant pointer to interval
+ *	@returns seconds
+ *
+ */
 float8 interval2seconds(const Interval *interval) {
 	float8 result;
 	text *epochText = cstring_to_text("epoch");
@@ -61,6 +71,13 @@ float8 interval2seconds(const Interval *interval) {
 	return result;
 }
 
+/** @brief Function converting the interval to seconds in its place
+ *
+ *	@param[in] seconds Seconds
+ *	@param[in] result pointer to result
+ *
+ *  @return seconds
+ */
 Interval *seconds2interval(float8 seconds, Interval *result) {
 	Interval *ret = NULL;
 	Interval *oneSecond = DatumGetIntervalP(DirectFunctionCall3(interval_in, CStringGetDatum("00:00:01"), PointerGetDatum(0), Int32GetDatum(-1)));
@@ -77,6 +94,11 @@ Interval *seconds2interval(float8 seconds, Interval *result) {
 	return ret;
 }
 
+/** @brief Function converting timestamp to seconds
+ *
+ * 	@param ts timestamp
+ *  @return seconds
+ */
 float8 timestamp2seconds(Timestamp ts) {
 	float8 result;
 	text *epochText = cstring_to_text("epoch");
@@ -87,6 +109,11 @@ float8 timestamp2seconds(Timestamp ts) {
 	return result;
 }
 
+/** @brief Function converting seconds to timestamp
+ *
+ *	@param seconds
+ *  @return timestamp
+ */
 Timestamp seconds2timestamp(float8 seconds) {
 	Timestamp result;
 	Interval *secondsInterval = seconds2interval(seconds, NULL );

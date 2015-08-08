@@ -1,6 +1,6 @@
 # Documentantion  {#documentation}
 
-The documentation of the Hermes MOD was done using [Doxygen](http://www.doxygen.nl/). Doxygen is the de facto tool for generating documentation for many programming languages and this page describes the shortcomings of the currents documentations and how to create the documentation using the doxygen.
+The documentation of the Hermes MOD was done using [Doxygen](http://www.doxygen.nl/). Doxygen is the de facto tool for generating documentation for many programming languages and this page describes the shortcomings of the current documentation and how to create the documentation using the doxygen.
 
 # Creating the documentation  
 

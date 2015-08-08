@@ -1,10 +1,8 @@
 # Advanced # {#advanced}
 
-In this section are described the more advanced functions of Hermes MOD.
+In this section are described the some advanced functions of Hermes MOD.
 
 # Distance functions # {#similarity}
-
-Αντιγράφω κομμάτια της διπλωματικής μου και δεν βάζω τις αρχικές πηγές. Άμα διαφωνείτε πείτε μου.
 
 Object similarity or object dissimilarity or object matching or shape matching is the decision of the resemblance (similarity) between two objects. In general, two objects \f$A,B\f$ are given and the resemblance to each other is extracted. This can be quantitatively expressed as a distance between the two objects @cite anagnostopoulos2015similarity :
 
@@ -278,7 +276,7 @@ LCSS can be calculated by the below equation:
 	LCSS(A,B) = 
 	\begin{cases}
 	 0 & \quad \text{if }  m=0 \text{ or } n=0 \\
- 	LCSS(Head(A),Head(S)) + 1 & \quad \text{if } |r_{n} - s_{m}| < \epsilon \\
+ 	LCSS(Head(A),Head(B)) + 1 & \quad \text{if } |r_{n} - q_{m}| < \epsilon \\
    	& \text{ and } |n-m| \leq \delta \\
  	max
 	\begin{Bmatrix}
@@ -324,38 +322,38 @@ In the current implementation, dtw takes 5 parameters. The first two are the tra
 	
 ## EDR ## {#similarity_edr}
 
-The Edit Distance on Real Sequences (EDR) function is based on the well-known edit [distance function](https://en.wikipedia.org/wiki/Edit_distance) which has been succesfully used in applications like bioinformatics where an important task is to quantify the similarity between two strings. Given two strings, the Edit Distance function calculates the minimum number of insertions, deletions and replacements in order for the two strings to become identical. Like LCSS, EDR also uses a threshold \f$\epsilon\f$ to match two points, however the distance may be either 0 or 1, depending on whether they match or not. Applying this matching criterion to two points \f$r_i\f$ and \f$s_j\f$ of trajectories of moving objects @cite pelekis2014mobility :
+The Edit Distance on Real Sequences (EDR) function is based on the well-known edit [distance function](https://en.wikipedia.org/wiki/Edit_distance) which has been succesfully used in applications like bioinformatics where an important task is to quantify the similarity between two strings. Given two strings, the Edit Distance function calculates the minimum number of insertions, deletions and replacements in order for the two strings to become identical. Like LCSS, EDR also uses a threshold \f$\epsilon\f$ to match two points, however the distance may be either 0 or 1, depending on whether they match or not. Applying this matching criterion to two points \f$r_i\f$ and \f$q_j\f$ of trajectories of moving objects @cite pelekis2014mobility :
 
 \f{equation*}
-	match(r_i,s_j) = 
+	match(r_i,q_j) = 
 	\begin{cases}
-	 1 & \quad \text{if }  |r_{i,x} - s_{j,x}| \leq \epsilon \text{ and } |r_{i,y}-s{j,y}| \leq \epsilon \\
+	 1 & \quad \text{if }  |r_{i,x} - q_{j,x}| \leq \epsilon \text{ and } |r_{i,y}-q_{j,y}| \leq \epsilon \\
  	 0 & \quad \text{else }
  	\end{cases}
 \f}
 
-Due to this choise, outliers have much less impact on the overall distance, in comparison to the Euclidean distance or the DTW. On the other hand, a crucial difference with LCSS, is that EDR adds a penalty for the gaps between two matched parts, which is proportional to the gap length. This leads to higher accuracy in calculating the distance, in contrast to LCSS. Given the above, the EDR for two trajectories of moving objects, R and S, with lengths n and m, respectively, is defined as @cite pelekis2014mobility :
+Due to this choise, outliers have much less impact on the overall distance, in comparison to the Euclidean distance or the DTW. On the other hand, a crucial difference with LCSS, is that EDR adds a penalty for the gaps between two matched parts, which is proportional to the gap length. This leads to higher accuracy in calculating the distance, in contrast to LCSS. Given the above, the EDR for two trajectories of moving objects, A and B, with lengths n and m, respectively, is defined as @cite pelekis2014mobility :
 
 \f{equation*}
-	EDR(R,S) = 
+	EDR(A,B) = 
 	\begin{cases}
 	 n & \quad \text{if }  m=0 \\
  	 m & \quad \text{if }  n=0 \\
    	 max
 	 \begin{Bmatrix}
- 	 EDR(Rest(R),Rest(S) + subcost),  \\
- 	 EDR(Rest(S),S) +1 ,  \\
- 	 EDR(R,Rest(S)) +1 , 
+ 	 EDR(Rest(A),Rest(B) + subcost),  \\
+ 	 EDR(Rest(A),B) +1 ,  \\
+ 	 EDR(A,Rest(B)) +1 , 
 	 \end{Bmatrix}, & \text{ otherwise }
 	 \end{cases} 
 \f}
 
-where \f$ Rest(R)=((r_{2,x},r_{2,y})...(r_{n,x},r_{n,y}))\f$ and the subcost is defined as:
+where \f$ Rest(A)=((r_{2,x},r_{2,y})...(r_{n,x},r_{n,y}))\f$ and the subcost is defined as:
 
 \f{equation*}
 	subcost = 
 	\begin{cases}
-	 0 & \quad \text{if }  match(r_1,s_1)=1 \\
+	 0 & \quad \text{if }  match(r_1,q_1)=1 \\
  	 1 & \quad \text{otherwise}
  	\end{cases}
 \f}
@@ -387,15 +385,15 @@ In the current implementation, EDR takes 3 parameters. The first two are the tra
 The Edit Distance with Real Penalty (ERP) tries to combine the advantages of DTW and EDR by using a fixed reference point for calculating the distance of the points that have been unmatched. Moreover, if the distance between the two points is very large, ERP uses the distance between a point and the reference point. ERP is defined by the following equation @cite pelekis2014mobility :
 
 \f{equation*}
-	ERP(R,S) = 
+	ERP(A,B) = 
 	\begin{cases}
-	 \displaystyle\sum_{i=1}^{n} dist(s_i,g) & \quad \text{if }  m=0 \\
+	 \displaystyle\sum_{i=1}^{n} dist(q_i,g) & \quad \text{if }  m=0 \\
  	 \displaystyle\sum_{i=1}^{n} dist(r_i,g) & \quad \text{if }  n=0 \\
    	 min
 	 \begin{Bmatrix}
- 	 ERP(Rest(R),Rest(S)) + dist(t_1,s_1),  \\
- 	 ERP(Rest(R),S) + dist(t_1,g) ,  \\
- 	 ERP(R,Rest(S)) + dist(s_1,g)  
+ 	 ERP(Rest(A),Rest(B)) + dist(t_1,q_1),  \\
+ 	 ERP(Rest(A),B) + dist(t_1,g) ,  \\
+ 	 ERP(A,Rest(B)) + dist(q_1,g)  
 	 \end{Bmatrix}, & \text{ otherwise }
 	 \end{cases} 
 \f}
@@ -431,9 +429,7 @@ TRACLUS framework quantifies the distance between directed segments, which actua
 ![The TRACLUS approach for calculating the between two directed segments] (traclus.png)
 @image latex traclus.png "The TRACLUS approach for calculating the between two directed segments" width=\textwidth
 
-The algorithm works on two phases. First it partitions the trajectories using the minimum description length principle and then it groups them using a density-based line-segment clustering algorithm.
-
-An example using the TRACLUS algorithm with Hermes is shown below:
+An example using the TRACLUS`s distances with Hermes is shown below:
 
 - **projectionPointTraclus:** Takes as an input a PointSP and a SegmentSP and returns a PointSP which is the projection of the input PointSP on the input SegmentSP
 	

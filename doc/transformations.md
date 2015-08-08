@@ -114,10 +114,110 @@ csv files\), we get the following result:
 @image latex inc_04.png "Initial \(blue\) and transformed dataset" width=\textwidth
 
 ## Time Interval With Step Transformation {#time_sr}
-**trajectory\_transformation\_time\_sr (dataset, start\_date, end\_date, step, \[save\], \[new\_dataset\_name\], \[csv_file\])**
+**trajectory\_transformation\_inc\_sr (dataset, start\_date, end\_date, step\[, save \[, new\_dataset\_name\[, csv_file\]\]\])**
+
+###Returns###
+The integer 1 to indicate that everything went right.
+###Parameters Description###
+- **dataset** Text, the name with which the dataset is stored in Hermes.
+- **start\_date** Text, a timestamp with the following format:
+*yyyy-mm-dd hh:mm:ss*. Indicates the start of the time interval
+- **end\_date** Text, a timestamp with the following format:
+*yyyy-mm-dd hh:mm:ss*. Indicates the end of the time interval
+- **step** Integer, indicates the step inside time interval, measured in
+seconds.
+- **save** \(Optional\) Boolean, indicates whether the new dataset will be
+saved in Hermes or not. If left blank, the new dataset will be saved.
+- **new\_dataset\_name** \(Optional\) Text, If save is True, the name of the
+new dataset inside Hermes. If left blank, the name of the new_dataset will be
+*transformed\_time\_sr*
+- **csv\_file** \(Optional\) Boolean, Indicates whether the new dataset will be
+exported to a csv file, with the default format of Hermes. If left blank, the
+dataset will be exported to a csv file.
+
+###Example###
+For example purposes, suppose we have a dataset, saved in Hermes, containing one
+trajectory.
+The name of the dataset is gmaps. The segments of the dataset are shown below.
+![Segments of gmaps dataset](images\gmaps.png)
+@image latex gmaps.png "Segments of gmaps dataset" width=\textwidth
+
+It is clear that the trajectory consists of 7 ST Points. If we wanted to keep
+just the points between 2008-12-31 19:30:30 and 2008-12-31 19:50:30, every
+10 minutes we could run the following querie:
+
+      SELECT trajectory_transformation_time_sr('gmaps', '2008-12-31 19:30:30', '2008-12-31 19:50:30', 600, True, 'new_t', True);
+
+As a result, we get a new dataset named new\_t\_time\_sr, which consists of
+all the points (if there are any) between the indicated interval in combination
+with the given step. If we run the following querie we get the new
+ trajectory segments:
+
+      SELECT * FROM new_t_time_sr_seg;
+
+![Segments of time sr gmaps dataset](images\gmaps_time.png)
+@image latex gmaps_time.png "Segments of time sr gmaps dataset" width=\textwidth
+
+Additionally, due to csv_file parameter being True, we get a cvs file
+in the data folder. The name of the file would be *gmaps\_transformed\_\_timesr\_\_2008-12-31 19\_30\_30\_\_2008-12-31 19\_50\_30\_\_600*. Generally, the name of the csv file will
+be *dataset + \_transformed + \_kind of transformation + \_parameters*
+
+If we load the initial and the transformed datasets in Google Maps \(from the
+csv files\), we get the following result:
+
+![Initial \(blue\) and transformed \(green\) dataset](images\time.png)
+@image latex time.png "Initial \(blue\) and transformed \(green\) dataset" width=\textwidth
 
 ## Adding Noise Points Transformation {#add_noise}
-**trajectory\_transformation\_add\_noise (dataset, rate, distance, \[save\], \[new\_dataset\_name\], \[csv_file\])**
+**trajectory\_transformation\_add\_noise (dataset, rate, distance\[, save \[, new\_dataset\_name\[, csv_file\]\]\])**
+
+###Returns###
+The integer 1 to indicate that everything went right.
+###Parameters Description###
+- **dataset** Text, the name with which the dataset is stored in Hermes.
+- **rate** Float between 0 and 1, number of points to be added
+(rate \* |points|).
+- **distance** Integer, outlier - trajectory maximum distance, in meters.
+- **save** \(Optional\) Boolean, indicates whether the new dataset will be
+saved in Hermes or not. If left blank, the new dataset will be saved.
+- **new\_dataset\_name** \(Optional\) Text, If save is True, the name of the
+new dataset inside Hermes. If left blank, the name of the new_dataset will be
+*transformed\_add\_noise*
+- **csv\_file** \(Optional\) Boolean, Indicates whether the new dataset will be
+exported to a csv file, with the default format of Hermes. If left blank, the
+dataset will be exported to a csv file.
+
+###Example###
+For example purposes, suppose we have a dataset, saved in Hermes, containing one
+trajectory.
+The name of the dataset is gmaps. The segments of the dataset are shown below.
+![Segments of gmaps dataset](images\gmaps.png)
+@image latex gmaps.png "Segments of gmaps dataset" width=\textwidth
+
+It is clear that the trajectory consists of 7 ST Points. If we wanted to add
+40% more noise points, each one of them would be 2 km, at most, apart from the
+trajectory, we could run the following querie:
+
+      SELECT trajectory_transformation_add_noise('gmaps', 0.4, 2000, True, 'new_n', True);
+
+As a result, we get a new dataset named new\_d\_add\_noise, which consists of
+the initial points, plus 40% (3) more points, as described above. If we run the
+following querie we get the new trajectory segments:
+
+      SELECT * FROM new_n_add_noise_seg;
+
+![Segments of noise gmaps dataset](images\gmaps_noise.png)
+@image latex gmaps_noise.png "Segments of noise gmaps dataset" width=\textwidth
+
+Additionally, due to csv_file parameter being True, we get a cvs file
+in the data folder. The name of the file would be *gmaps\_transformed\_addnoise\_0.4\_2000.txt*. Generally, the name of the csv file will
+be *dataset + \_transformed + \_kind of transformation + \_parameters*
+
+If we load the initial and the transformed datasets in Google Maps \(from the
+csv files\), we get the following result:
+
+![Initial \(blue\) and transformed \(purple\) dataset](images\noise_04.png)
+@image latex noise_04.png "Initial \(blue\) and transformed \(purple\) dataset" width=\textwidth
 
 ## Trajectory Synced Shift Transformation {#synced_shift}
 **trajectory\_transformation\_synced\_shift (dataset, rate, distance, \[save\], \[new\_dataset\_name\], \[csv_file\])**

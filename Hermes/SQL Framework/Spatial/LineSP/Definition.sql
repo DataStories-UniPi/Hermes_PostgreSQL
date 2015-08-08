@@ -65,15 +65,41 @@ CREATE OPERATOR CLASS LineSP_OPS DEFAULT FOR TYPE LineSP USING hash AS
 	OPERATOR 1 =,
 	FUNCTION 1 hash(LineSP);
 
-/******************************************************************************/
+/** @brief The function returns the A parameter of the line
+ *
+ *  @param[in] line The LineSP
+ *
+ *	@return the A parameter
+ *
+ *	@see @ref methods_get
+ *
+ */
 CREATE FUNCTION getA(line LineSP) RETURNS double precision AS
 	'$libdir/Hermes','getALineSP'
 LANGUAGE C IMMUTABLE STRICT;
 
+/** @brief The function returns the B parameter of the line
+ *
+ *  @param[in] line The LineSP
+ *
+ *	@return the B parameter
+ *
+ *	@see @ref methods_get
+ *
+ */
 CREATE FUNCTION getB(line LineSP) RETURNS double precision AS
 	'$libdir/Hermes','getBLineSP'
 LANGUAGE C IMMUTABLE STRICT;
 
+/** @brief The function returns the C parameter of the line
+ *
+ *  @param[in] line The LineSP
+ *
+ *	@return the C parameter
+ *
+ *	@see @ref methods_get
+ *
+ */
 CREATE FUNCTION getC(line LineSP) RETURNS double precision AS
 	'$libdir/Hermes','getCLineSP'
 LANGUAGE C IMMUTABLE STRICT;

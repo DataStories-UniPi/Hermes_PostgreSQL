@@ -61,19 +61,54 @@ CREATE OPERATOR CLASS RangeSP_OPS DEFAULT FOR TYPE RangeSP USING hash AS
 	OPERATOR 1 =,
 	FUNCTION 1 hash(RangeSP);
 
-/******************************************************************************/
+/** @brief The function returns the radius of the RangeSP
+ *
+ *  @param[in] range The RangeSP
+ *
+ *	@return the radius
+ *
+ *	@see @ref methods_get
+ *
+ */
 CREATE FUNCTION getR(range RangeSP) RETURNS integer AS
 	'$libdir/Hermes','getRRangeSP'
 LANGUAGE C IMMUTABLE STRICT;
 
+/** @brief The function returns the center of the RangeSP
+ *
+ *  @param[in] range The RangeSP
+ *
+ *	@return the center
+ *
+ *	@see @ref methods_get
+ *
+ */
 CREATE FUNCTION getC(range RangeSP) RETURNS PointSP AS
 	'$libdir/Hermes','getCRangeSP'
 LANGUAGE C IMMUTABLE STRICT;
 
+/** @brief The function returns the x coordinate of the center of the RangeSP
+ *
+ *  @param[in] range The RangeSP
+ *
+ *	@return the coordinate
+ *
+ *	@see @ref methods_get
+ *
+ */
 CREATE FUNCTION getX(range RangeSP) RETURNS integer AS
 	'$libdir/Hermes','getXRangeSP'
 LANGUAGE C IMMUTABLE STRICT;
 
+/** @brief The function returns the y coordinate of the center of the RangeSP
+ *
+ *  @param[in] range The RangeSP
+ *
+ *	@return the coordinate
+ *
+ *	@see @ref methods_get
+ *
+ */
 CREATE FUNCTION getY(range RangeSP) RETURNS integer AS
 	'$libdir/Hermes','getYRangeSP'
 LANGUAGE C IMMUTABLE STRICT;

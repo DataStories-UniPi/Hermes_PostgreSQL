@@ -59,48 +59,141 @@ CREATE OPERATOR CLASS SegmentST_OPS DEFAULT FOR TYPE SegmentST USING hash AS
 	OPERATOR 1 =,
 	FUNCTION 1 hash(SegmentST);
 
-/******************************************************************************/
-CREATE FUNCTION getT(segment SegmentST) RETURNS Period AS
+/** @brief The function returns the period of the SegmentST
+ *
+ *  @param[in] segment The SegmentST
+ *
+ *	@return the period
+ *
+ *	@see @ref methods_get
+ *
+ */
+ CREATE FUNCTION getT(segment SegmentST) RETURNS Period AS
 	'$libdir/Hermes','getTSegmentST'
 LANGUAGE C IMMUTABLE STRICT;
 
+/** @brief The function returns the start time of the period of the SegmentST
+ *
+ *  @param[in] segment The SegmentST
+ *
+ *	@return the start time
+ *
+ *	@see @ref methods_get
+ *
+ */
 CREATE FUNCTION getTi(segment SegmentST) RETURNS timestamp AS
 	'$libdir/Hermes','getTiSegmentST'
 LANGUAGE C IMMUTABLE STRICT;
 
+/** @brief The function returns the end time of the period of the SegmentST
+ *
+ *  @param[in] segment The SegmentST
+ *
+ *	@return the end time
+ *
+ *	@see @ref methods_get
+ *
+ */
 CREATE FUNCTION getTe(segment SegmentST) RETURNS timestamp AS
 	'$libdir/Hermes','getTeSegmentST'
 LANGUAGE C IMMUTABLE STRICT;
 
+/** @brief The function returns the Spatial Segment of the SegmentST
+ *
+ *  @param[in] segment The SegmentST
+ *
+ *	@return SegmentSP
+ *
+ *	@see @ref methods_get
+ *
+ */
 CREATE FUNCTION getSp(segment SegmentST) RETURNS SegmentSP AS
 	'$libdir/Hermes','getSpSegmentST'
 LANGUAGE C IMMUTABLE STRICT;
 
+/** @brief The function returns the start of the  Spatial Segment 
+ *	of the SegmentST
+ *
+ *  @param[in] segment The SegmentST
+ *
+ *	@return start of the SegmentSP
+ *
+ *	@see @ref methods_get
+ *
+ */
 CREATE FUNCTION getI(segment SegmentST) RETURNS PointSP AS
 	'$libdir/Hermes','getISegmentST'
 LANGUAGE C IMMUTABLE STRICT;
 
+/** @brief The function returns the x coordinate of the start of the  
+ *	Spatial Segment of the SegmentST
+ *
+ *  @param[in] segment The SegmentST
+ *
+ *	@return start of the SegmentSP
+ *
+ *	@see @ref methods_get
+ *
+ */
 CREATE FUNCTION getIx(segment SegmentST) RETURNS integer AS
 	'$libdir/Hermes','getIxSegmentST'
 LANGUAGE C IMMUTABLE STRICT;
 
+/** @brief The function returns the y coordinate of the start of the  
+ *	Spatial Segment of the SegmentST
+ *
+ *  @param[in] segment The SegmentST
+ *
+ *	@return start of the SegmentSP
+ *
+ *	@see @ref methods_get
+ *
+ */
 CREATE FUNCTION getIy(segment SegmentST) RETURNS integer AS
 	'$libdir/Hermes','getIySegmentST'
 LANGUAGE C IMMUTABLE STRICT;
 
+/** @brief The function returns the end of the  Spatial Segment 
+ *	of the SegmentST
+ *
+ *  @param[in] segment The SegmentST
+ *
+ *	@return end of the SegmentSP
+ *
+ *	@see @ref methods_get
+ *
+ */
 CREATE FUNCTION getE(segment SegmentST) RETURNS PointSP AS
 	'$libdir/Hermes','getESegmentST'
 LANGUAGE C IMMUTABLE STRICT;
 
+/** @brief The function returns the x coordinate of the end of the  
+ *	Spatial Segment of the SegmentST
+ *
+ *  @param[in] segment The SegmentST
+ *
+ *	@return end of the SegmentSP
+ *
+ *	@see @ref methods_get
+ *
+ */
 CREATE FUNCTION getEx(segment SegmentST) RETURNS integer AS
 	'$libdir/Hermes','getExSegmentST'
 LANGUAGE C IMMUTABLE STRICT;
 
+/** @brief The function returns the y coordinate of the end of the  
+ *	Spatial Segment of the SegmentST
+ *
+ *  @param[in] segment The SegmentST
+ *
+ *	@return end of the SegmentSP
+ *
+ *	@see @ref methods_get
+ *
+ */
 CREATE FUNCTION getEy(segment SegmentST) RETURNS integer AS
 	'$libdir/Hermes','getEySegmentST'
 LANGUAGE C IMMUTABLE STRICT;
-
-/******************************************************************************/
 
 /** @brief The function returns a SegmentST data type
  *

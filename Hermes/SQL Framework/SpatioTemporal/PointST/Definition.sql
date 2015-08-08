@@ -60,19 +60,54 @@ CREATE OPERATOR CLASS PointST_OPS DEFAULT FOR TYPE PointST USING hash AS
 	OPERATOR 1 =,
 	FUNCTION 1 hash(PointST);
 
-/******************************************************************************/
+/** @brief The function returns the timestamp of the PointST
+ *
+ *  @param[in] point The PointST
+ *
+ *	@return the timestamp
+ *
+ *	@see @ref methods_get
+ *
+ */
 CREATE FUNCTION getT(point PointST) RETURNS timestamp AS
 	'$libdir/Hermes','getTPointST'
 LANGUAGE C IMMUTABLE STRICT;
 
+/** @brief The function returns the coordinates of the PointST
+ *
+ *  @param[in] point The PointST
+ *
+ *	@return the coordinates
+ *
+ *	@see @ref methods_get
+ *
+ */
 CREATE FUNCTION getSp(point PointST) RETURNS PointSP AS
 	'$libdir/Hermes','getSpPointST'
 LANGUAGE C IMMUTABLE STRICT;
 
+/** @brief The function returns the x coordinate of the PointST
+ *
+ *  @param[in] point The PointST
+ *
+ *	@return the x coordinate
+ *
+ *	@see @ref methods_get
+ *
+ */
 CREATE FUNCTION getX(point PointST) RETURNS integer AS
 	'$libdir/Hermes','getXPointST'
 LANGUAGE C IMMUTABLE STRICT;
 
+/** @brief The function returns the y coordinate of the PointST
+ *
+ *  @param[in] point The PointST
+ *
+ *	@return the y coordinate
+ *
+ *	@see @ref methods_get
+ *
+ */
 CREATE FUNCTION getY(point PointST) RETURNS integer AS
 	'$libdir/Hermes','getYPointST'
 LANGUAGE C IMMUTABLE STRICT;

@@ -6,14 +6,18 @@ In this section we elaborate on the functionality of Hermes in terms of SQL func
 
 The following methods can be used interchangeably either on Segments (e.g. SegmentST) or Trajectory objects, but in each case a different interpolation model is assumed @cite vodas2013hermes. According to @cite vodas2013hermes in the case of segments a [uniform linear motion model](https://en.wikipedia.org/wiki/Linear_motion) is assumed and in the case of a trajectory object a non-uniform linear motion with constant non-zero acceleration between two points is used. An assumption is made on the initial speed of the object: the speed of the object at the first point of the trajectory is considered equal to the speed at the second point, in other words, the acceleration at the first segment of the trajectory is zero.
 
-In the following, there is example code segments for the segment model mainly
-
-
-@see @ref SegmentSP/Interpolation.sql
+In the following, there is example code segments for the segment model mainly.
 
 @see @ref SegmentST/Interpolation.sql
 @see @ref SegmentST/Properties.sql
 @see @ref SegmentST/RelationalOperators.sql
+@see @ref SegmentST/Definition.sql
+
+@see @ref LineSP/Definition.sql
+
+@see @ref RangeSP/Definition.sql
+
+@see @ref PointST/Definition.sql
 
 @see @ref Trajectory/Properties.sql
 @see @ref Trajectory/Interpolation.sql
@@ -70,8 +74,18 @@ This function takes a segment (or a trajectory) and a point as parameters and re
 	---------------------------
  	'2008-12-31 19:30:01' 2 2
 	(1 row)
-
 	
+	
+## closestPoint ## {#methods_closestPoint}
+
+This function takes as input a segment and a point and returns the closest point of the segment. 
+
+	SELECT closestPoint(SegmentSP(0,0,0,4),PointSP(1,1)); 
+		closestpoint 
+	--------------
+ 	0 1
+	(1 row)
+
 ## At period ## {#methods_atperiod}
 
 This function takes a segment (or a trajectory) and a period as parameters and returns the part of the segment that corresponds to the given period. 
@@ -150,7 +164,7 @@ This function returns the length of a trajectory.
 
 ## Displacement ## {#methods_displacement}
 
-This function returns the displacement of a trajectory. (Ποια η διαφορά με το length οεο??)
+This function returns the displacement of a trajectory.  -- PENDING!! --
 
 	SELECT displacement(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:30' :: Timestamp, PointSP(3,3))]));
    	displacement   
@@ -170,7 +184,7 @@ This function returns the centroid of a trajectory.
 
 ## Masscenter ## {#methods_masscenter}
 
-This function returns the masscenter of a trajectory. (Ποια η διαφορά με το centroid ???)
+This function returns the masscenter of a trajectory. -- PENDING!! --
 
 	SELECT masscenter(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:30' :: Timestamp, PointSP(3,3))]));
  	masscenter 
@@ -181,7 +195,7 @@ This function returns the masscenter of a trajectory. (Ποια η διαφορ�
 
 ## Gyradius ## {#methods_gyradius}
 
-This function returns the [radius of gyration](https://en.wikipedia.org/wiki/Radius_of_gyration) of a trajectory. Δεν έχω ιδέα τί είναι !!!
+This function returns the [radius of gyration](https://en.wikipedia.org/wiki/Radius_of_gyration) of a trajectory. -- PENDING!! --
 	
 	SELECT gyradius(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:30' :: Timestamp, PointSP(3,3))]));
     gyradius     
@@ -190,7 +204,7 @@ This function returns the [radius of gyration](https://en.wikipedia.org/wiki/Rad
 	(1 row)
 
 
-## anglexxavg ## 
+## anglexxavg ## {#methods_anglexxavg}
 
 This function returns the average direction of a trajectory.
 
@@ -201,9 +215,9 @@ This function returns the average direction of a trajectory.
 	(1 row)
 
 
-## anglexx ##
+## anglexx ## {#methods_anglexx}
 
-Ποια η διαφορά με την πιο πάνω ;;;
+-- PENDING!! --
 
 	SELECT anglexx(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:30' :: Timestamp, PointSP(3,3))]));
       anglexx      
@@ -211,15 +225,121 @@ This function returns the average direction of a trajectory.
  	0.785398163397448
 	(1 row)
 
-## normalizedsamplingrate ##
+## normalizedsamplingrate ## {#methods_normalizedsamplingrate}
 
-Δεν έχω ιδέα τί είναι !!!
+-- PENDING!! --
 
 	SELECT normalizedSamplingRate(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:30' :: Timestamp, PointSP(3,3))]));
  	normalizedsamplingrate 
 	------------------------
      0.0344827586206897
 	(1 row)
+	
+## get ## {#methods_get}
+
+This category of functions returns the attributes of an object.
+
+-- PENDING!! --
+
+Function                | Returns
+:---------------------: | :-----------:
+getT(segment SegmentST) | the period of the SegmentST
+getTi(segment SegmentST)| the start time of the period of the SegmentST
+getTe(segment SegmentST)| the end time of the period of the SegmentST
+getSp(segment SegmentST)| the Spatial Segment of the SegmentST
+getI(segment SegmentST) | the start of the  Spatial Segment of the SegmentST
+getIx(segment SegmentST)| the x coordinate of the start of the  Spatial Segment of the SegmentST
+getIy(segment SegmentST)| the y coordinate of the start of the  Spatial Segment of the SegmentST
+getE(segment SegmentST) | the end of the  Spatial Segment of the SegmentST
+getEx(segment SegmentST)| the x coordinate of the end of the  Spatial Segment of the SegmentST
+getEy(segment SegmentST)| the y coordinate of the end of the  Spatial Segment of the SegmentST
+getA(line LineSP)       | the a parameter of the LineSP
+getB(line LineSP)       | the b parameter of the LineSP
+getC(line LineSP)       | the c parameter of the LineSP
+getR(range RangeSP)     | the radius of the RangeSP
+getC(range RangeSP)     | the center of the RangeSP
+getX(range RangeSP)     | the x coordinate of the center of the RangeSP
+getY(range RangeSP)     | the y coordinate of the center of the RangeSP
+getT(point PointST)     | the timestamp of the PointST
+getSp(point PointST)    | the coordinates of the PointST
+getX(point PointST)     | the x coordinate of the PointST
+getY(point PointST)     | the y coordinate of the PointST
+
+Some examples are shown below: 
+
+	SELECT getT(SegmentST('1970-1-1 0:0:0',0,0,'1970-1-1 4:0:0',4,4));
+ 	gett
+	---------------------------------------------
+ 	'1970-01-01 00:00:00' '1970-01-01 04:00:00'
+	(1 row)
+	
+	SELECT getI(SegmentST('1970-1-1 0:0:0',0,0,'1970-1-1 4:0:0',4,4));
+ 	geti 
+	------
+ 	0 0
+	(1 row)
+	
+	SELECT getSp(PointST('2008-12-31 19:29:31' :: Timestamp, PointSP(2,2)));
+ 	getsp 
+	-------
+ 	2 2
+	(1 row)
+	
+	SELECT getT(PointST('2008-12-31 19:29:31' :: Timestamp, PointSP(2,2)));
+        gett         
+	---------------------
+ 	2008-12-31 19:29:31
+	(1 row)
+
+@see @ref SegmentST/Definition.sql
+@see @ref LineSP/Definition.sql
+@see @ref RangeSP/Definition.sql
+@see @ref PointST/Definition.sql
+
+## size ## {#methods_size}
+
+-- PENDING!! --
+
+## NrPoints ## {#methods_NrPoints}
+
+-- PENDING!! --
+
+## NrSegments ## {#methods_NrSegments}
+
+-- PENDING!! --
+
+## samplingPeriod ## {#methods_samplingPeriod}
+
+-- PENDING!! --
+
+## pointAt ## {#methods_pointAt}
+
+-- PENDING!! --
+
+## segmentAt ## {#methods_segmentAt}
+
+-- PENDING!! --
+
+## firstPoint ## {#methods_firstPoint}
+
+-- PENDING!! --
+
+## lastPoint ## {#methods_lastPoint}
+
+-- PENDING!! --
+
+## firstSegment ## {#methods_firstSegment}
+
+-- PENDING!! --
+
+## lastSegment ## {#methods_lastSegment}
+
+-- PENDING!! --
+
+## sub ## {#methods_sub}
+
+-- PENDING!! --
+
 
 # Functions & Operators # {#operators}
 
@@ -236,13 +356,13 @@ Symbol  Operation                 | Returns | Left Argument | Right Argument
 
 ## && overlaps ## {#operators_overlaps}
 
-The && (overlaps) operator checks if the segment has any common points (or common timespan, in the case of Period) with the object in the right of the operator. When the object in the right is of spatio-temporal type interpolate is used to find if both the spatial and temporal components interact.
+The && (overlaps) operator checks if the segment has any common points (or common timespan, in the case of Period) with the object in the right of the operator. When the object in the right is of spatio-temporal type interpolation is used to find if both the spatial and temporal components interact.
 
 For example some of the questions that someone can answer with  @ref operators_overlaps operator are:
 
-### Find the movement of ships inside the area of Piraeus port at New Year`s eve 2009 (range querie) ###
+### Find the movement of ships inside the area of Piraeus port at New Year`s eve 2009 (range query) ###
 
-This is range querie base on a rectangular spatio-temporal window.The SQL script that answers this question is listed below:
+This is range query base on a rectangular spatio-temporal window.The SQL script that answers this question is listed below:
 
 	WITH 
 		TO_METERS AS (
@@ -261,7 +381,7 @@ This is range querie base on a rectangular spatio-temporal window.The SQL script
 	WHERE seg && (SELECT box FROM SPT_WINDOW)
 	AND (atBox(seg, (SELECT box FROM SPT_WINDOW))).n = 2;
 	
-To answer this specific querie, we exploit on the index-supported operators @ref operators_overlaps and @ref operators_within_distance, respectively. Technically, the operator @ref operators_overlaps filters the database in order to select only those segments that overlap the spatio-temporal window defined by interval “2009-01-01 00:00:00” ± 1 hour in temporal dimension and 2-dimensional rectangle with lower-left corner (23.59E, 37.91N) and upper-right corner (23.65E, 37.96N) in spatial dimension, bounding the area of port of Piraeus in lon/lat degrees (converted to x/y meters with PointSP() method). Then, the atbox() method finds the sub-trajectories within this range @cite pelekis2014mobility.
+To answer this specific query, we exploit on the index-supported operators @ref operators_overlaps. Technically, the operator @ref operators_overlaps filters the database in order to select only those segments that overlap the spatio-temporal window defined by interval “2009-01-01 00:00:00” ± 1 hour in temporal dimension and 2-dimensional rectangle with lower-left corner (23.59E, 37.91N) and upper-right corner (23.65E, 37.96N) in spatial dimension, bounding the area of port of Piraeus in lon/lat degrees (converted to x/y meters with PointSP() method). Then, the atbox() method finds the sub-trajectories within this range @cite pelekis2014mobility.
 
 Please note that atbox() may under certain circumstances return a (3-dimensional) point instead of a (3-dimensional) segment, such as when the intersection between the segment and the box is a point or when the segment and the period have only one timestamp in common. This explains why the method returns three properties: “n”, “p”, and “s”. In particular, “n” informs whether the result is a point (value 1) or a segment (value 2) or there is no intersection between the segment and the box (value 0). Especially for values 1 and 2 of property “n”, “p” gets the point and “s” gets the segment, respectively @cite pelekis2014mobility. Some results of the query are shown below:
 
@@ -359,7 +479,7 @@ The \latexonly ~ \endlatexonly  \htmlonly ~ \endhtmlonly (contains) operator che
 
 For example some of the questions that someone can answer with  @ref operators_contains operator are:
 
-### Find the position of all ships on the second day of 2009, midnight (timeslice querie) ### 
+### Find the position of all ships on the second day of 2009, midnight (timeslice query) ### 
 
 The SQL script that answers this question is listed below:
 
@@ -368,7 +488,7 @@ The SQL script that answers this question is listed below:
 	FROM imis_seg
 	WHERE seg ~ '2009-01-02 00:00:00' :: timestamp ;
 	
-The index-supported operator @ref operators_contains filters the database in order to select only those segments that contain the given timestamp “2009-01-01 00:00:00” in their temporal dimension. Then, the @rer atinstant() method finds the exact location of objects at the given timestamp @cite pelekis2014mobility. Some results of the query are shown below:
+The index-supported operator @ref operators_contains filters the database in order to select only those segments that contain the given timestamp “2009-01-01 00:00:00” in their temporal dimension. Then, the @ref atinstant() method finds the exact location of objects at the given timestamp @cite pelekis2014mobility. Some results of the query are shown below:
 	
 	 obj_id | traj_id |               position                
 	--------+---------+---------------------------------------
@@ -391,61 +511,61 @@ The index-supported operator @ref operators_contains filters the database in ord
 	     33 |       1 | '2009-01-02 00:00:00' 2012838 3900850
 	     36 |       1 | '2009-01-02 00:00:00' 2067413 3865059
 
-## @ contained   ## {#operators_contained}
+## \@ contained ## {#operators_contained}
 
-The @ (contained) operator checks whether the segment is contained within a BoxSP (or Period, when we only check time) allowing it to touch the perimeter of the box. 
+The \@ (contained) operator checks whether the segment is contained within a BoxSP (or Period, when we only check time) allowing it to touch the perimeter of the box. 
 
-## @! contained properly ## {#operators_contained_properly}
+## \@! contained properly ## {#operators_contained_properly}
 
-The @! (contained properly) operator differentiates from the @ref operators_contained in that it doesn’t allow the segment to touch the perimeter (thus fully contained).
+The \@! (contained properly) operator differentiates from the @ref operators_contained in that it doesn’t allow the segment to touch the perimeter (thus fully contained).
 
 ## -< within distance  ## {#operators_within_distance}
 
 The -<(within distance) operator checks whether the distance of the segment from the center of the RangeSP is less than the radius of the RangeSP object. In the case where the right argument is a RangeST interpolation takes place before evaluating the spatial distance. Specifically, atPeriod method is called on the segment and the Period (Period is the temporal quantity that is represented in the RangeST object).
+
+### Find the ships that approached closer than half nautical mile to Cape Sounion, Attica (range query) ###	
+
+This is a range query base on a circular spatio-temporal window. The SQL script that answers this question is listed below:
+
+	SELECT DISTINCT obj_id, traj_id
+	FROM imis_seg
+	WHERE seg -< RangeSP(round(nm2meters(0.5))::integer,
+		PointSP(PointLL(24.025, 37.649), HDatasetID('imis'))
+	);
+	
+The operator @ref operators_within_distance filters the database in order to select only those segments that overlap the spatial circular window defined by radius corresponding to 0.5 n.m. and center at (24.025E, 37.649N) corresponding to Cape Sounion, at the southernmost tip of the Attica peninsula. The nm2meters() function is used to transform nautical miles to meters, which is the adopted measurement unit for length in Hermes @cite pelekis2014mobility. The results of the query are shown below:
+
+	 obj_id | traj_id 
+	--------+---------
+	    303 |       1
+	(1 row)
+	
+\see @ref data_type_transformation
+
+### Find the ships that approached closer than half nautical mile to Cape Sounion, Attica (range query) ###
+
+This is a range query base on a circular spatio-temporal window. The SQL script that answers this question is listed below:
+
+	SELECT DISTINCT obj_id, traj_id
+	FROM imis_seg
+	WHERE seg -< RangeSP(round(nm2meters(0.5))::integer,
+		PointSP(PointLL(24.025, 37.649), HDatasetID('imis'))
+	);
+	
+The operator @ref operators_within_distance filters the database in order to select only those segments that overlap the spatial circular window defined by radius corresponding to 0.5 n.m. and center at (24.025E, 37.649N) corresponding to Cape Sounion, at the southernmost tip of the Attica peninsula. The nm2meters() function is used to transform nautical miles to meters, which is the adopted measurement unit for length in Hermes @cite pelekis2014mobility. The results of the query are shown below:
+
+	 obj_id | traj_id 
+	--------+---------
+	    303 |       1
+	(1 row)
+	
+\see @ref data_type_transformation
 
 ## <-> distance  ## {#operators_distance}
 
 The <->(distance) operator returns a number, in contrast to the previous operators that return a boolean value, and shows the distance in seconds or meters from the SegmentST to the right argument. If the right argument is a temporal type the operator returns distance in seconds whereas if the argumment is a spatial type it returns in meters.
 
 For example some of the questions that someone can answer with  @ref operators_distance operator are:
-
-### Find the ships that approached closer than half nautical mile to Cape Sounion, Attica (range querie) ###	
-
-This is a range querie base on a circular spatio-temporal window. The SQL script that answers this question is listed below:
-
-	SELECT DISTINCT obj_id, traj_id
-	FROM imis_seg
-	WHERE seg -< RangeSP(round(nm2meters(0.5))::integer,
-		PointSP(PointLL(24.025, 37.649), HDatasetID('imis'))
-	);
-	
-The operator @ref operators_within_distance filters the database in order to select only those segments that overlap the spatial circular window defined by radius corresponding to 0.5 n.m. and center at (24.025E, 37.649N) corresponding to Cape Sounion, at the southernmost tip of the Attica peninsula. The nm2meters() function is used to transform nautical miles to meters, which is the adopted measurement unit for length in Hermes @cite pelekis2014mobility. The results of the query are shown below:
-
-	 obj_id | traj_id 
-	--------+---------
-	    303 |       1
-	(1 row)
-	
-\see @ref data_type_transformation
-
-### Find the ships that approached closer than half nautical mile to Cape Sounion, Attica (range querie) ###
-
-This is a range querie base on a circular spatio-temporal window. The SQL script that answers this question is listed below:
-
-	SELECT DISTINCT obj_id, traj_id
-	FROM imis_seg
-	WHERE seg -< RangeSP(round(nm2meters(0.5))::integer,
-		PointSP(PointLL(24.025, 37.649), HDatasetID('imis'))
-	);
-	
-The operator @ref operators_within_distance filters the database in order to select only those segments that overlap the spatial circular window defined by radius corresponding to 0.5 n.m. and center at (24.025E, 37.649N) corresponding to Cape Sounion, at the southernmost tip of the Attica peninsula. The nm2meters() function is used to transform nautical miles to meters, which is the adopted measurement unit for length in Hermes @cite pelekis2014mobility. The results of the query are shown below:
-
-	 obj_id | traj_id 
-	--------+---------
-	    303 |       1
-	(1 row)
-	
-\see @ref data_type_transformation
 
 ### Find the ships that came closer than half nautical mile from an old lighthouse in Patrai ###
 
@@ -457,7 +577,7 @@ The SQL script that answers this question is listed below:
 		round ( nm2metres (0.5) ) :: integer ,
 		PointSP ( PointLL (21.72565 , 38.24513) , HDatasetID ('imis')));
 		
-Just as in the previous querie the operator @ref operators_within_distance filters filters the database. Notice that nm2metres() function is used to transform nautical miles to meters. Since Hermes uses 1 meter accuracy the number is rounded to the nearest integer. The results are shown below:
+Just as in the previous query the operator @ref operators_within_distance filters filters the database. Notice that nm2metres() function is used to transform nautical miles to meters. Since Hermes uses 1 meter accuracy the number is rounded to the nearest integer. The results are shown below:
 
 	 obj_id | traj_id 
 	--------+---------
@@ -563,7 +683,7 @@ A timeslice query is executed first and its result is used by a (spatio-temporal
 	
 ## Enter-leave points ## {#methods_enter_leave_points}
 
-The enter leave function finds the points where the object entered or left a specific region. It takes an array of segments and a box as parameters. The function returns two columns one for the enter and one for the leave point. If one of them doesn’t exist then it returns NULL to the corresponding column.
+The enter-leave function finds the points where the object entered or left a specific region. It takes an array of segments and a box as parameters. The function returns two columns one for the enter and one for the leave point. If one of them doesn’t exist then it returns NULL to the corresponding column.
 
 	SELECT enterPoint , leavePoint FROM enter_leave (array_o f_segm ents [] , box_area ) ;
 	
@@ -594,7 +714,7 @@ The SQL script that answers this question is listed below:
 	) AS tmp
 	WHERE (el).enterPoint IS NOT NULL ;
 	
-Notice the @ref methods_enter_leave_points function which takes an array of segments of the same trajectory and returns an enter and a leave points of that trajectory in the area specified in the second argument. If there is no enter and/or leave point then the corresponding property in the result of the function will be NULL. In our example, the box corresponding to the port of Patras – and returns a structure consisting of two points: the enter and leave points of the trajectory with respect to the box (or value(s) NULL if there is no enter and/or leave point). We are only interested in the enter point of the structure denoted by (el).enterPoint (see the WHERE clause at the final line of the SQL script) @cite vodas2013hermes. The results of the query are shown below:
+Notice the @ref methods_enter_leave_points function which takes an array of segments of the same trajectory and returns an enter and a leave point of that trajectory in the area specified in the second argument. If there is no enter and/or leave point then the corresponding property in the result of the function will be NULL. In our example, the box corresponding to the port of Patras – and returns a structure consisting of two points: the enter and leave points of the trajectory with respect to the box (or value(s) NULL if there is no enter and/or leave point). We are only interested in the enter point of the structure denoted by (el).enterPoint (see the WHERE clause at the final line of the SQL script) @cite vodas2013hermes. The results of the query are shown below:
 	
 	 obj_id |              enterpoint               
 	--------+---------------------------------------
@@ -610,6 +730,8 @@ Notice the @ref methods_enter_leave_points function which takes an array of segm
 	    331 | '2009-01-02 06:41:41' 1856761 3928407
 	    339 | '2009-01-01 05:22:41' 1856732 3928407	
 	(11 rows)
+	
+@see @ref [array_agg](http://www.postgresql.org/docs/9.4/static/functions-aggregate.html)
 	
 ### Find the ships that crossed Evvoia - Andros narrow passage. (Irrespective of time) (cross) ###
 
@@ -664,7 +786,7 @@ We simulate cross operator by appropriately combining enter and leave operators.
 	    
 # Advanced queries # {#queries_advanecd}
 
-Cross-tab queries are, in general, more complex and more expensive than the previous ones. Nevertheless, they are very useful for analysis purposes since they provide deeper insight into the dataset under examination.
+Below some more advanced queries are shown.
 
 ## Grid partinioning ## {#queries_grid}
 
@@ -827,5 +949,48 @@ More specifically, it takes as input a trajectory, calculates its trajectory buf
 
 	SELECT array_agg(normalized_voting ORDER BY ordinality ASC)
 	FROM S2T_VotingSignal() WITH ORDINALITY;
+	
+Below is shown the the execution of the queries:
+	
+	SET enable_seqscan = off;
+	SET
+	
+	SELECT S2T_TemporalBufferSize('00:00:00'); 
+	 s2t_temporalbuffersize 
+	------------------------
+	
+	(1 row)
+	
+	SELECT S2T_SpatialBufferSize(10000);
+ 	s2t_spatialbuffersize 
+	-----------------------
+ 
+	(1 row)
+	
+	SELECT S2T_VotingMethod('Trapezoidal');
+ 	s2t_votingmethod 
+	------------------
+ 
+	(1 row)
+	
+	SELECT 1
+	FROM ONLY imis_seg
+	WHERE seg &&& 
+	(
+		SELECT trajectory_agg(seg ORDER BY getTi(seg) ASC) FROM imis_seg WHERE (obj_id, traj_id) = (215171000, 2)
+	);
+	
+	 ?column? 
+	----------
+	(0 rows)
+	
+	
+	SELECT array_agg(normalized_voting ORDER BY ordinality ASC)
+	FROM S2T_VotingSignal() WITH ORDINALITY;
+	 array_agg 
+	-----------
+ 
+	(1 row)
+		
 	
 @see http://infolab.cs.unipi.gr/technical_reports/TR-2013-02.pdf

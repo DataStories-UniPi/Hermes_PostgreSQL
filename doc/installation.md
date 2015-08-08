@@ -51,10 +51,6 @@ Optional requirements:
 
 - You can use the [Hermes Installer](https://hermes-mod.java.net/Installer/BookVersion/HermesInstaller.zip)
 
-# Installation on Mac OS {#installation_mac}
-
-- ???
-
 # Compile from source code on Ubuntu 14.04 {#installation_compile}
 
 If you are compiling the Hermes MOD from source, except from the PostgreSQL you will also need to install the postgresql-server-dev-9.4 

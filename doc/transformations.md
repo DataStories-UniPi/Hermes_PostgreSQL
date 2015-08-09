@@ -269,5 +269,54 @@ csv files\), we get the following result:
 
 ![Initial \(blue\) and transformed \(green\) dataset](images\synced.png)
 @image latex synced.png "Initial \(blue\) and transformed \(green\) dataset" width=\textwidth
+
 ## Trajectory Random Shift Transformation {#random_shift}
 **trajectory\_transformation\_random\_shift (dataset, rate, distance, \[save\], \[new\_dataset\_name\], \[csv_file\])**
+###Returns###
+The integer 1 to indicate that everything went right.
+###Parameters Description###
+- **dataset** Text, the name with which the dataset is stored in Hermes.
+- **rate** Float between 0 and 1, number of points to be shifted
+(rate \* |points|).
+- **distance** Integer, shifted point - trajectory point maximum distance, in
+meters.
+- **save** \(Optional\) Boolean, indicates whether the new dataset will be
+saved in Hermes or not. If left blank, the new dataset will be saved.
+- **new\_dataset\_name** \(Optional\) Text, If save is True, the name of the
+new dataset inside Hermes. If left blank, the name of the new_dataset will be
+*transformed\_random\_shift*
+- **csv\_file** \(Optional\) Boolean, Indicates whether the new dataset will be
+exported to a csv file, with the default format of Hermes. If left blank, the
+dataset will be exported to a csv file.
+
+###Example###
+For example purposes, suppose we have a dataset, saved in Hermes, containing one
+trajectory.
+The name of the dataset is gmaps. The segments of the dataset are shown below.
+![Segments of gmaps dataset](images\gmaps.png)
+@image latex gmaps.png "Segments of gmaps dataset" width=\textwidth
+
+It is clear that the trajectory consists of 7 ST Points. If we wanted to shift
+60% of the trajectory points, by random direction and distance \(distance at
+  most 1500 meters\) we could run the following querie:
+
+      SELECT trajectory_transformation_random_shift('gmaps', 0.6, 1500, True, 'new_r', True);
+
+As a result, we get a new dataset named new\_r\_random\_shift, which consists of
+the initial points, 60% of them shifted by random direction and offset each. By
+running the following querie we can see the new trajectory segments.
+
+      SELECT * FROM new_r_random_shift_seg;
+
+![Segments of random shift gmaps dataset](images\gmaps_random.png)
+@image latex gmaps_random.png "Segments of random shift gmaps dataset" width=\textwidth
+
+Additionally, due to csv_file parameter being True, we get a cvs file
+in the data folder. The name of the file would be *gmaps\_transformed\_randomshift\_0.6\_1500.txt*. Generally, the name of the csv file will
+be *dataset + \_transformed + \_kind of transformation + \_parameters*
+
+If we load the initial and the transformed datasets in Google Maps \(from the
+csv files\), we get the following result:
+
+![Initial \(blue\) and transformed \(pink\) dataset](images\random.png)
+@image latex random.png "Initial \(blue\) and transformed \(pink\) dataset" width=\textwidth

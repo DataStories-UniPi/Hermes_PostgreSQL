@@ -85,6 +85,79 @@ This function takes as input a segment and a point and returns the closest point
 	--------------
  	0 1
 	(1 row)
+	
+## pointAt ## {#methods_pointAt}
+
+This function returns the point at a specific position of the trajectory.
+
+	SELECT PointAt(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:40' :: Timestamp, PointSP(4,4))]),2);
+          pointat          
+	---------------------------
+ 	'2008-12-31 19:30:40' 4 4
+	(1 row)
+
+## segmentAt ## {#methods_segmentAt}
+
+This function returns the segment at a specific position of the trajectory.
+
+	SELECT SegmentAt(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:40' :: Timestamp, PointSP(4,4))]),1);
+                      segmentat                      
+	-----------------------------------------------------
+ 	'2008-12-31 19:29:32' 1 1 '2008-12-31 19:30:40' 4 4
+	(1 row)
+
+## firstPoint ## {#methods_firstPoint}
+
+This function returns the first point of a trajectory.
+
+	SELECT firstPoint(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:40' :: Timestamp, PointSP(4,4))]));
+        firstpoint         
+	---------------------------
+ 	'2008-12-31 19:29:32' 1 1
+	(1 row)
+
+## lastPoint ## {#methods_lastPoint}
+
+This function returns the last point of a trajectory.
+
+	SELECT lastPoint(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:40' :: Timestamp, PointSP(4,4))]));
+         lastpoint         
+	---------------------------
+ 	'2008-12-31 19:30:40' 4 4
+	(1 row)
+
+## firstSegment ## {#methods_firstSegment}
+
+This function returns the first segment of the trajectory.
+
+	SELECT firstSegment(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:40' :: Timestamp, PointSP(4,4))]));
+                    firstsegment                     
+	-----------------------------------------------------
+ 	'2008-12-31 19:29:32' 1 1 '2008-12-31 19:30:40' 4 4
+	(1 row)
+
+
+## lastSegment ## {#methods_lastSegment}
+
+This function returns the last segment of the trajectory.
+
+	SELECT lastSegment(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:40' :: Timestamp, PointSP(4,4))]));
+                     lastsegment                     
+	-----------------------------------------------------
+ 	'2008-12-31 19:29:32' 1 1 '2008-12-31 19:30:40' 4 4
+	(1 row)
+
+
+## sub ## {#methods_sub}
+
+This function returns the sub-trajectory from a trajectory specified by the two integers.
+
+	SELECT sub(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:40' :: Timestamp, PointSP(4,4))]),1,2);
+                         sub                         
+	-----------------------------------------------------
+ 	'2008-12-31 19:29:32' 1 1,'2008-12-31 19:30:40' 4 4
+	(1 row)
+
 
 ## At period ## {#methods_atperiod}
 
@@ -192,7 +265,6 @@ This function returns the masscenter of a trajectory. -- PENDING!! --
  	2 2
 	(1 row)
 
-
 ## Gyradius ## {#methods_gyradius}
 
 This function returns the [radius of gyration](https://en.wikipedia.org/wiki/Radius_of_gyration) of a trajectory. -- PENDING!! --
@@ -202,7 +274,6 @@ This function returns the [radius of gyration](https://en.wikipedia.org/wiki/Rad
 	-----------------
  	1.4142135623731
 	(1 row)
-
 
 ## anglexxavg ## {#methods_anglexxavg}
 
@@ -214,7 +285,6 @@ This function returns the average direction of a trajectory.
  	0.785398163397448
 	(1 row)
 
-
 ## anglexx ## {#methods_anglexx}
 
 -- PENDING!! --
@@ -223,6 +293,16 @@ This function returns the average direction of a trajectory.
       anglexx      
 	-------------------
  	0.785398163397448
+	(1 row)
+	
+## samplingPeriod ## {#methods_samplingPeriod}
+
+-- PENDING!! --
+
+	SELECT SamplingPeriod(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:40' :: Timestamp, PointSP(4,4))]));
+ 	samplingperiod 
+	----------------
+ 	00:01:08
 	(1 row)
 
 ## normalizedsamplingrate ## {#methods_normalizedsamplingrate}
@@ -235,11 +315,39 @@ This function returns the average direction of a trajectory.
      0.0344827586206897
 	(1 row)
 	
+## size ## {#methods_size}
+
+This function returns the size of the trajectory in bytes.
+
+	SELECT size(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1))]));
+ 	size 
+	------
+   	32
+	(1 row)
+
+## NrPoints ## {#methods_NrPoints}
+
+This functions returns the number of points in a trajectory.
+	
+	SELECT NrPoints(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:40' :: Timestamp, PointSP(4,4))]));
+ 	nrpoints 
+	----------
+    	    2
+	(1 row)
+
+## NrSegments ## {#methods_NrSegments}
+
+This function returns the number of segments in a trajectory.
+	
+	SELECT NrSegments(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:40' :: Timestamp, PointSP(4,4))]));
+ 	nrsegments 
+	------------
+          1
+	(1 row)
+	
 ## get ## {#methods_get}
 
 This category of functions returns the attributes of an object.
-
--- PENDING!! --
 
 Function                | Returns
 :---------------------: | :-----------:
@@ -295,51 +403,6 @@ Some examples are shown below:
 @see @ref LineSP/Definition.sql
 @see @ref RangeSP/Definition.sql
 @see @ref PointST/Definition.sql
-
-## size ## {#methods_size}
-
--- PENDING!! --
-
-## NrPoints ## {#methods_NrPoints}
-
--- PENDING!! --
-
-## NrSegments ## {#methods_NrSegments}
-
--- PENDING!! --
-
-## samplingPeriod ## {#methods_samplingPeriod}
-
--- PENDING!! --
-
-## pointAt ## {#methods_pointAt}
-
--- PENDING!! --
-
-## segmentAt ## {#methods_segmentAt}
-
--- PENDING!! --
-
-## firstPoint ## {#methods_firstPoint}
-
--- PENDING!! --
-
-## lastPoint ## {#methods_lastPoint}
-
--- PENDING!! --
-
-## firstSegment ## {#methods_firstSegment}
-
--- PENDING!! --
-
-## lastSegment ## {#methods_lastSegment}
-
--- PENDING!! --
-
-## sub ## {#methods_sub}
-
--- PENDING!! --
-
 
 # Functions & Operators # {#operators}
 

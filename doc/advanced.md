@@ -175,8 +175,8 @@ The previous transformation actually decomposes the dissimilarity calculation pr
 
 Hermes implements 2 functions that use the DISSIM similarity:
 
-- **DISSIMApproximate:** Κοίταξα τις υλοποιήσεις αλλά δεν κατάλαβα τις διαφορές τους !!!
-- **DISSIMExact:** Κοίταξα τις υλοποιήσεις αλλά δεν κατάλαβα τις διαφορές τους !!!
+- **DISSIMApproximate:** -- PENDING!! --
+- **DISSIMExact:** -- PENDING!! --
 
 Below are shown some examples:
 
@@ -432,8 +432,8 @@ TRACLUS framework quantifies the distance between directed segments, which actua
 An example using the TRACLUS`s distances with Hermes is shown below:
 
 - **projectionPointTraclus:** Takes as an input a PointSP and a SegmentSP and returns a PointSP which is the projection of the input PointSP on the input SegmentSP
-	
-		SELECT projectionPointTraclus(
+
+	SELECT projectionPointTraclus(
 			'2247569 4792246'::pointsp, 
 			'2247568 4792243 2246947 4782505'::segmentsp
 		);
@@ -444,8 +444,8 @@ An example using the TRACLUS`s distances with Hermes is shown below:
 		(1 row)		
       
 - **perpendicularDistanceTraclus:** Takes as an input two SegmentSP and returns a double precision which is the perpendicular distance between the two segments as defined in the Traclus paper
-	    
-    	﻿SELECT perpendicularDistanceTraclus(
+	
+	SELECT perpendicularDistanceTraclus(
     		'2247569 4792246 2246943 4782504'::segmentsp, 
     		'2247568 4792243 2246947 4782505'::segmentsp
     	);    
@@ -456,7 +456,7 @@ An example using the TRACLUS`s distances with Hermes is shown below:
 
 - **parallelDistanceTraclus:** Takes as an input two SegmentSP and returns a double precision which is the parallel distance between the two segments as defined in the Traclus paper
 
-	    ﻿SELECT parallelDistanceTraclus(
+	SELECT parallelDistanceTraclus(
 	    	'2247569 4792246 2246943 4782504'::segmentsp, 	
 	    	'2247568 4792243 2246947 4782505'::segmentsp
 	    );
@@ -467,7 +467,7 @@ An example using the TRACLUS`s distances with Hermes is shown below:
 
 - **angleDistanceTraclus:** Takes as an input two SegmentSP and returns a double precision which is the angle distance between the two segments as defined in the Traclus paper
 
-    	﻿SELECT angleDistanceTraclus(
+	SELECT angleDistanceTraclus(
     		'2247569 4792246 2246943 4782504'::segmentsp, 
     		'2247568 4792243 2246947 4782505'::segmentsp
     	);
@@ -478,7 +478,7 @@ An example using the TRACLUS`s distances with Hermes is shown below:
     		
 - **traclusDistance:** Takes as an input two SegmentSP and 3 real which represent the weights for each of the above described distance functions (w_perpendicular, w_parallel and w_angle). It returns a double precision which is the overall distance between the two segments as defined in the Traclus paper. 
 
-    	SELECT traclusDistance(
+	SELECT traclusDistance(
     		SegmentSP(PointSP(2337709, 4163887),PointSP(3228259, 4721671)),
     		SegmentSP(PointSP(2337709, 4163887),PointSP(3228259, 4721671)),
     		1, 1, 1
@@ -502,18 +502,18 @@ It takes as input a set of trajectories and a set of parameters and returns a se
 
 The first step is the voting step where each trajectory gets voted by all the other trajectories. The input of the voting procedure is a set of trajectories, and a set of parameters (temporal buffer size, spatial buffer size, sigma). This is achieved by employing the aforementioned TBQ query. The output is a set of voting signals
 
-The second step is the segmentation phase where each trajectory is broken down to homogeneous sub-trajectories  w.r.t. their voting. The input of this procedure is output of the voting step, which is a set of trajectories with their corresponding voting signals, and a two parameters w and τ. The output is a set of sub-trajectories
+The second step is the segmentation phase where each trajectory is broken down to homogeneous sub-trajectories  w.r.t. their voting. The input of this procedure is output of the voting step, which is a set of trajectories with their corresponding voting signals, and a two parameters w and \f$\tau\f$. The output is a set of sub-trajectories
 
 The third step is the sampling step where from the set of sub-trajectories produced by the previous step the most representatives are selected. The input is a set of sub-trajectories and a set of parameters (temporal buffer size, spatial buffer size, M and eps_ssa). The output is a set of representative sub-trajectories.
 
 Finally, the fourth step is the clustering phase, where the clusters are built "around" the representative sub-trajectories produced by the sampling procedure, which play the role of cluster seeds. The input is the set of the representative sub-trajectories, the set of the rest of the sub-trajectories and a set of parameters (temporal buffer size, spatial buffer size and eps_sca)
 
-	﻿DROP TABLE IF EXISTS S2T_Parameters CASCADE;
+	DROP TABLE IF EXISTS S2T_Parameters CASCADE;
 	CREATE TEMPORARY TABLE S2T_Parameters (key text NOT NULL, value text NOT NULL, PRIMARY KEY (key)); --Creating a temporary table in order to store the parameters
 	INSERT INTO S2T_Parameters(key, value) VALUES ('D', 'imis');--Defining the dataset
 	INSERT INTO S2T_Parameters(key, value) VALUES ('NN_method', 'Hermes');--Setting the TBQ as the voting approach
 	INSERT INTO S2T_Parameters(key, value) SELECT 'w', round((avg_trajectory_points + 1) * 0.2)::integer FROM hdatasets_statistics WHERE dataset = HDatasetID('imis');--Setting parameter w which is used for the segmentation phase. Parameter w sets the minimum size of a partitioned trajectory  
-	INSERT INTO S2T_Parameters(key, value) VALUES ('tau', 0.01);--Setting parameter τ which is used for the segmentation phase. Parameter τ is related with the segmentation sensitivity of our method. As τ increases, the number of sub-trajectories reduces.  
+	INSERT INTO S2T_Parameters(key, value) VALUES ('tau', 0.01);--Setting parameter  which is used for the segmentation phase. Parameter \f$\tau\f$ is related with the segmentation sensitivity of our method. As \f$\tau\f$ increases, the number of sub-trajectories reduces.  
 	INSERT INTO S2T_Parameters(key, value) VALUES ('M', 500);-- Setting the maximum number of representatives to be identified.
 	INSERT INTO S2T_Parameters(key, value) VALUES ('eps_ssa', 0.001);--Setting the parameter eps_ssa which is used for the sampling phase. It is a positive real number close to zero that acts as a lower bound threshold of similarity between sub-trajectories and representative candidates.
 	INSERT INTO S2T_Parameters(key, value) VALUES ('eps_sca', 0.001);--Setting the parameter eps_sca which is used for the clustering phase. It is a positive real number close to zero that acts as a lower bound threshold of similarity between sub-trajectories and representatives.

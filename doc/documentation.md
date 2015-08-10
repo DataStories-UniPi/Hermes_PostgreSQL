@@ -8,9 +8,10 @@ For the generation of the documentation, doxygen must be installed. Analytical i
 
 In ubuntu 14.04 this is achieved by executing the following in a terminal:
 
+	sudo apt-get install doxygen graphviz
 	cd hermes 
 	
-which changes the current directory to the Hermes MOD source. Generally someone will have to use the path were his source code is. Afterwards we call the doxygen by using: 
+which installs doxygen and changes the current directory to the Hermes MOD source. Generally someone will have to use the path were his source code is. Afterwards we call the doxygen by using:
 
 	doxygen hermes.doxyfile
 	

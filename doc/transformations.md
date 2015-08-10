@@ -32,7 +32,7 @@ dataset will be exported to a csv file.
 For example purposes, suppose we have a dataset, saved in Hermes, containing one
 trajectory.
 The name of the dataset is gmaps. The segments of the dataset are shown below.
-![Segments of gmaps dataset](images\gmaps.png)
+![Segments of gmaps dataset](gmaps.png)
 @image latex gmaps.png "Segments of gmaps dataset" width=\textwidth
 
 It is clear that the trajectory consists of 7 ST Points. If we wanted to perform
@@ -47,7 +47,7 @@ trajectory segments:
 
       SELECT * FROM new_d_dec_sr_seg;
 
-![Segments of decreased sr gmaps dataset](images\gmaps_dec.png)
+![Segments of decreased sr gmaps dataset](gmaps_dec.png)
 @image latex gmaps_dec.png "Segments of decreased sr gmaps dataset" width=\textwidth
 
 Additionally, due to csv_file parameter being True, we get a cvs file
@@ -57,7 +57,7 @@ be *dataset + \_transformed + \_kind of transformation + \_parameters*
 If we load the initial and the transformed datasets in Google Maps \(from the
 csv files\), we get the following result:
 
-![Initial \(blue\) and transformed \(red\) dataset](images\dec_04.png)
+![Initial \(blue\) and transformed \(red\) dataset](dec_04.png)
 @image latex dec_04.png "Initial \(blue\) and transformed \(red\) dataset" width=\textwidth
 
 ## Increased Sampling Rate Transformation {#increased_sr}
@@ -82,7 +82,7 @@ dataset will be exported to a csv file.
 For example purposes, suppose we have a dataset, saved in Hermes, containing one
 trajectory.
 The name of the dataset is gmaps. The segments of the dataset are shown below.
-![Segments of gmaps dataset](images\gmaps.png)
+![Segments of gmaps dataset](gmaps.png)
 @image latex gmaps.png "Segments of gmaps dataset" width=\textwidth
 
 It is clear that the trajectory consists of 7 ST Points. If we wanted to perform
@@ -100,7 +100,7 @@ trajectory segments:
 
       SELECT * FROM new_i_inc_sr_seg;
 
-![Segments of increased sr gmaps dataset](images\gmaps_inc.png)
+![Segments of increased sr gmaps dataset](gmaps_inc.png)
 @image latex gmaps_inc.png "Segments of increased sr gmaps dataset" width=\textwidth
 
 Additionally, due to csv_file parameter being True, we get a cvs file
@@ -110,7 +110,7 @@ be *dataset + \_transformed + \_kind of transformation + \_parameters*
 If we load the initial and the transformed datasets in Google Maps \(from the
 csv files\), we get the following result:
 
-![Initial \(blue\) and transformed dataset](images\inc_04.png)
+![Initial \(blue\) and transformed dataset](inc_04.png)
 @image latex inc_04.png "Initial \(blue\) and transformed dataset" width=\textwidth
 
 ## Time Interval With Step Transformation {#time_sr}
@@ -139,7 +139,7 @@ dataset will be exported to a csv file.
 For example purposes, suppose we have a dataset, saved in Hermes, containing one
 trajectory.
 The name of the dataset is gmaps. The segments of the dataset are shown below.
-![Segments of gmaps dataset](images\gmaps.png)
+![Segments of gmaps dataset](gmaps.png)
 @image latex gmaps.png "Segments of gmaps dataset" width=\textwidth
 
 It is clear that the trajectory consists of 7 ST Points. If we wanted to keep
@@ -155,7 +155,7 @@ with the given step. If we run the following querie we get the new
 
       SELECT * FROM new_t_time_sr_seg;
 
-![Segments of time sr gmaps dataset](images\gmaps_time.png)
+![Segments of time sr gmaps dataset](gmaps_time.png)
 @image latex gmaps_time.png "Segments of time sr gmaps dataset" width=\textwidth
 
 Additionally, due to csv_file parameter being True, we get a cvs file
@@ -165,7 +165,7 @@ be *dataset + \_transformed + \_kind of transformation + \_parameters*
 If we load the initial and the transformed datasets in Google Maps \(from the
 csv files\), we get the following result:
 
-![Initial \(blue\) and transformed \(green\) dataset](images\time.png)
+![Initial \(blue\) and transformed \(green\) dataset](time.png)
 @image latex time.png "Initial \(blue\) and transformed \(green\) dataset" width=\textwidth
 
 ## Adding Noise Points Transformation {#add_noise}
@@ -191,7 +191,7 @@ dataset will be exported to a csv file.
 For example purposes, suppose we have a dataset, saved in Hermes, containing one
 trajectory.
 The name of the dataset is gmaps. The segments of the dataset are shown below.
-![Segments of gmaps dataset](images\gmaps.png)
+![Segments of gmaps dataset](gmaps.png)
 @image latex gmaps.png "Segments of gmaps dataset" width=\textwidth
 
 It is clear that the trajectory consists of 7 ST Points. If we wanted to add
@@ -206,7 +206,7 @@ following querie we get the new trajectory segments:
 
       SELECT * FROM new_n_add_noise_seg;
 
-![Segments of noise gmaps dataset](images\gmaps_noise.png)
+![Segments of noise gmaps dataset](gmaps_noise.png)
 @image latex gmaps_noise.png "Segments of noise gmaps dataset" width=\textwidth
 
 Additionally, due to csv_file parameter being True, we get a cvs file
@@ -216,7 +216,7 @@ be *dataset + \_transformed + \_kind of transformation + \_parameters*
 If we load the initial and the transformed datasets in Google Maps \(from the
 csv files\), we get the following result:
 
-![Initial \(blue\) and transformed \(purple\) dataset](images\noise_04.png)
+![Initial \(blue\) and transformed \(purple\) dataset](noise_04.png)
 @image latex noise_04.png "Initial \(blue\) and transformed \(purple\) dataset" width=\textwidth
 
 ## Trajectory Synced Shift Transformation {#synced_shift}
@@ -242,7 +242,7 @@ dataset will be exported to a csv file.
 For example purposes, suppose we have a dataset, saved in Hermes, containing one
 trajectory.
 The name of the dataset is gmaps. The segments of the dataset are shown below.
-![Segments of gmaps dataset](images\gmaps.png)
+![Segments of gmaps dataset](gmaps.png)
 @image latex gmaps.png "Segments of gmaps dataset" width=\textwidth
 
 It is clear that the trajectory consists of 7 ST Points. If we wanted to shift
@@ -257,7 +257,7 @@ running the following querie we can see the new trajectory segments.
 
       SELECT * FROM new_s_synced_shift_seg;
 
-![Segments of synced shift gmaps dataset](images\gmaps_sync.png)
+![Segments of synced shift gmaps dataset](gmaps_sync.png)
 @image latex gmaps_sync.png "Segments of synced shift gmaps dataset" width=\textwidth
 
 Additionally, due to csv_file parameter being True, we get a cvs file
@@ -267,7 +267,7 @@ be *dataset + \_transformed + \_kind of transformation + \_parameters*
 If we load the initial and the transformed datasets in Google Maps \(from the
 csv files\), we get the following result:
 
-![Initial \(blue\) and transformed \(green\) dataset](images\synced.png)
+![Initial \(blue\) and transformed \(green\) dataset](synced.png)
 @image latex synced.png "Initial \(blue\) and transformed \(green\) dataset" width=\textwidth
 
 ## Trajectory Random Shift Transformation {#random_shift}
@@ -293,7 +293,7 @@ dataset will be exported to a csv file.
 For example purposes, suppose we have a dataset, saved in Hermes, containing one
 trajectory.
 The name of the dataset is gmaps. The segments of the dataset are shown below.
-![Segments of gmaps dataset](images\gmaps.png)
+![Segments of gmaps dataset](gmaps.png)
 @image latex gmaps.png "Segments of gmaps dataset" width=\textwidth
 
 It is clear that the trajectory consists of 7 ST Points. If we wanted to shift
@@ -308,7 +308,7 @@ running the following querie we can see the new trajectory segments.
 
       SELECT * FROM new_r_random_shift_seg;
 
-![Segments of random shift gmaps dataset](images\gmaps_random.png)
+![Segments of random shift gmaps dataset](gmaps_random.png)
 @image latex gmaps_random.png "Segments of random shift gmaps dataset" width=\textwidth
 
 Additionally, due to csv_file parameter being True, we get a cvs file
@@ -318,5 +318,5 @@ be *dataset + \_transformed + \_kind of transformation + \_parameters*
 If we load the initial and the transformed datasets in Google Maps \(from the
 csv files\), we get the following result:
 
-![Initial \(blue\) and transformed \(pink\) dataset](images\random.png)
+![Initial \(blue\) and transformed \(pink\) dataset](random.png)
 @image latex random.png "Initial \(blue\) and transformed \(pink\) dataset" width=\textwidth

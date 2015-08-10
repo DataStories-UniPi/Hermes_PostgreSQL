@@ -562,6 +562,8 @@ By enclosing a folder element into a KML document element, a KML file is ready t
 		FROM TABULAR_RESULT
 	) TO '/home/anagno/Timeslice.kml';
 	
+The produced file is shown in [Timeslice.kml](Timeslice.kml).
+	
 Another more complicated example is shown below:
 
 	COPY (
@@ -612,6 +614,8 @@ Another more complicated example is shown below:
 			GROUP BY obj_id
 		) AS folders
 	) TO '/home/anagno/postgresql/Range.kml';
+	
+Again the produced file is shown in [Range.kml](Range.kml) .
 	
 \see KML.sql
 \see [PostgreSQL aggregate functions](http://www.postgresql.org/docs/9.4/static/functions-aggregate.html)

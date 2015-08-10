@@ -563,6 +563,9 @@ By enclosing a folder element into a KML document element, a KML file is ready t
 	) TO '/home/anagno/Timeslice.kml';
 	
 The produced file is shown in [Timeslice.kml](Timeslice.kml).
+
+![The visualization of the Timeslice.kml](Timeslice.jpeg)
+@image latex Timeslice.jpeg "The visualization of the Timeslice.kml" 
 	
 Another more complicated example is shown below:
 
@@ -616,6 +619,9 @@ Another more complicated example is shown below:
 	) TO '/home/anagno/postgresql/Range.kml';
 	
 Again the produced file is shown in [Range.kml](Range.kml) .
+
+![The visualization of the Range.kml](Range.jpeg)
+@image latex Range.jpeg "The visualization of the Range.kml" 
 	
 \see KML.sql
 \see [PostgreSQL aggregate functions](http://www.postgresql.org/docs/9.4/static/functions-aggregate.html)

@@ -2,7 +2,7 @@
  * @file
  * @author Kiriakos Velissariou (kir.velissariou@gmail.com).
  * @brief The file implements six different trajectory transformation functions
- * 
+ *
  *
  */
 
@@ -15,7 +15,7 @@
  *	@param[in] csv_file Boolean which indicates whether the new dataset will exported in a cvs format (traj_new.txt)
  *
  *  @return Interger 1 to indicate succesfull completion
- * 
+ *
  */
 CREATE OR REPLACE FUNCTION trajectory_transformation_dec_sr (dataset text, rate float, save boolean DEFAULT True, new_dataset_name text DEFAULT 'transformed', csv_file boolean DEFAULT True)
 RETURNS integer
@@ -29,7 +29,7 @@ AS $$
 #-------------------------helper functions----------------------------------
 	def date_between(start, end):
 		"""
-		This function will return a random datetime between two datetime 
+		This function will return a random datetime between two datetime
 		objects.
 		"""
 		delta = end - start
@@ -61,9 +61,12 @@ AS $$
 	for i in range(0, len(traj_result)):
 		seg_qry = "SELECT * FROM " + dataset + "_seg WHERE obj_id =" + str(traj_result[i]['obj_id']) + "AND traj_id =" + str(traj_result[i]['traj_id'])
 		seg_result = plpy.execute(seg_qry)
+
+		points_to_delete = int(rate * (len(seg_result) + 1))
+		delete_list = random.sample(range(0, len(seg_result) - 1), points_to_delete)
+
 		for j in range(0, len(seg_result)):
-			stay_possibility = random.random()
-			if stay_possibility > rate:
+			if j not in delete_list:
 				traj_stripped = seg_result[j]['seg'].split(" '")
 				traj_stripped = traj_stripped[0]
 				traj_stripped = traj_stripped.replace("'", '')
@@ -80,7 +83,7 @@ AS $$
 		coords = xy_lanlot(traj_stripped[2], traj_stripped[3], "3857")
 		coords = coords.split(' ')
 		traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + coords[0] + "," + coords[1]
-		generated_trajectories.write("%d,%d,%s\n" % (seg_result[j]['obj_id'], seg_result[j]['traj_id'], traj_stripped))	
+		generated_trajectories.write("%d,%d,%s\n" % (seg_result[j]['obj_id'], seg_result[j]['traj_id'], traj_stripped))
 
 	generated_trajectories.close()
 
@@ -92,7 +95,7 @@ AS $$
 
 	if not csv_file:
 		os.remove(csv_name)
-		
+
 	return 1
 $$ LANGUAGE plpython3u;
 
@@ -105,7 +108,7 @@ $$ LANGUAGE plpython3u;
  *	@param[in] csv_file Boolean which indicates whether the new dataset will exported in a cvs format (traj_new.txt)
  *
  *  @return Interger 1 to indicate succesfull completion
- * 
+ *
  */
 CREATE OR REPLACE FUNCTION trajectory_transformation_inc_sr (dataset text, rate float, save boolean DEFAULT True, new_dataset_name text DEFAULT 'transformed', csv_file boolean DEFAULT True)
 RETURNS integer
@@ -119,7 +122,7 @@ AS $$
 #-------------------------helper functions----------------------------------
 	def date_between(start, end):
 		"""
-		This function will return a random datetime between two datetime 
+		This function will return a random datetime between two datetime
 		objects.
 		"""
 		delta = end - start
@@ -152,6 +155,10 @@ AS $$
 	for i in range(0, len(traj_result)):
 		seg_qry = "SELECT * FROM " + dataset + "_seg WHERE obj_id =" + str(traj_result[i]['obj_id']) + "AND traj_id =" + str(traj_result[i]['traj_id'])
 		seg_result = plpy.execute(seg_qry)
+
+		points_to_add = int(rate * (len(seg_result) + 1))
+		add_list = random.sample(range(0, len(seg_result) - 1), points_to_add)
+
 		for j in range(0, len(seg_result)):
 			traj_stripped = seg_result[j]['seg'].split(" '")
 			traj_stripped = traj_stripped[0]
@@ -164,10 +171,9 @@ AS $$
 			y1 = traj_stripped[3]
 			traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + coords[0] + "," + coords[1]
 			generated_trajectories.write("%d,%d,%s\n" % (seg_result[j]['obj_id'], seg_result[j]['traj_id'], traj_stripped))
-				
 
-			add_possibility = random.random()
-			if add_possibility <= rate:
+
+			if j in add_list:
 				next_traj_stripped = seg_result[j]['seg'].split(" '")
 				next_traj_stripped = next_traj_stripped[1]
 				next_traj_stripped = next_traj_stripped.replace("'", '')
@@ -182,7 +188,7 @@ AS $$
 				new_timestamp = new_timestamp.strftime('%Y-%m-%d %H:%M:%S')
 				start_timestamp = start_timestamp.strftime('%Y-%m-%d %H:%M:%S')
 				end_timestamp = end_timestamp.strftime('%Y-%m-%d %H:%M:%S')
-				at_instant_qry = "SELECT atInstant(SegmentST(" + "'" +  start_timestamp  + "'" + "," + x1 + "," + y1 + "," + "'" + end_timestamp + "'" + "," + x2 + "," + y2 + "), " + "'" + new_timestamp + "'" + ");" 
+				at_instant_qry = "SELECT atInstant(SegmentST(" + "'" +  start_timestamp  + "'" + "," + x1 + "," + y1 + "," + "'" + end_timestamp + "'" + "," + x2 + "," + y2 + "), " + "'" + new_timestamp + "'" + ");"
 				interpolation = plpy.execute(at_instant_qry)
 
 				interpolation = interpolation[0]['atinstant']
@@ -213,9 +219,9 @@ AS $$
 
 	if not csv_file:
 		os.remove(csv_name)
-		
+
 	return 1
-$$ LANGUAGE plpython3u;	
+$$ LANGUAGE plpython3u;
 
 
 /** @brief This function performs trajectory transformation within a specified time period, with a specified step
@@ -229,7 +235,7 @@ $$ LANGUAGE plpython3u;
  *	@param[in] csv_file Boolean which indicates whether the new dataset will exported in a cvs format (traj_new.txt)
  *
  *  @return Interger 1 to indicate succesfull completion
- * 
+ *
  */
 CREATE OR REPLACE FUNCTION trajectory_transformation_time_sr (dataset text, start_date text, end_date text, step integer,save boolean DEFAULT True, new_dataset_name text DEFAULT 'transformed', csv_file boolean DEFAULT True)
 RETURNS integer
@@ -243,7 +249,7 @@ AS $$
 #-------------------------helper functions----------------------------------
 	def date_between(start, end):
 		"""
-		This function will return a random datetime between two datetime 
+		This function will return a random datetime between two datetime
 		objects.
 		"""
 		delta = end - start
@@ -312,9 +318,9 @@ AS $$
 
 	if not csv_file:
 		os.remove(csv_name)
-		
+
 	return 1
-$$ LANGUAGE plpython3u;	
+$$ LANGUAGE plpython3u;
 
 
 /** @brief This function performs trajectory transformation by adding noise points (outliers) to the initial trajectory
@@ -327,7 +333,7 @@ $$ LANGUAGE plpython3u;
  *	@param[in] csv_file Boolean which indicates whether the new dataset will exported in a cvs format (traj_new.txt)
  *
  *  @return Interger 1 to indicate succesfull completion
- * 
+ *
  */
 CREATE OR REPLACE FUNCTION trajectory_transformation_add_noise (dataset text, rate float, distance float, save boolean DEFAULT True, new_dataset_name text DEFAULT 'transformed', csv_file boolean DEFAULT True)
 RETURNS integer
@@ -342,7 +348,7 @@ AS $$
 #-------------------------helper functions----------------------------------
 	def date_between(start, end):
 		"""
-		This function will return a random datetime between two datetime 
+		This function will return a random datetime between two datetime
 		objects.
 		"""
 		delta = end - start
@@ -375,6 +381,10 @@ AS $$
 	for i in range(0, len(traj_result)):
 		seg_qry = "SELECT * FROM " + dataset + "_seg WHERE obj_id =" + str(traj_result[i]['obj_id']) + "AND traj_id =" + str(traj_result[i]['traj_id'])
 		seg_result = plpy.execute(seg_qry)
+
+		points_to_add = int(rate * (len(seg_result) + 1))
+		add_list = random.sample(range(0, len(seg_result) - 1), points_to_add)
+
 		for j in range(0, len(seg_result)):
 			traj_stripped = seg_result[j]['seg'].split(" '")
 			traj_stripped = traj_stripped[0]
@@ -387,10 +397,9 @@ AS $$
 			y1 = traj_stripped[3]
 			traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + coords[0] + "," + coords[1]
 			generated_trajectories.write("%d,%d,%s\n" % (seg_result[j]['obj_id'], seg_result[j]['traj_id'], traj_stripped))
-				
 
-			add_possibility = random.random()
-			if add_possibility <= rate:
+
+			if j in add_list:
 				next_traj_stripped = seg_result[j]['seg'].split(" '")
 				next_traj_stripped = next_traj_stripped[1]
 				next_traj_stripped = next_traj_stripped.replace("'", '')
@@ -405,7 +414,7 @@ AS $$
 				new_timestamp = new_timestamp.strftime('%Y-%m-%d %H:%M:%S')
 				start_timestamp = start_timestamp.strftime('%Y-%m-%d %H:%M:%S')
 				end_timestamp = end_timestamp.strftime('%Y-%m-%d %H:%M:%S')
-				at_instant_qry = "SELECT atInstant(SegmentST(" + "'" +  start_timestamp  + "'" + "," + x1 + "," + y1 + "," + "'" + end_timestamp + "'" + "," + x2 + "," + y2 + "), " + "'" + new_timestamp + "'" + ");" 
+				at_instant_qry = "SELECT atInstant(SegmentST(" + "'" +  start_timestamp  + "'" + "," + x1 + "," + y1 + "," + "'" + end_timestamp + "'" + "," + x2 + "," + y2 + "), " + "'" + new_timestamp + "'" + ");"
 				interpolation = plpy.execute(at_instant_qry)
 
 				#The noise addition will take place here
@@ -445,9 +454,9 @@ AS $$
 
 	if not csv_file:
 		os.remove(csv_name)
-		
+
 	return 1
-$$ LANGUAGE plpython3u;	
+$$ LANGUAGE plpython3u;
 
 /** @brief This function performs trajectory transformation by shifting randomly rate % points
  *
@@ -459,7 +468,7 @@ $$ LANGUAGE plpython3u;
  *	@param[in] csv_file Boolean which indicates whether the new dataset will exported in a cvs format (traj_new.txt)
  *
  *  @return Interger 1 to indicate succesfull completion
- * 
+ *
  */
 CREATE OR REPLACE FUNCTION trajectory_transformation_random_shift (dataset text, rate float, distance float, save boolean DEFAULT True, new_dataset_name text DEFAULT 'transformed', csv_file boolean DEFAULT True)
 RETURNS integer
@@ -497,20 +506,23 @@ AS $$
 	for i in range(0, len(traj_result)):
 		seg_qry = "SELECT * FROM " + dataset + "_seg WHERE obj_id =" + str(traj_result[i]['obj_id']) + "AND traj_id =" + str(traj_result[i]['traj_id'])
 		seg_result = plpy.execute(seg_qry)
+
+		points_to_shift = int(rate * (len(seg_result) + 1))
+		shift_list = random.sample(range(0, len(seg_result) - 1), points_to_shift)
+
 		for j in range(0, len(seg_result)):
 			traj_stripped = seg_result[j]['seg'].split(" '")
 			traj_stripped = traj_stripped[0]
 			traj_stripped = traj_stripped.replace("'", '')
 			traj_stripped = traj_stripped.split()
-			shift_possibility = random.random()
 
-			if shift_possibility > rate:
+			if j not in shift_list:
 			# Don't shift the point
 				coords = xy_lanlot(traj_stripped[2], traj_stripped[3], "3857")
 				coords = coords.split(' ')
 				traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + coords[0] + "," + coords[1]
 				generated_trajectories.write("%d,%d,%s\n" % (seg_result[j]['obj_id'], seg_result[j]['traj_id'], traj_stripped))
-				
+
 			else:
 				# Shift the point
 				# Choose a random point inside a circle with the initial coordinates as its center
@@ -545,9 +557,9 @@ AS $$
 
 	if not csv_file:
 		os.remove(csv_name)
-		
+
 	return 1
-$$ LANGUAGE plpython3u;	
+$$ LANGUAGE plpython3u;
 
 /** @brief This function performs trajectory transformation by shifting, in a synced manner, rate % points
  *
@@ -559,7 +571,7 @@ $$ LANGUAGE plpython3u;
  *	@param[in] csv_file Boolean which indicates whether the new dataset will exported in a cvs format (traj_new.txt)
  *
  *  @return Interger 1 to indicate succesfull completion
- * 
+ *
  */
 CREATE OR REPLACE FUNCTION trajectory_transformation_synced_shift (dataset text, rate float, distance float, save boolean DEFAULT True, new_dataset_name text DEFAULT 'transformed', csv_file boolean DEFAULT True)
 RETURNS integer
@@ -599,20 +611,23 @@ AS $$
 	for i in range(0, len(traj_result)):
 		seg_qry = "SELECT * FROM " + dataset + "_seg WHERE obj_id =" + str(traj_result[i]['obj_id']) + "AND traj_id =" + str(traj_result[i]['traj_id'])
 		seg_result = plpy.execute(seg_qry)
+
+		points_to_shift = int(rate * (len(seg_result) + 1))
+		shift_list = random.sample(range(0, len(seg_result) - 1), points_to_shift)
+
 		for j in range(0, len(seg_result)):
 			traj_stripped = seg_result[j]['seg'].split(" '")
 			traj_stripped = traj_stripped[0]
 			traj_stripped = traj_stripped.replace("'", '')
 			traj_stripped = traj_stripped.split()
-			shift_possibility = random.random()
 
-			if shift_possibility > rate:
+			if j not in shift_list:
 			# Don't shift the point
 				coords = xy_lanlot(traj_stripped[2], traj_stripped[3], "3857")
 				coords = coords.split(' ')
 				traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + coords[0] + "," + coords[1]
 				generated_trajectories.write("%d,%d,%s\n" % (seg_result[j]['obj_id'], seg_result[j]['traj_id'], traj_stripped))
-				
+
 			else:
 				# Shift the point
 				# Choose a random point inside a circle with the initial coordinates as its center
@@ -645,16 +660,11 @@ AS $$
 
 	if not csv_file:
 		os.remove(csv_name)
-		
+
 	return 1
-$$ LANGUAGE plpython3u;	
+$$ LANGUAGE plpython3u;
 
 
 -------------------------Tests--------------------------------------------------------------
---SELECT trajectory_transformation_inc_sr('gmaps', 0.5, True, 'lol', True)
---SELECT trajectory_transformation_add_noise('gmaps', 0.5, 1000)
---SELECT trajectory_transformation_random_shift('gmaps', 0.4, 1000)
---SELECT trajectory_transformation_synced_shift('gmaps', 0.8, 500, True, 'newdataset', True)
---SELECT trajectory_transformation_time_sr('gmaps', '2008-12-31 19:30:30', '2008-12-31 20:00:30', 600)
---SELECT * FROM next_dec_sr_seg;
-
+--SELECT trajectory_transformation_dec_sr('gmaps', 0.5, True, 'lol', True);
+--SELECT * FROM lol_dec_sr_seg;

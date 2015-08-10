@@ -24,7 +24,7 @@ In the following, there is example code segments for the segment model mainly.
 @see @ref Trajectory/Properties.sql
 @see @ref Trajectory/RelationalOperators.sql
 
-## Average speed ## {#methods_average}
+## averageSpeed ## {#methods_average}
 
 This function takes a segment or a trajectory as a parameter and returns the
 average speed.
@@ -42,7 +42,7 @@ average speed.
 	(1 row)
 	
 	
-## At instant ## {#methods_instant}
+## atInstant ## {#methods_instant}
 
 This function takes a segment (or a trajectory) and a timestamp as parameters and returns the point where the object was found at the given timestamp.
 
@@ -59,7 +59,7 @@ This function takes a segment (or a trajectory) and a timestamp as parameters an
 	(1 row)
 		
 		
-## At point ## {#methods_atpoint}
+## atPoint ## {#methods_atpoint}
 
 This function takes a segment (or a trajectory) and a point as parameters and returns the timestamp at which the object was found at the given point. The point has to be on the segment, otherwise the function returns NULL.
 
@@ -551,7 +551,7 @@ The SQL script that answers this question is listed below:
 	FROM imis_seg
 	WHERE seg ~ '2009-01-02 00:00:00' :: timestamp ;
 	
-The index-supported operator @ref operators_contains filters the database in order to select only those segments that contain the given timestamp “2009-01-01 00:00:00” in their temporal dimension. Then, the @ref atinstant() method finds the exact location of objects at the given timestamp @cite pelekis2014mobility. Some results of the query are shown below:
+The index-supported operator @ref operators_contains filters the database in order to select only those segments that contain the given timestamp “2009-01-01 00:00:00” in their temporal dimension. Then, the @ref methods_instant method finds the exact location of objects at the given timestamp @cite pelekis2014mobility. Some results of the query are shown below:
 	
 	 obj_id | traj_id |               position                
 	--------+---------+---------------------------------------
@@ -996,8 +996,8 @@ TBQ takes as as input a trajectory and a set of trajectories and returns a votin
 Each element of this vector corresponds to the voting that a specific element has received, for example the ith element of the voting vector correspond to the voting of the ith segment. 
 More specifically, it takes as input a trajectory, calculates its trajectory buffer (i.e. its spatial enlargement in space), returns the segments of all other trajectories that overlap with it and calculates its voting.
 
-	﻿SET enable_seqscan = off;--Forcing the system to use the index. We need this because TBQ is index based
-
+	SET enable_seqscan = off;--Forcing the system to use the index. We need this because TBQ is index based
+	
 	SELECT S2T_TemporalBufferSize('00:00:00'); --Setting the Temporal Buffer Size (00:00:00 since we use the trapezoidal distance function)
 	SELECT S2T_SpatialBufferSize(10000); --Setting the Spatial Buffer Size
 	SELECT S2T_Sigma(10000); --Setting Sigma. Sigma shows how fast the function of the "voting influence” decreases with distance.

@@ -433,7 +433,7 @@ An example using the TRACLUS`s distances with Hermes is shown below:
 
 - **projectionPointTraclus:** Takes as an input a PointSP and a SegmentSP and returns a PointSP which is the projection of the input PointSP on the input SegmentSP
 
-	SELECT projectionPointTraclus(
+		SELECT projectionPointTraclus(
 			'2247569 4792246'::pointsp, 
 			'2247568 4792243 2246947 4782505'::segmentsp
 		);
@@ -445,7 +445,7 @@ An example using the TRACLUS`s distances with Hermes is shown below:
       
 - **perpendicularDistanceTraclus:** Takes as an input two SegmentSP and returns a double precision which is the perpendicular distance between the two segments as defined in the Traclus paper
 	
-	SELECT perpendicularDistanceTraclus(
+		SELECT perpendicularDistanceTraclus(
     		'2247569 4792246 2246943 4782504'::segmentsp, 
     		'2247568 4792243 2246947 4782505'::segmentsp
     	);    
@@ -456,7 +456,7 @@ An example using the TRACLUS`s distances with Hermes is shown below:
 
 - **parallelDistanceTraclus:** Takes as an input two SegmentSP and returns a double precision which is the parallel distance between the two segments as defined in the Traclus paper
 
-	SELECT parallelDistanceTraclus(
+		SELECT parallelDistanceTraclus(
 	    	'2247569 4792246 2246943 4782504'::segmentsp, 	
 	    	'2247568 4792243 2246947 4782505'::segmentsp
 	    );
@@ -467,7 +467,7 @@ An example using the TRACLUS`s distances with Hermes is shown below:
 
 - **angleDistanceTraclus:** Takes as an input two SegmentSP and returns a double precision which is the angle distance between the two segments as defined in the Traclus paper
 
-	SELECT angleDistanceTraclus(
+		SELECT angleDistanceTraclus(
     		'2247569 4792246 2246943 4782504'::segmentsp, 
     		'2247568 4792243 2246947 4782505'::segmentsp
     	);
@@ -478,7 +478,7 @@ An example using the TRACLUS`s distances with Hermes is shown below:
     		
 - **traclusDistance:** Takes as an input two SegmentSP and 3 real which represent the weights for each of the above described distance functions (w_perpendicular, w_parallel and w_angle). It returns a double precision which is the overall distance between the two segments as defined in the Traclus paper. 
 
-	SELECT traclusDistance(
+		SELECT traclusDistance(
     		SegmentSP(PointSP(2337709, 4163887),PointSP(3228259, 4721671)),
     		SegmentSP(PointSP(2337709, 4163887),PointSP(3228259, 4721671)),
     		1, 1, 1

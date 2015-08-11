@@ -618,6 +618,8 @@ Another more complicated example is shown below:
 		) AS folders
 	) TO '/home/anagno/postgresql/Range.kml';
 	
+In this example we answer the query "Find the movement of ships inside the area of Piraeus port at New Year`s eve 2009 (range query)" that was presented in the @ref operators and afterwards using the visualization functions we export the result to a file.
+	
 Again the produced file is shown in [Range.kml](Range.kml) .
 
 ![The visualization of the Range.kml](Range.jpeg)

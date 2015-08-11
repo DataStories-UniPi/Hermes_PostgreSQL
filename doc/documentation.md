@@ -17,17 +17,22 @@ which installs doxygen and changes the current directory to the Hermes MOD sourc
 	
 and the documentation is generated in the doc/bin/ folder. The html folder contains the files needed by a web server and the only that remains to be done is move them to a public web server. The latex folder contains the files needed for a pdf to be produced. The easier way of doing it is by calling the make command and the refman.pdf is created containing the documentation.
 
-# Known shortcoming of doxygen
+	cd dob/bin/latex
+	make
+
+# Known shortcomings of doxygen
 
 - Doxygen does not support yet the sql language (12/06/2015). For this reason a [flex filter from MADLib](https://github.com/madlib/madlib/wiki/Documentation-Guide-%28Doxygen%29) was used. To create the executable file of the filter, used in the documentation of the sql, [flex](http://flex.sourceforge.net/) and [bison](http://www.gnu.org/software/bison/) are needed. To compile the parser, which is located in doc/SQL2C++ folder, the following commands must be executed (in ubuntu):
 		
-		cd bin
+		sudo apt-get install flex bison
+		cd doc/SQL2C++/bin
 		flex -L -outfile='sql.scanner.cc' ../sql.ll
 		mv utfile\=sql.scanner.cc sql.scanner.cc
  		bison -y -d ../sql.yy --output=sql.parser.cc
  		g++ sql.parser.cc sql.scanner.cc -lfl -o SQL2C++
  	
- The executable file must be placed in doc/SQL2C++/bin folder or change the configurations of the hermes.doxyfile. In other operating systems another compile must be used or [install gcc on the windows](https://gcc.gnu.org/install/binaries.html) 
+ The executable file must be placed in doc/SQL2C++/bin folder or change the configurations of the hermes.doxyfile. In other operating systems another compile must be used or [install gcc on the windows](https://gcc.gnu.org/install/binaries.html).
+ An executable for linux is already provided with the repository and the end user should not produce a new one. 
  From time to time, someone should check for updates in the filter or if the newer editions of the doxygen support sql. 
 
 - [Doxygen does not support the ordering of pages in a custom (or any) fashion](

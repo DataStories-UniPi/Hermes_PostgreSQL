@@ -10,8 +10,8 @@
 /** @brief This function constructs the KML document
  *
  *	@param[in] text the text to be include
- *	@param[in] colors no idea. Ask marios
- *	@param[in] widths no idea. Ask marios
+ *	@param[in] 
+ *	@param[in] 
  *
  *  @return the name of the dataset
  * 

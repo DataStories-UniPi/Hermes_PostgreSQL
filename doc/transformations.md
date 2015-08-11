@@ -57,7 +57,7 @@ be *dataset + \_transformed + \_kind of transformation + \_parameters*
 If we load the initial and the transformed datasets in Google Maps \(from the
 csv files\), we get the following result:
 
-![Initial \(blue\) and transformed \(red\) dataset](dec_04.png)
+![Initial (blue) and transformed (red) dataset](dec_04.png)
 @image latex dec_04.png "Initial \(blue\) and transformed \(red\) dataset" width=\textwidth
 
 ## Increased Sampling Rate Transformation {#increased_sr}
@@ -165,7 +165,7 @@ be *dataset + \_transformed + \_kind of transformation + \_parameters*
 If we load the initial and the transformed datasets in Google Maps \(from the
 csv files\), we get the following result:
 
-![Initial \(blue\) and transformed \(green\) dataset](time.png)
+![Initial (blue) and transformed (green) dataset](time.png)
 @image latex time.png "Initial \(blue\) and transformed \(green\) dataset" width=\textwidth
 
 ## Adding Noise Points Transformation {#add_noise}
@@ -216,11 +216,11 @@ be *dataset + \_transformed + \_kind of transformation + \_parameters*
 If we load the initial and the transformed datasets in Google Maps \(from the
 csv files\), we get the following result:
 
-![Initial \(blue\) and transformed \(purple\) dataset](noise_04.png)
+![Initial (blue) and transformed (purple) dataset](noise_04.png)
 @image latex noise_04.png "Initial \(blue\) and transformed \(purple\) dataset" width=\textwidth
 
 ## Trajectory Synced Shift Transformation {#synced_shift}
-**trajectory\_transformation\_synced\_shift (dataset, rate, distance, \[save\], \[new\_dataset\_name\], \[csv_file\])**
+**trajectory\_transformation\_synced\_shift (dataset, rate, distance\[, save \[, new\_dataset\_name\[, csv_file\]\]\])**
 ###Returns###
 The integer 1 to indicate that everything went right.
 ###Parameters Description###
@@ -267,11 +267,11 @@ be *dataset + \_transformed + \_kind of transformation + \_parameters*
 If we load the initial and the transformed datasets in Google Maps \(from the
 csv files\), we get the following result:
 
-![Initial \(blue\) and transformed \(green\) dataset](synced.png)
+![Initial (blue) and transformed (green) dataset](synced.png)
 @image latex synced.png "Initial \(blue\) and transformed \(green\) dataset" width=\textwidth
 
 ## Trajectory Random Shift Transformation {#random_shift}
-**trajectory\_transformation\_random\_shift (dataset, rate, distance, \[save\], \[new\_dataset\_name\], \[csv_file\])**
+**trajectory\_transformation\_random\_shift (dataset, rate, distance\[, save \[, new\_dataset\_name\[, csv_file\]\]\])**
 ###Returns###
 The integer 1 to indicate that everything went right.
 ###Parameters Description###
@@ -318,5 +318,5 @@ be *dataset + \_transformed + \_kind of transformation + \_parameters*
 If we load the initial and the transformed datasets in Google Maps \(from the
 csv files\), we get the following result:
 
-![Initial \(blue\) and transformed \(pink\) dataset](random.png)
+![Initial (blue) and transformed (pink) dataset](random.png)
 @image latex random.png "Initial \(blue\) and transformed \(pink\) dataset" width=\textwidth

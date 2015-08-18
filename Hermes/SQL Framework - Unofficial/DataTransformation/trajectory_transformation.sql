@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file
  * @author Kiriakos Velissariou (kir.velissariou@gmail.com).
  * @brief The file implements six different trajectory transformation functions
@@ -61,10 +61,47 @@ AS $$
 	for i in range(0, len(traj_result)):
 		seg_qry = "SELECT * FROM " + dataset + "_seg WHERE obj_id =" + str(traj_result[i]['obj_id']) + "AND traj_id =" + str(traj_result[i]['traj_id'])
 		seg_result = plpy.execute(seg_qry)
+		if len(seg_result) < 2:
+			traj_stripped = seg_result[len(seg_result) - 1]['seg'].split(" '")
+			traj_stripped = traj_stripped[0]
+			traj_stripped = traj_stripped.replace("'", '')
+			traj_stripped = traj_stripped.split()
+			coords = xy_lanlot(traj_stripped[2], traj_stripped[3], "3857")
+			coords = coords.split(' ')
+			traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + coords[0] + "," + coords[1]
+			generated_trajectories.write("%d,%d,%s\n" % (seg_result[len(seg_result) - 1]['obj_id'], seg_result[len(seg_result) - 1]['traj_id'], traj_stripped))
+
+			traj_stripped = seg_result[len(seg_result) - 1]['seg'].split(" '")
+			traj_stripped = traj_stripped[1]
+			traj_stripped = traj_stripped.replace("'", '')
+			traj_stripped = traj_stripped.split()
+			coords = xy_lanlot(traj_stripped[2], traj_stripped[3], "3857")
+			coords = coords.split(' ')
+			traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + coords[0] + "," + coords[1]
+			generated_trajectories.write("%d,%d,%s\n" % (seg_result[len(seg_result) - 1]['obj_id'], seg_result[len(seg_result) - 1]['traj_id'], traj_stripped))
+			continue
 
 		points_to_delete = int(rate * (len(seg_result) + 1))
-		delete_list = random.sample(range(0, len(seg_result) - 1), points_to_delete)
+		if points_to_delete >= len(seg_result):
+			traj_stripped = seg_result[len(seg_result) - 1]['seg'].split(" '")
+			traj_stripped = traj_stripped[0]
+			traj_stripped = traj_stripped.replace("'", '')
+			traj_stripped = traj_stripped.split()
+			coords = xy_lanlot(traj_stripped[2], traj_stripped[3], "3857")
+			coords = coords.split(' ')
+			traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + coords[0] + "," + coords[1]
+			generated_trajectories.write("%d,%d,%s\n" % (seg_result[len(seg_result) - 1]['obj_id'], seg_result[len(seg_result) - 1]['traj_id'], traj_stripped))
 
+			traj_stripped = seg_result[len(seg_result) - 1]['seg'].split(" '")
+			traj_stripped = traj_stripped[1]
+			traj_stripped = traj_stripped.replace("'", '')
+			traj_stripped = traj_stripped.split()
+			coords = xy_lanlot(traj_stripped[2], traj_stripped[3], "3857")
+			coords = coords.split(' ')
+			traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + coords[0] + "," + coords[1]
+			generated_trajectories.write("%d,%d,%s\n" % (seg_result[len(seg_result) - 1]['obj_id'], seg_result[len(seg_result) - 1]['traj_id'], traj_stripped))
+			continue
+		delete_list = random.sample(range(0, len(seg_result) - 1), points_to_delete)
 		for j in range(0, len(seg_result)):
 			if j not in delete_list:
 				traj_stripped = seg_result[j]['seg'].split(" '")
@@ -155,8 +192,47 @@ AS $$
 	for i in range(0, len(traj_result)):
 		seg_qry = "SELECT * FROM " + dataset + "_seg WHERE obj_id =" + str(traj_result[i]['obj_id']) + "AND traj_id =" + str(traj_result[i]['traj_id'])
 		seg_result = plpy.execute(seg_qry)
+		if len(seg_result) < 2:
+			traj_stripped = seg_result[len(seg_result) - 1]['seg'].split(" '")
+			traj_stripped = traj_stripped[0]
+			traj_stripped = traj_stripped.replace("'", '')
+			traj_stripped = traj_stripped.split()
+			coords = xy_lanlot(traj_stripped[2], traj_stripped[3], "3857")
+			coords = coords.split(' ')
+			traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + coords[0] + "," + coords[1]
+			generated_trajectories.write("%d,%d,%s\n" % (seg_result[len(seg_result) - 1]['obj_id'], seg_result[len(seg_result) - 1]['traj_id'], traj_stripped))
+
+			traj_stripped = seg_result[len(seg_result) - 1]['seg'].split(" '")
+			traj_stripped = traj_stripped[1]
+			traj_stripped = traj_stripped.replace("'", '')
+			traj_stripped = traj_stripped.split()
+			coords = xy_lanlot(traj_stripped[2], traj_stripped[3], "3857")
+			coords = coords.split(' ')
+			traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + coords[0] + "," + coords[1]
+			generated_trajectories.write("%d,%d,%s\n" % (seg_result[len(seg_result) - 1]['obj_id'], seg_result[len(seg_result) - 1]['traj_id'], traj_stripped))
+			continue
 
 		points_to_add = int(rate * (len(seg_result) + 1))
+		if points_to_add >= len(seg_result):
+			traj_stripped = seg_result[len(seg_result) - 1]['seg'].split(" '")
+			traj_stripped = traj_stripped[0]
+			traj_stripped = traj_stripped.replace("'", '')
+			traj_stripped = traj_stripped.split()
+			coords = xy_lanlot(traj_stripped[2], traj_stripped[3], "3857")
+			coords = coords.split(' ')
+			traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + coords[0] + "," + coords[1]
+			generated_trajectories.write("%d,%d,%s\n" % (seg_result[len(seg_result) - 1]['obj_id'], seg_result[len(seg_result) - 1]['traj_id'], traj_stripped))
+
+			traj_stripped = seg_result[len(seg_result) - 1]['seg'].split(" '")
+			traj_stripped = traj_stripped[1]
+			traj_stripped = traj_stripped.replace("'", '')
+			traj_stripped = traj_stripped.split()
+			coords = xy_lanlot(traj_stripped[2], traj_stripped[3], "3857")
+			coords = coords.split(' ')
+			traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + coords[0] + "," + coords[1]
+			generated_trajectories.write("%d,%d,%s\n" % (seg_result[len(seg_result) - 1]['obj_id'], seg_result[len(seg_result) - 1]['traj_id'], traj_stripped))
+			continue
+
 		add_list = random.sample(range(0, len(seg_result) - 1), points_to_add)
 
 		for j in range(0, len(seg_result)):
@@ -184,6 +260,8 @@ AS $$
 
 				start_timestamp = datetime.strptime(start_timestamp, '%Y-%m-%d %H:%M:%S')
 				end_timestamp = datetime.strptime(end_timestamp, '%Y-%m-%d %H:%M:%S')
+				if end_timestamp - start_timestamp:
+					continue
 				new_timestamp = date_between(start_timestamp, end_timestamp)
 				new_timestamp = new_timestamp.strftime('%Y-%m-%d %H:%M:%S')
 				start_timestamp = start_timestamp.strftime('%Y-%m-%d %H:%M:%S')
@@ -381,8 +459,48 @@ AS $$
 	for i in range(0, len(traj_result)):
 		seg_qry = "SELECT * FROM " + dataset + "_seg WHERE obj_id =" + str(traj_result[i]['obj_id']) + "AND traj_id =" + str(traj_result[i]['traj_id'])
 		seg_result = plpy.execute(seg_qry)
+		if len(seg_result) < 2:
+			traj_stripped = seg_result[len(seg_result) - 1]['seg'].split(" '")
+			traj_stripped = traj_stripped[0]
+			traj_stripped = traj_stripped.replace("'", '')
+			traj_stripped = traj_stripped.split()
+			coords = xy_lanlot(traj_stripped[2], traj_stripped[3], "3857")
+			coords = coords.split(' ')
+			traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + coords[0] + "," + coords[1]
+			generated_trajectories.write("%d,%d,%s\n" % (seg_result[len(seg_result) - 1]['obj_id'], seg_result[len(seg_result) - 1]['traj_id'], traj_stripped))
+
+			traj_stripped = seg_result[len(seg_result) - 1]['seg'].split(" '")
+			traj_stripped = traj_stripped[1]
+			traj_stripped = traj_stripped.replace("'", '')
+			traj_stripped = traj_stripped.split()
+			coords = xy_lanlot(traj_stripped[2], traj_stripped[3], "3857")
+			coords = coords.split(' ')
+			traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + coords[0] + "," + coords[1]
+			generated_trajectories.write("%d,%d,%s\n" % (seg_result[len(seg_result) - 1]['obj_id'], seg_result[len(seg_result) - 1]['traj_id'], traj_stripped))
+			continue
+
 
 		points_to_add = int(rate * (len(seg_result) + 1))
+		if points_to_add >= len(seg_result):
+			traj_stripped = seg_result[len(seg_result) - 1]['seg'].split(" '")
+			traj_stripped = traj_stripped[0]
+			traj_stripped = traj_stripped.replace("'", '')
+			traj_stripped = traj_stripped.split()
+			coords = xy_lanlot(traj_stripped[2], traj_stripped[3], "3857")
+			coords = coords.split(' ')
+			traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + coords[0] + "," + coords[1]
+			generated_trajectories.write("%d,%d,%s\n" % (seg_result[len(seg_result) - 1]['obj_id'], seg_result[len(seg_result) - 1]['traj_id'], traj_stripped))
+
+			traj_stripped = seg_result[len(seg_result) - 1]['seg'].split(" '")
+			traj_stripped = traj_stripped[1]
+			traj_stripped = traj_stripped.replace("'", '')
+			traj_stripped = traj_stripped.split()
+			coords = xy_lanlot(traj_stripped[2], traj_stripped[3], "3857")
+			coords = coords.split(' ')
+			traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + coords[0] + "," + coords[1]
+			generated_trajectories.write("%d,%d,%s\n" % (seg_result[len(seg_result) - 1]['obj_id'], seg_result[len(seg_result) - 1]['traj_id'], traj_stripped))
+			continue
+
 		add_list = random.sample(range(0, len(seg_result) - 1), points_to_add)
 
 		for j in range(0, len(seg_result)):
@@ -506,8 +624,47 @@ AS $$
 	for i in range(0, len(traj_result)):
 		seg_qry = "SELECT * FROM " + dataset + "_seg WHERE obj_id =" + str(traj_result[i]['obj_id']) + "AND traj_id =" + str(traj_result[i]['traj_id'])
 		seg_result = plpy.execute(seg_qry)
+		if len(seg_result) < 2:
+			traj_stripped = seg_result[len(seg_result) - 1]['seg'].split(" '")
+			traj_stripped = traj_stripped[0]
+			traj_stripped = traj_stripped.replace("'", '')
+			traj_stripped = traj_stripped.split()
+			coords = xy_lanlot(traj_stripped[2], traj_stripped[3], "3857")
+			coords = coords.split(' ')
+			traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + coords[0] + "," + coords[1]
+			generated_trajectories.write("%d,%d,%s\n" % (seg_result[len(seg_result) - 1]['obj_id'], seg_result[len(seg_result) - 1]['traj_id'], traj_stripped))
+
+			traj_stripped = seg_result[len(seg_result) - 1]['seg'].split(" '")
+			traj_stripped = traj_stripped[1]
+			traj_stripped = traj_stripped.replace("'", '')
+			traj_stripped = traj_stripped.split()
+			coords = xy_lanlot(traj_stripped[2], traj_stripped[3], "3857")
+			coords = coords.split(' ')
+			traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + coords[0] + "," + coords[1]
+			generated_trajectories.write("%d,%d,%s\n" % (seg_result[len(seg_result) - 1]['obj_id'], seg_result[len(seg_result) - 1]['traj_id'], traj_stripped))
+			continue
 
 		points_to_shift = int(rate * (len(seg_result) + 1))
+		if points_to_shift >= len(seg_result):
+			traj_stripped = seg_result[len(seg_result) - 1]['seg'].split(" '")
+			traj_stripped = traj_stripped[0]
+			traj_stripped = traj_stripped.replace("'", '')
+			traj_stripped = traj_stripped.split()
+			coords = xy_lanlot(traj_stripped[2], traj_stripped[3], "3857")
+			coords = coords.split(' ')
+			traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + coords[0] + "," + coords[1]
+			generated_trajectories.write("%d,%d,%s\n" % (seg_result[len(seg_result) - 1]['obj_id'], seg_result[len(seg_result) - 1]['traj_id'], traj_stripped))
+
+			traj_stripped = seg_result[len(seg_result) - 1]['seg'].split(" '")
+			traj_stripped = traj_stripped[1]
+			traj_stripped = traj_stripped.replace("'", '')
+			traj_stripped = traj_stripped.split()
+			coords = xy_lanlot(traj_stripped[2], traj_stripped[3], "3857")
+			coords = coords.split(' ')
+			traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + coords[0] + "," + coords[1]
+			generated_trajectories.write("%d,%d,%s\n" % (seg_result[len(seg_result) - 1]['obj_id'], seg_result[len(seg_result) - 1]['traj_id'], traj_stripped))
+			continue
+
 		shift_list = random.sample(range(0, len(seg_result) - 1), points_to_shift)
 
 		for j in range(0, len(seg_result)):
@@ -517,7 +674,6 @@ AS $$
 			traj_stripped = traj_stripped.split()
 
 			if j not in shift_list:
-			# Don't shift the point
 				coords = xy_lanlot(traj_stripped[2], traj_stripped[3], "3857")
 				coords = coords.split(' ')
 				traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + coords[0] + "," + coords[1]
@@ -611,8 +767,48 @@ AS $$
 	for i in range(0, len(traj_result)):
 		seg_qry = "SELECT * FROM " + dataset + "_seg WHERE obj_id =" + str(traj_result[i]['obj_id']) + "AND traj_id =" + str(traj_result[i]['traj_id'])
 		seg_result = plpy.execute(seg_qry)
+		if len(seg_result) < 2:
+			traj_stripped = seg_result[len(seg_result) - 1]['seg'].split(" '")
+			traj_stripped = traj_stripped[0]
+			traj_stripped = traj_stripped.replace("'", '')
+			traj_stripped = traj_stripped.split()
+			coords = xy_lanlot(traj_stripped[2], traj_stripped[3], "3857")
+			coords = coords.split(' ')
+			traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + coords[0] + "," + coords[1]
+			generated_trajectories.write("%d,%d,%s\n" % (seg_result[len(seg_result) - 1]['obj_id'], seg_result[len(seg_result) - 1]['traj_id'], traj_stripped))
+
+			traj_stripped = seg_result[len(seg_result) - 1]['seg'].split(" '")
+			traj_stripped = traj_stripped[1]
+			traj_stripped = traj_stripped.replace("'", '')
+			traj_stripped = traj_stripped.split()
+			coords = xy_lanlot(traj_stripped[2], traj_stripped[3], "3857")
+			coords = coords.split(' ')
+			traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + coords[0] + "," + coords[1]
+			generated_trajectories.write("%d,%d,%s\n" % (seg_result[len(seg_result) - 1]['obj_id'], seg_result[len(seg_result) - 1]['traj_id'], traj_stripped))
+			continue
 
 		points_to_shift = int(rate * (len(seg_result) + 1))
+		if points_to_shift >= len(seg_result):
+			traj_stripped = seg_result[len(seg_result) - 1]['seg'].split(" '")
+			traj_stripped = traj_stripped[0]
+			traj_stripped = traj_stripped.replace("'", '')
+			traj_stripped = traj_stripped.split()
+			coords = xy_lanlot(traj_stripped[2], traj_stripped[3], "3857")
+			coords = coords.split(' ')
+			traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + coords[0] + "," + coords[1]
+			generated_trajectories.write("%d,%d,%s\n" % (seg_result[len(seg_result) - 1]['obj_id'], seg_result[len(seg_result) - 1]['traj_id'], traj_stripped))
+
+			traj_stripped = seg_result[len(seg_result) - 1]['seg'].split(" '")
+			traj_stripped = traj_stripped[1]
+			traj_stripped = traj_stripped.replace("'", '')
+			traj_stripped = traj_stripped.split()
+			coords = xy_lanlot(traj_stripped[2], traj_stripped[3], "3857")
+			coords = coords.split(' ')
+			traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + coords[0] + "," + coords[1]
+			generated_trajectories.write("%d,%d,%s\n" % (seg_result[len(seg_result) - 1]['obj_id'], seg_result[len(seg_result) - 1]['traj_id'], traj_stripped))
+			continue
+
+
 		shift_list = random.sample(range(0, len(seg_result) - 1), points_to_shift)
 
 		for j in range(0, len(seg_result)):
@@ -622,7 +818,6 @@ AS $$
 			traj_stripped = traj_stripped.split()
 
 			if j not in shift_list:
-			# Don't shift the point
 				coords = xy_lanlot(traj_stripped[2], traj_stripped[3], "3857")
 				coords = coords.split(' ')
 				traj_stripped = traj_stripped[0] + " " + traj_stripped[1] + "," + coords[0] + "," + coords[1]

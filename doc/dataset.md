@@ -21,13 +21,13 @@ able to host multiple datasets. That metadata infrastructure takes the form of a
 - **srid** is an integer column that contains the EPSG code of the projected reference system in which the dataset is stored in Hermes. Note that if we give a value for local ref poi then SRID will have to be NULL and vice versa.
 - **segment_storage** a boolean value that shows whether the segment storage is in use
 - **trajectory_storage** a boolean value shows whether the trajectory storage is in use
-- **subtrajectory_storage** is not currently in use 
-- **semantics_enabled** is not currently in use 
-- **partitioning_t_range** is not currently in use 
+- **subtrajectory_storage** is not currently in use
+- **semantics_enabled** is not currently in use
+- **partitioning_t_range** is not currently in use
 - **partitioning_x_range** is not currently in use
 - **partitioning_y_range** is not currently in use
 - **notes** is a text column that contains arbitrary notes on the dataset.
- 
+
 Each dataset in this table has a unique identifier and a unique short name e.g. [1, ‘imis’] or [2, ‘milan’]. Most spatio-temporal datasets are in the form of [objectID, trajectoryID, t, lon, lat] where “objectID” is the identifier of the object, “trajectoryID” is the identifier of the trajectory for that object, “t” is the UTC (Coordinated Universal Time) timestamp at which it was recorded and “lon” and “lat” are degrees of longitude and latitude in WGS 84 Geographic Coordinate System. “objectID” and “trajectoryID”, normally, are combined to form the unique identifier of a trajectory in a specific dataset @cite vodas2013hermes
 
 Each dataset consists of three tables. Each table’s name begins with the
@@ -53,7 +53,7 @@ columns:
   + **t** is not currently in use
   + **x** is not currently in use
   + **y** is not currently in use
- 
+
 According to @cite vodas2013hermes the objects table and the trajectories table must have data in contrast with segments table. The “traj” column in trajectories table could be empty if
 trajectories are stored in the segments table. It is always possible to build a trajectory object from its corresponding segments that we can find in the segments table on the fly using aggregate functions. That allows us to use advanced methods that Hermes provides for its “Trajectory” type.
 
@@ -61,8 +61,8 @@ trajectories are stored in the segments table. It is always possible to build a 
 
 Finally there is an hparameters table, with global parameters visible by all tables/function and the structure of the table is a (key,value) format.
 
-- **key** value contains a text 
-- **value** value contains a text 
+- **key** value contains a text
+- **value** value contains a text
 
 ## hdataset_statistics table ## {#database_statistics}
 
@@ -75,20 +75,20 @@ The statistics for each dataset are stored in the table hdatasets_statistics. Th
 The structure of the table is described below:
 
 - **dataset** is a foreign key to hdatasets table storing the primary key of the dataset.
-- **nr_objects** is a bigint storing the total number of objects stored in the table _obj of the dataset. 
-- **nr_trajectories** is a bigint storing the total number of Trajectories in the table _traj of the dataset. 
+- **nr_objects** is a bigint storing the total number of objects stored in the table _obj of the dataset.
+- **nr_trajectories** is a bigint storing the total number of Trajectories in the table _traj of the dataset.
 - **nr_segments** is a bigint storing the total number of Segments in the table _seg of the dataset.
-- **nr_points** is a bigint storing the total number of Points in the Trajectories. 
+- **nr_points** is a bigint storing the total number of Points in the Trajectories.
 - **tmin** is a timestamp showing the minimum timestamp of the dataset
 - **tmax** is a timestamp showing the maximum timestamp of the dataset
 - **lx** is an integer returning the lowest x coordinate
 - **ly** is an integer returning the lowest y coordinate
 - **hx** is an integer returning the highest x coordinate
 - **hy** is an integer returning the highest y coordinate
-- **llon** is a double precision number returning the lowest longitude 
-- **llat** is a double precision number returning the lowest latitude 
-- **hlon** is a double precision number returning the highest longitude 
-- **hlat** is a double precision number returning the highest latitude 
+- **llon** is a double precision number returning the lowest longitude
+- **llat** is a double precision number returning the lowest latitude
+- **hlon** is a double precision number returning the highest longitude
+- **hlat** is a double precision number returning the highest latitude
 - **points_centroid_t** is a timestamp showing the centroid of the dataset
 - **points_centroid_x** is an integer showing the centroid of the x coordinate in the dataset
 - **points_centroid_y** is an integer showing the centroid of the y coordinate in the dataset
@@ -190,37 +190,42 @@ The structure of the table is described below:
 In these pages you will find some examples of the Hermes MOD. These examples use the [IMIS3days Dataset](http://chorochronos.datastories.org/?q=node/8), which has been kindly provided by the IMIS HELLAS. According to \cite pelekis2014mobility the dataset covers almost 3 days of informations about ships sailing at Greek Seas. The “IMIS 3 Days” dataset spawns from “2008-12-31 19:29:30” to “2009-01-02 17:10:06” and contains positions reports for 933 ships. It is spatially constrained in the Aegean Sea and covers an area of 496736 km 2 , from (21,35)-lowest to (29,39)-highest longitude-latitude point @cite vodas2013hermes .
 
 ![Overview of the IMIS 3 Days dataset](imis_overview.png)
-@image latex imis_overview.png "Overview of the IMIS 3 Days dataset" 
+@image latex imis_overview.png "Overview of the IMIS 3 Days dataset"
 
 Loading the datatset into Hermes MOD is simple, due to a module called "Hermes-Loader", which automates the creation and feeding of the respective database table as well as the transformation of coordinates from degrees (lon/lat to meters (x/y) @cite pelekis2014mobility.
 
 Before loading the AIS data in PostgreSql, one needs to save the data files in the PostgreSQL directory in a file type of csv with a header for column names with the following structure: <obj_id, traj_id, t, lon, lat>. You can find the directory by executing the below command in the database:
 
-	postgres=# SHOW data_directory;
-        data_directory        
+    postgres=# SHOW data_directory;
+        data_directory
 	------------------------------
  	/var/lib/postgresql/9.4/main
 	(1 row)
 
 Afterwards copying the imis3days.txt file in the database directory the below commands must be executed:
 
-	SELECT HLoader('imis', 'IMIS 3 Days');
+    SELECT HLoader('imis', 'IMIS 3 Days');
 	SELECT HLoaderCSV_II('imis', 'imis3days.txt');
 	SELECT HDatasetsOfflineStatistics('imis');
 	CREATE INDEX ON imis_seg USING gist (seg) WITH (FILLFACTOR = 100);
-	
-	
+
+An alternate way of uploading a dataset to Hermes is to use the wrapper function
+load_dataset as below:
+
+    SELECT load_dataset('imis', 'IMIS 3 Days', 'imis3days.txt');
+
+
 In the above script the first and the second line create the tables that will host the dataset and fill these tables, respectively, with the data that are found in file “imis3days.txt”, according to the formatting discussed above. The function HLoader loads the dataset by taking into account the information / parameters that we pass to the function but also the ones that are present in the table. Because loader can be extended to support more formats beyond CSV this is why “HLoader” table exists to hold the specific parameters for that extension. Every loader though must have the parameters that are passed in the function since they are common to any dataset and loader combination @cite vodas2013hermes.
 
 	postgres=# SELECT HLoader('imis', 'imis3days');
- 	hloader 
+ 	hloader
 	---------
- 
+
 	(1 row)
-	
+
 	postgres=# \dt
                 List of relations
- 	Schema |         Name         | Type  |  Owner   
+ 	Schema |         Name         | Type  |  Owner
 	--------+----------------------+-------+----------
  	public | hdatasets            | table | postgres
  	public | hdatasets_statistics | table | postgres
@@ -230,17 +235,17 @@ In the above script the first and the second line create the tables that will ho
  	public | imis_seg_lobby       | table | postgres
  	public | imis_traj            | table | postgres
 	(7 rows)
-	
-If we want to enable and the trajectory storage model instead of the above command we should use the below command. 
-	
+
+If we want to enable and the trajectory storage model instead of the above command we should use the below command.
+
 	SELECT hdatasetsregister('imis', 'imis', dataset_trajectory_storage:=TRUE, dataset_segment_storage:=TRUE);
- 	hdatasetsregister 
+ 	hdatasetsregister
 	-------------------
  	t
 	(1 row)
-	
-This command enables both the trajectory and segment storage. By default only the segment storage is enabled.	
-	
+
+This command enables both the trajectory and segment storage. By default only the segment storage is enabled.
+
 In the execution of the second line there might be some warning but there is no reason for worrying (ask marios for more informations)
 
 	postgres=# SELECT HLoaderCSV_II('imis', 'imis3days.txt');
@@ -249,41 +254,41 @@ In the execution of the second line there might be some warning but there is no 
 	PL/pgSQL function hdatasetsload(text,text,boolean) line 57 at EXECUTE statement
 	SQL statement "SELECT HDatasetsLoad(dataset_name, csv_file)"
 	PL/pgSQL function hloadercsv_ii(text,text) line 3 at PERFORM
- 	hloadercsv_ii 
+ 	hloadercsv_ii
 	---------------
- 
-	(1 row)
-	
 
-Line 4 calculates some statistics for the dataset, such as average number of points per trajectory, average duration of trajectories, and average length of trajectories (see also @ref database_statistics). 
+	(1 row)
+
+
+Line 4 calculates some statistics for the dataset, such as average number of points per trajectory, average duration of trajectories, and average length of trajectories (see also @ref database_statistics).
 
 	postgres=# SELECT HDatasetsOfflineStatistics('imis');
- 	hdatasetsofflinestatistics 
+ 	hdatasetsofflinestatistics
 	----------------------------
- 
+
 	(1 row)
-	
-  
+
+
 After the calculation of the statistics we can see the statistics with simple queries such as:
-  
-	SELECT * 
+
+	SELECT *
 	FROM hdatasets_statistics
-	WHERE dataset = HDatasetID('imis');	
-	
+	WHERE dataset = HDatasetID('imis');
+
 Line 4 creates an index of type 3D R-tree on the dataset.
 
 	postgres=# CREATE INDEX ON imis_seg USING gist (seg) WITH (FILLFACTOR = 100);
 	CREATE INDEX
-	
+
 By default, the dataset is hosted in "imis_seg" table, according to a segment-oriente storage model. The list of attributes of “imis_seg” is as follows: <obj_id, traj_id, seg_id, seg>, where obj_id corresponds to object’s identifier (in our case, the MMSI of the ship), traj_id corresponds to a unique identifier of object’s trajectory, seg_id corresponds to a unique identifier object’s trajectory segment, and seg is the geometry of the trajectory segment, of type SegmentST @cite pelekis2014mobility.
 
-	
+
 ## Deleting Dataset ## {#dataset_deleting}
 
 If someone wants to delete the dataset, he should execute the below command:
 
 	SELECT HDatasetsDrop('imis');
-	
+
 @see Catalog.sql
 @see Compatibility.sql
 @see Loader.sql

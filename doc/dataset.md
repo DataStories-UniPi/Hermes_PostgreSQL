@@ -209,12 +209,6 @@ Afterwards copying the imis3days.txt file in the database directory the below co
 	SELECT HDatasetsOfflineStatistics('imis');
 	CREATE INDEX ON imis_seg USING gist (seg) WITH (FILLFACTOR = 100);
 
-An alternate way of uploading a dataset to Hermes is to use the wrapper function
-load_dataset as below:
-
-    SELECT load_dataset('imis', 'IMIS 3 Days', 'imis3days.txt');
-
-
 In the above script the first and the second line create the tables that will host the dataset and fill these tables, respectively, with the data that are found in file “imis3days.txt”, according to the formatting discussed above. The function HLoader loads the dataset by taking into account the information / parameters that we pass to the function but also the ones that are present in the table. Because loader can be extended to support more formats beyond CSV this is why “HLoader” table exists to hold the specific parameters for that extension. Every loader though must have the parameters that are passed in the function since they are common to any dataset and loader combination @cite vodas2013hermes.
 
 	postgres=# SELECT HLoader('imis', 'imis3days');
@@ -268,7 +262,6 @@ Line 4 calculates some statistics for the dataset, such as average number of poi
 
 	(1 row)
 
-
 After the calculation of the statistics we can see the statistics with simple queries such as:
 
 	SELECT *
@@ -282,6 +275,19 @@ Line 4 creates an index of type 3D R-tree on the dataset.
 
 By default, the dataset is hosted in "imis_seg" table, according to a segment-oriente storage model. The list of attributes of “imis_seg” is as follows: <obj_id, traj_id, seg_id, seg>, where obj_id corresponds to object’s identifier (in our case, the MMSI of the ship), traj_id corresponds to a unique identifier of object’s trajectory, seg_id corresponds to a unique identifier object’s trajectory segment, and seg is the geometry of the trajectory segment, of type SegmentST @cite pelekis2014mobility.
 
+## New loader ## {#new_loader}
+A new way of uploading a new dataset to Hermes is the use of the wrapper function
+load_dataset. The signature is:
+
+    SELECT load_dataset(name text, description text, file text, trajectory_storage boolean)
+
+So, if we wanted to upload the imis dataset, instead of running the previous four commands we
+run:
+
+    SELECT load_dataset('imis', 'IMIS 3 Days', 'imis3days.txt', False);
+
+or, the above with the last parameter set to True, if we wanted both the trajectory storage
+and segment storage modes enabled.
 
 ## Deleting Dataset ## {#dataset_deleting}
 

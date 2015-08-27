@@ -81,11 +81,28 @@ CREATE OPERATOR CLASS PointSP_OPS DEFAULT FOR TYPE PointSP USING hash AS
 	OPERATOR 1 =,
 	FUNCTION 1 hash(PointSP);
 
-/******************************************************************************/
+/** @brief The function returns the x coordinate of the point
+ *
+ *  @param[in] point The PointSP
+ *
+ *	@return the coordinate
+ *
+ *	@see @ref methods_get
+ *
+ */
 CREATE FUNCTION getX(point PointSP) RETURNS integer AS
 	'$libdir/Hermes','getXPointSP'
 LANGUAGE C IMMUTABLE STRICT;
 
+/** @brief The function returns the y coordinate of the point
+ *
+ *  @param[in] point The PointSP
+ *
+ *	@return the coordinate
+ *
+ *	@see @ref methods_get
+ *
+ */
 CREATE FUNCTION getY(point PointSP) RETURNS integer AS
 	'$libdir/Hermes','getYPointSP'
 LANGUAGE C IMMUTABLE STRICT;

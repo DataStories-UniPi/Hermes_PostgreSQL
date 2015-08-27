@@ -237,7 +237,7 @@ This function returns the length of a trajectory.
 
 ## Displacement ## {#methods_displacement}
 
-This function returns the displacement of a trajectory.  -- PENDING!! --
+This function returns the displacement (the distance between the first and the last point) of a trajectory.
 
 	SELECT displacement(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:30' :: Timestamp, PointSP(3,3))]));
    	displacement   
@@ -355,15 +355,29 @@ getT(segment SegmentST) | the period of the SegmentST
 getTi(segment SegmentST)| the start time of the period of the SegmentST
 getTe(segment SegmentST)| the end time of the period of the SegmentST
 getSp(segment SegmentST)| the Spatial Segment of the SegmentST
-getI(segment SegmentST) | the start of the  Spatial Segment of the SegmentST
-getIx(segment SegmentST)| the x coordinate of the start of the  Spatial Segment of the SegmentST
-getIy(segment SegmentST)| the y coordinate of the start of the  Spatial Segment of the SegmentST
+getI(segment SegmentST) | the start of the Spatial Segment of the SegmentST
+getIx(segment SegmentST)| the x coordinate of the start of the Spatial Segment of the SegmentST
+getIy(segment SegmentST)| the y coordinate of the start of the Spatial Segment of the SegmentST
 getE(segment SegmentST) | the end of the  Spatial Segment of the SegmentST
-getEx(segment SegmentST)| the x coordinate of the end of the  Spatial Segment of the SegmentST
-getEy(segment SegmentST)| the y coordinate of the end of the  Spatial Segment of the SegmentST
+getEx(segment SegmentST)| the x coordinate of the end of the Spatial Segment of the SegmentST
+getEy(segment SegmentST)| the y coordinate of the end of the Spatial Segment of the SegmentST
+getI(segment SegmentSP)	| the start of the SegmentSP
+getIx(segment SegmentSP)| the x coordinate of the start of the SegmentSP
+getIy(segment SegmentSP)| the y coordinate of the start of the SegmentSP
+getE(segment SegmentSP)	| the end of the SegmentSP
+getEx(segment SegmentSP)| the x coordinate of the end of the SegmentSP
+getEy(segment SegmentSP)| the y coordinate of the end of the SegmentSP
 getA(line LineSP)       | the a parameter of the LineSP
 getB(line LineSP)       | the b parameter of the LineSP
 getC(line LineSP)       | the c parameter of the LineSP
+getT(range RangeST)		| the RangeT of the RangeST
+getTr(range RangeST)	| the interval of the RangeST
+getTc(range RangeST)	| the timestamp of the RangeST
+getSp(range RangeST)	| the spatial range of the RangeST 
+getSpr(range RangeST)	| the radius of the spatial range of the RangeST
+getSpc(range RangeST)	| the center of the spatial range of the RangeST
+getCx(range RangeST)	| the x coordinate of the center of the spatial range of the RangeST
+getCy(range RangeST)	| the y coordinate of the center of the spatial range of the RangeST
 getR(range RangeSP)     | the radius of the RangeSP
 getC(range RangeSP)     | the center of the RangeSP
 getX(range RangeSP)     | the x coordinate of the center of the RangeSP
@@ -372,6 +386,12 @@ getT(point PointST)     | the timestamp of the PointST
 getSp(point PointST)    | the coordinates of the PointST
 getX(point PointST)     | the x coordinate of the PointST
 getY(point PointST)     | the y coordinate of the PointST
+getL(box BoxSP)         | the low left point of the BoxSP
+getLx(box BoxSP)        | the x coordinate of the low left point of the BoxSP
+getLy(box BoxSP)		| the y coordinate of the low left point of the BoxSP
+getH(box BoxSP)			| the high right point of the BoxSP
+getHx(box BoxSP)		| the x coordinate of the high right point of the BoxSP
+getHy(box BoxSP)		| the y coordinate of the high right point of the BoxSP
 
 Some examples are shown below: 
 
@@ -994,7 +1014,7 @@ The results of the query are shown below:
 
 TBQ takes as as input a trajectory and a set of trajectories and returns a voting vector. 
 Each element of this vector corresponds to the voting that a specific element has received, for example the ith element of the voting vector correspond to the voting of the ith segment. 
-More specifically, it takes as input a trajectory, calculates its trajectory buffer (i.e. its spatial enlargement in space), returns the segments of all other trajectories that overlap with it and calculates its voting.
+The voting of the ith segment is defined by the number of the objects that follow this segment along with time, space and direction and it is actually how many trajectories are "close enough" to it during its lifespan w.r.t a spatial threshold. More specifically, in order to achive this the TBQ takes as input a trajectory, calculates its trajectory buffer (i.e. its spatial enlargement in space), returns the segments of all other trajectories that overlap with it and calculates its voting.
 
 	SET enable_seqscan = off;--Forcing the system to use the index. We need this because TBQ is index based
 	
@@ -1012,6 +1032,8 @@ More specifically, it takes as input a trajectory, calculates its trajectory buf
 
 	SELECT array_agg(normalized_voting ORDER BY ordinality ASC)
 	FROM S2T_VotingSignal() WITH ORDINALITY;
+	
+The query "SELECT trajectory_agg ... (215171000, 2)" retrieves the segments from the _seg table of the specified trajectory and afterwards it sort them in time and creates an new trajecrory using trajectory_agg function.
 	
 Below is shown the the execution of the queries:
 	

@@ -104,7 +104,14 @@ CREATE FUNCTION getC(line LineSP) RETURNS double precision AS
 	'$libdir/Hermes','getCLineSP'
 LANGUAGE C IMMUTABLE STRICT;
 
-/******************************************************************************/
+/** @brief The function creates a LineSP from 3 double precision numbers
+ * 
+ *  @param[in] A the A parameter 
+ *  @param[in] B the B parameter 
+ * 	@param[in] C the C parameter 
+ *
+ *  @return LineSP
+ */
 CREATE FUNCTION LineSP(A double precision, B double precision, C double precision) RETURNS LineSP AS
 	'$libdir/Hermes','constructorLineSPV1'
 LANGUAGE C IMMUTABLE STRICT;

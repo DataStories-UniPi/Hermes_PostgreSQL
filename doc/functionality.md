@@ -247,7 +247,7 @@ This function returns the displacement (the distance between the first and the l
 
 ## Centroid ## {#methods_centroid}
 
-This function returns the centroid of a trajectory.
+This function returns the centroid of a trajectory (the average point in all 3 dimensions \f$(x,y,t)\f$ ).
 
 	SELECT centroid(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:30' :: Timestamp, PointSP(3,3))]));
          centroid          
@@ -257,7 +257,7 @@ This function returns the centroid of a trajectory.
 
 ## Masscenter ## {#methods_masscenter}
 
-This function returns the masscenter of a trajectory. -- PENDING!! --
+This function returns the [center of mass](https://en.wikipedia.org/wiki/Center_of_mass) of a trajectory (The average point \f$(x,y)\f$ of the average points of each segment in the trajectory).
 
 	SELECT masscenter(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:30' :: Timestamp, PointSP(3,3))]));
  	masscenter 
@@ -267,7 +267,7 @@ This function returns the masscenter of a trajectory. -- PENDING!! --
 
 ## Gyradius ## {#methods_gyradius}
 
-This function returns the [radius of gyration](https://en.wikipedia.org/wiki/Radius_of_gyration) of a trajectory. -- PENDING!! --
+This function returns the [radius of gyration](https://en.wikipedia.org/wiki/Radius_of_gyration) of a trajectory.
 	
 	SELECT gyradius(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:30' :: Timestamp, PointSP(3,3))]));
     gyradius     
@@ -287,7 +287,7 @@ This function returns the average direction of a trajectory.
 
 ## anglexx ## {#methods_anglexx}
 
--- PENDING!! --
+This function in a segment it returns the direction of the segment and in a trajectory it returns the direction between the first and the last point.
 
 	SELECT anglexx(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:30' :: Timestamp, PointSP(3,3))]));
       anglexx      
@@ -297,7 +297,7 @@ This function returns the average direction of a trajectory.
 	
 ## samplingPeriod ## {#methods_samplingPeriod}
 
--- PENDING!! --
+This function returns the time between the last of the first point of a trajectory.
 
 	SELECT SamplingPeriod(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:40' :: Timestamp, PointSP(4,4))]));
  	samplingperiod 
@@ -307,7 +307,7 @@ This function returns the average direction of a trajectory.
 
 ## normalizedsamplingrate ## {#methods_normalizedsamplingrate}
 
--- PENDING!! --
+This function returns the number of points divided by the difference in seconds of the last point and the first point (
 
 	SELECT normalizedSamplingRate(Trajectory(ARRAY[PointST('2008-12-31 19:29:32' :: Timestamp, PointSP(1,1)),PointST('2008-12-31 19:30:30' :: Timestamp, PointSP(3,3))]));
  	normalizedsamplingrate 

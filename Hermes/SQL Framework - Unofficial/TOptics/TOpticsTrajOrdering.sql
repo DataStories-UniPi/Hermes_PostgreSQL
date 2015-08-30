@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Authors: Marios Vodas (mvodas@gmail.com).
  */
 
@@ -27,7 +27,7 @@ INSERT INTO TOptics_Traj_NN_vars(key, value) VALUES ('temporal_threshold', '30 m
 SELECT TOptics_Traj('milan_traj', 'he_TOptics_Traj_NN_Euclidean', 15);
 */
 
-CREATE FUNCTION TOptics_Traj_storage() RETURNS void AS $$
+CREATE OR REPLACE FUNCTION TOptics_Traj_storage() RETURNS void AS $$
 BEGIN
 	DROP TABLE IF EXISTS TOptics_Traj_vars CASCADE;
 	DROP TABLE IF EXISTS TOptics_Traj_ordering CASCADE;
@@ -91,7 +91,7 @@ TOptics_Traj_seeds
 TOptics_Traj_neighbors
 TOptics_Traj_db_ids';
 
-CREATE FUNCTION TOptics_Traj_cleanUp() RETURNS void AS $$
+CREATE OR REPLACE FUNCTION TOptics_Traj_cleanUp() RETURNS void AS $$
 BEGIN
 	DROP TABLE IF EXISTS TOptics_Traj_db_ids CASCADE;
 	DROP TABLE IF EXISTS TOptics_Traj_neighbors CASCADE;
@@ -99,16 +99,14 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE FUNCTION TOptics_Traj_neighbors(DB text, NN_method text, p_obj integer, p_traj integer) RETURNS void AS $$
-BEGIN
+CREATE OR REPLACE FUNCTION TOptics_Traj_get_neighbors(DB text, NN_method text, p_obj integer, p_traj integer, epsilon integer) RETURNS void AS $$ BEGIN
 	TRUNCATE TABLE TOptics_Traj_neighbors;
-
-	EXECUTE 'SELECT ' || NN_method || '(''' || DB || '''::text, ' || p_obj || '::integer, ' || p_traj || '::integer);';
+	EXECUTE 'SELECT ' || NN_method || '(''' || DB || '''::text, ' || p_obj || '::integer, ' || p_traj || '::integer, ' || epsilon || '::integer);';
 END;
 $$ LANGUAGE plpgsql STRICT;
 
 -- If no ksi value is given, do not perform cluster extraction
-CREATE FUNCTION TOptics_Traj(DB text, NN_method text, min_trajs integer, ksi double precision DEFAULT -1.0) RETURNS void AS $$
+CREATE OR REPLACE FUNCTION TOptics_Traj(DB text, NN_method text, min_trajs integer, epsilon integer, ksi double precision DEFAULT -1.0) RETURNS void AS $$
 DECLARE
 	p_obj integer;
 	p_traj integer;
@@ -134,7 +132,7 @@ BEGIN
 		SELECT obj_id, traj_id INTO p_obj, p_traj FROM TOptics_Traj_db_ids LIMIT 1;
 		EXIT WHEN NOT FOUND;
 
-		PERFORM TOptics_Traj_neighbors(DB, NN_method, p_obj, p_traj);
+		PERFORM TOptics_Traj_get_neighbors(DB, NN_method, p_obj, p_traj, epsilon);
 
 		-- Set core distance
 		SELECT distance INTO core_distance_temp FROM TOptics_Traj_neighbors ORDER BY distance ASC LIMIT 1 OFFSET min_trajs - 1;
@@ -180,7 +178,7 @@ BEGIN
 				DELETE FROM TOptics_Traj_seeds WHERE (obj_id, traj_id) = (p_obj, p_traj);
 
 				-- Find neighbors
-				PERFORM TOptics_Traj_neighbors(DB, NN_method, p_obj, p_traj);
+				PERFORM TOptics_Traj_get_neighbors(DB, NN_method, p_obj, p_traj, epsilon);
 
 				SELECT distance INTO core_distance_temp FROM TOptics_Traj_neighbors ORDER BY distance ASC LIMIT 1 OFFSET min_trajs - 1;
 				-- This trajectory cannot be a core object based on min_trajs parameter
@@ -220,6 +218,7 @@ BEGIN
 	INSERT INTO TOptics_Traj_vars(key, value) VALUES ('DB', DB);
 	INSERT INTO TOptics_Traj_vars(key, value) VALUES ('NN_method', NN_method);
 	INSERT INTO TOptics_Traj_vars(key, value) VALUES ('min_trajs', min_trajs);
+	INSERT INTO TOptics_Traj_vars(key, value) VALUES ('epsilon', epsilon);
 
 	SELECT max(id) INTO mxid FROM TOptics_Traj_ordering;
 	IF mxid IS NULL THEN

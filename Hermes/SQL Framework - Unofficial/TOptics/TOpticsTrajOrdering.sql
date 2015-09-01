@@ -106,7 +106,7 @@ END;
 $$ LANGUAGE plpgsql STRICT;
 
 -- If no ksi value is given, do not perform cluster extraction
-CREATE OR REPLACE FUNCTION TOptics_Traj(DB text, NN_method text, min_trajs integer, epsilon integer, ksi double precision DEFAULT -1.0) RETURNS void AS $$
+CREATE OR REPLACE FUNCTION TOptics_Traj(DB text, NN_method text, min_trajs integer, epsilon integer) RETURNS void AS $$
 DECLARE
 	p_obj integer;
 	p_traj integer;

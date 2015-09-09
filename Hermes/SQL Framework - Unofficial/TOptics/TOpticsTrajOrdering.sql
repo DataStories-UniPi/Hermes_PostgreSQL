@@ -99,14 +99,14 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION TOptics_Traj_get_neighbors(DB text, NN_method text, p_obj integer, p_traj integer, epsilon integer) RETURNS void AS $$ BEGIN
+CREATE OR REPLACE FUNCTION TOptics_Traj_get_neighbors(DB text, NN_method text, p_obj integer, p_traj integer, epsilon integer, commonprd boolean DEFAULT False) RETURNS void AS $$ BEGIN
 	TRUNCATE TABLE TOptics_Traj_neighbors;
-	EXECUTE 'SELECT ' || NN_method || '(''' || DB || '''::text, ' || p_obj || '::integer, ' || p_traj || '::integer, ' || epsilon || '::integer);';
+	EXECUTE 'SELECT ' || NN_method || '(''' || DB || '''::text, ' || p_obj || '::integer, ' || p_traj || '::integer, ' || epsilon || '::integer, ' || commonprd || '::boolean);';
 END;
 $$ LANGUAGE plpgsql STRICT;
 
 -- If no ksi value is given, do not perform cluster extraction
-CREATE OR REPLACE FUNCTION TOptics_Traj(DB text, NN_method text, min_trajs integer, epsilon integer) RETURNS void AS $$
+CREATE OR REPLACE FUNCTION TOptics_Traj(DB text, NN_method text, min_trajs integer, epsilon integer, commonprd boolean DEFAULT False) RETURNS void AS $$
 DECLARE
 	p_obj integer;
 	p_traj integer;
@@ -132,7 +132,7 @@ BEGIN
 		SELECT obj_id, traj_id INTO p_obj, p_traj FROM TOptics_Traj_db_ids LIMIT 1;
 		EXIT WHEN NOT FOUND;
 
-		PERFORM TOptics_Traj_get_neighbors(DB, NN_method, p_obj, p_traj, epsilon);
+		PERFORM TOptics_Traj_get_neighbors(DB, NN_method, p_obj, p_traj, epsilon, commonprd);
 
 		-- Set core distance
 		SELECT distance INTO core_distance_temp FROM TOptics_Traj_neighbors ORDER BY distance ASC LIMIT 1 OFFSET min_trajs - 1;
@@ -178,7 +178,7 @@ BEGIN
 				DELETE FROM TOptics_Traj_seeds WHERE (obj_id, traj_id) = (p_obj, p_traj);
 
 				-- Find neighbors
-				PERFORM TOptics_Traj_get_neighbors(DB, NN_method, p_obj, p_traj, epsilon);
+				PERFORM TOptics_Traj_get_neighbors(DB, NN_method, p_obj, p_traj, epsilon, commonprd);
 
 				SELECT distance INTO core_distance_temp FROM TOptics_Traj_neighbors ORDER BY distance ASC LIMIT 1 OFFSET min_trajs - 1;
 				-- This trajectory cannot be a core object based on min_trajs parameter
@@ -241,8 +241,5 @@ BEGIN
 		INSERT INTO TOptics_Traj_vars(key, value) VALUES ('ucd', ucd);
 	END IF;
 
-	IF 0.0 < ksi AND ksi < 1.0 THEN
-		PERFORM TOptics_Traj_extractClusters(ksi);
-	END IF;
 END;
 $$ LANGUAGE plpgsql STRICT;

@@ -7,7 +7,7 @@ spatiotemporal data ie. the Trajectory type of Hermes @cite ankerst1999optics
 presented, as well as a hands on example.
 
 ## TOptics ordering {#ordering}
-**TOptics\_Traj(DB, NN\_method, min\_trajs, epsilon)**
+**TOptics\_Traj(DB, NN\_method, min\_trajs, epsilon\[, commonprd\])**
 
 ###Returns###
 Void
@@ -23,6 +23,8 @@ he\_TOptics\_Traj\_NN\_ERP,
 he\_TOptics\_Traj\_NN\_LCSS.
 - **min\_trajs** Integer, minimum trajectories for a cluster to be valid.
 - **epsilon** Integer, core distance of a cluster.
+- **commonprd** Boolean, indicates if the trajectories will be constrained in their common lifespan.
+Default value is False.
 
 ## TOptics extract clusters {#extract}
 **TOpticsExtractClusters(epsilon, minpts)**
@@ -81,10 +83,10 @@ For demonstration purposes, a very simple and small dataset, consisting of 10
 trajectories, will be used. The name of the dataset is *tocluster*. In the
 next two images, the dataset is presented both graphically and in the database.
 
-![tocluster in database](tocluster.png)
+![tocluster in database](images\tocluster.png)
 @image latex tocluster.png "tocluster in database" width=\textwidth
 
-![tocluster graphically](map.png)
+![tocluster graphically](images\map.png)
 @image latex map.png "tocluster graphically" width=\textwidth
 
 
@@ -102,7 +104,7 @@ ordering with the following querie:
         SELECT * FROM TOptics_Traj_ordering;
 
 
-![trajectory ordering](trajectory_ordering.png)
+![trajectory ordering](images\trajectory_ordering.png)
 @image latex trajectory_ordering.png "trajectory ordering" width=\textwidth
 
 If we want to use the above ordering to extract the clusters,
@@ -115,7 +117,7 @@ Finally, the clusters can be seen by running:
         SELECT * FROM TOptics_Traj_clustering;
         
 
-![clusters](extract.png)
+![clusters](images\extract.png)
 @image latex extract.png "trajectory ordering" width=\textwidth
 
 Notice that because the parameter minpts was 3 (1 core object + two others),

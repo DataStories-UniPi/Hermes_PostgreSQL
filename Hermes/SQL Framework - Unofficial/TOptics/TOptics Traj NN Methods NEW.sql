@@ -2,7 +2,7 @@
  * Authors: Marios Vodas (mvodas@gmail.com), Sotiria Kallitzaki (skallitzaki@gmail.com).
  */
 
-CREATE OR REPLACE FUNCTION he_TOptics_Traj_NN_Euclidean(DB text, p_obj integer, p_traj integer, epsilon integer) RETURNS void AS $$
+CREATE OR REPLACE FUNCTION he_TOptics_Traj_NN_Euclidean(DB text, p_obj integer, p_traj integer, epsilon integer, commonprd boolean DEFAULT False) RETURNS void AS $$
 DECLARE
 	rec record;
 	distance double precision;
@@ -29,13 +29,15 @@ BEGIN
 		'
 		USING p_obj, p_traj, p, epsilon
 	LOOP
-		common_period := intersection(p::Period, rec.traj::Period);
-		IF common_period IS NULL THEN
-			RETURN;
-		END IF;
-
-		distance := Euclidean(atPeriod(p, common_period), atPeriod(rec.traj, common_period));
-
+        IF commonprd THEN
+		    common_period := intersection(p::Period, rec.traj::Period);
+		    IF common_period IS NULL THEN
+			    RETURN;
+		    END IF;
+		    distance := Euclidean(atPeriod(p, common_period), atPeriod(rec.traj, common_period));
+        ELSE
+		    distance := Euclidean(p, rec.traj);
+        END IF;
 		IF distance IS NOT NULL THEN
 			INSERT INTO TOptics_Traj_neighbors(obj_id, traj_id, distance) VALUES (rec.obj_id, rec.traj_id, distance);
 		END IF;
@@ -44,7 +46,7 @@ END;
 $$ LANGUAGE plpgsql STRICT;
 
 
-CREATE OR REPLACE FUNCTION he_TOptics_Traj_NN_Manhattan(DB text, p_obj integer, p_traj integer, epsilon integer) RETURNS void AS $$
+CREATE OR REPLACE FUNCTION he_TOptics_Traj_NN_Manhattan(DB text, p_obj integer, p_traj integer, epsilon integer, commonprd boolean DEFAULT False) RETURNS void AS $$
 DECLARE
 	rec record;
 	distance double precision;
@@ -71,11 +73,15 @@ BEGIN
 		'
 		USING p_obj, p_traj, p, epsilon
 	LOOP
-		common_period := intersection(p::Period, rec.traj::Period);
-		IF common_period IS NULL THEN
-			RETURN;
-		END IF;
-		distance := Manhattan(atPeriod(p, common_period), atPeriod(rec.traj, common_period));
+        IF commonprd THEN
+		    common_period := intersection(p::Period, rec.traj::Period);
+		    IF common_period IS NULL THEN
+			    RETURN;
+		    END IF;
+		    distance := Manhattan(atPeriod(p, common_period), atPeriod(rec.traj, common_period));
+        ELSE 
+            distance := Manhattan(p, rec.traj);
+        END IF;
 
 		IF distance IS NOT NULL THEN
 			INSERT INTO TOptics_Traj_neighbors(obj_id, traj_id, distance) VALUES (rec.obj_id, rec.traj_id, distance);
@@ -85,7 +91,7 @@ END;
 $$ LANGUAGE plpgsql STRICT;
 
 
-CREATE OR REPLACE FUNCTION he_TOptics_Traj_NN_Chebyshev(DB text, p_obj integer, p_traj integer, epsilon integer) RETURNS void AS $$
+CREATE OR REPLACE FUNCTION he_TOptics_Traj_NN_Chebyshev(DB text, p_obj integer, p_traj integer, epsilon integer, commonprd boolean DEFAULT False) RETURNS void AS $$
 DECLARE
 	rec record;
 	distance double precision;
@@ -112,12 +118,16 @@ BEGIN
 		'
 		USING p_obj, p_traj, p, epsilon
 	LOOP
-		common_period := intersection(p::Period, rec.traj::Period);
-		IF common_period IS NULL THEN
-			RETURN;
-		END IF;
-
-		distance := Chebyshev(atPeriod(p, common_period), atPeriod(rec.traj, common_period));
+        IF commonprd THEN
+		    common_period := intersection(p::Period, rec.traj::Period);
+		    IF common_period IS NULL THEN
+		    	RETURN;
+		    END IF;
+		    distance := Chebyshev(atPeriod(p, common_period), atPeriod(rec.traj, common_period));
+        ELSE
+		    distance := Chebyshev(p, rec.traj);
+        END IF;
+            
 
 		IF distance IS NOT NULL THEN
 			INSERT INTO TOptics_Traj_neighbors(obj_id, traj_id, distance) VALUES (rec.obj_id, rec.traj_id, distance);
@@ -127,7 +137,7 @@ END;
 $$ LANGUAGE plpgsql STRICT;
 
 
-CREATE OR REPLACE FUNCTION he_TOptics_Traj_NN_EuclideanStart(DB text, p_obj integer, p_traj integer, epsilon integer) RETURNS void AS $$
+CREATE OR REPLACE FUNCTION he_TOptics_Traj_NN_EuclideanStart(DB text, p_obj integer, p_traj integer, epsilon integer, commonprd boolean DEFAULT False) RETURNS void AS $$
 DECLARE
 	rec record;
 	distance double precision;
@@ -154,12 +164,16 @@ BEGIN
 		'
 		USING p_obj, p_traj, p, epsilon
 	LOOP
-		common_period := intersection(p::Period, rec.traj::Period);
-		IF common_period IS NULL THEN
-			RETURN;
-		END IF;
+        IF commonprd THEN
+		    common_period := intersection(p::Period, rec.traj::Period);
+		    IF common_period IS NULL THEN
+		    	RETURN;
+		    END IF;
 
-		distance := EuclideanStart(atPeriod(p, common_period), atPeriod(rec.traj, common_period));
+		    distance := EuclideanStart(atPeriod(p, common_period), atPeriod(rec.traj, common_period));
+        ELSE
+		    distance := EuclideanStart(p, rec.traj);
+        END IF;
 
 		IF distance IS NOT NULL THEN
 			INSERT INTO TOptics_Traj_neighbors(obj_id, traj_id, distance) VALUES (rec.obj_id, rec.traj_id, distance);
@@ -169,7 +183,7 @@ END;
 $$ LANGUAGE plpgsql STRICT;
 
 
-CREATE OR REPLACE FUNCTION he_TOptics_Traj_NN_EuclideanEnd(DB text, p_obj integer, p_traj integer, epsilon integer) RETURNS void AS $$
+CREATE OR REPLACE FUNCTION he_TOptics_Traj_NN_EuclideanEnd(DB text, p_obj integer, p_traj integer, epsilon integer, commonprd boolean DEFAULT False) RETURNS void AS $$
 DECLARE
 	rec record;
 	distance double precision;
@@ -196,12 +210,16 @@ BEGIN
 		'
 		USING p_obj, p_traj, p, epsilon
 	LOOP
-		common_period := intersection(p::Period, rec.traj::Period);
-		IF common_period IS NULL THEN
-			RETURN;
-		END IF;
+        IF commonprd THEN
+		    common_period := intersection(p::Period, rec.traj::Period);
+		    IF common_period IS NULL THEN
+		    	RETURN;
+		    END IF;
 
-		distance := EuclideanEnd(atPeriod(p, common_period), atPeriod(rec.traj, common_period));
+		    distance := EuclideanEnd(atPeriod(p, common_period), atPeriod(rec.traj, common_period));
+        ELSE
+		    distance := EuclideanEnd(p, rec.traj);
+        END IF;
 
 		IF distance IS NOT NULL THEN
 			INSERT INTO TOptics_Traj_neighbors(obj_id, traj_id, distance) VALUES (rec.obj_id, rec.traj_id, distance);
@@ -211,7 +229,7 @@ END;
 $$ LANGUAGE plpgsql STRICT;
 
 
-CREATE OR REPLACE FUNCTION he_TOptics_Traj_NN_EuclideanStartEnd(DB text, p_obj integer, p_traj integer, epsilon integer) RETURNS void AS $$
+CREATE OR REPLACE FUNCTION he_TOptics_Traj_NN_EuclideanStartEnd(DB text, p_obj integer, p_traj integer, epsilon integer, commonprd boolean DEFAULT False) RETURNS void AS $$
 DECLARE
 	rec record;
 	distance double precision;
@@ -238,12 +256,16 @@ BEGIN
 		'
 		USING p_obj, p_traj, p, epsilon
 	LOOP
-		common_period := intersection(p::Period, rec.traj::Period);
-		IF common_period IS NULL THEN
-			RETURN;
-		END IF;
+        IF commonprd THEN
+		    common_period := intersection(p::Period, rec.traj::Period);
+		    IF common_period IS NULL THEN
+		    	RETURN;
+		    END IF;
 
-		distance := EuclideanStartEnd(atPeriod(p, common_period), atPeriod(rec.traj, common_period));
+		    distance := EuclideanStartEnd(atPeriod(p, common_period), atPeriod(rec.traj, common_period));
+        ELSE
+		    distance := EuclideanStartEnd(p, rec.traj);
+        END IF;
 
 		IF distance IS NOT NULL THEN
 			INSERT INTO TOptics_Traj_neighbors(obj_id, traj_id, distance) VALUES (rec.obj_id, rec.traj_id, distance);
@@ -253,7 +275,7 @@ END;
 $$ LANGUAGE plpgsql STRICT;
 
 
-CREATE OR REPLACE FUNCTION he_TOptics_Traj_NN_DTW(DB text, p_obj integer, p_traj integer, epsilon integer) RETURNS void AS $$
+CREATE OR REPLACE FUNCTION he_TOptics_Traj_NN_DTW(DB text, p_obj integer, p_traj integer, epsilon integer, commonprd boolean DEFAULT False) RETURNS void AS $$
 DECLARE
 	rec record;
 	distance double precision;
@@ -290,7 +312,7 @@ END;
 $$ LANGUAGE plpgsql STRICT;
 
 
-CREATE OR REPLACE FUNCTION he_TOptics_Traj_NN_EDR(DB text, p_obj integer, p_traj integer, epsilon integer) RETURNS void AS $$
+CREATE OR REPLACE FUNCTION he_TOptics_Traj_NN_EDR(DB text, p_obj integer, p_traj integer, epsilon integer, commonprd boolean DEFAULT False) RETURNS void AS $$
 DECLARE
 	rec record;
 	distance double precision;
@@ -327,7 +349,7 @@ END;
 $$ LANGUAGE plpgsql STRICT;
 
 
-CREATE OR REPLACE FUNCTION he_TOptics_Traj_NN_ERP(DB text, p_obj integer, p_traj integer, epsilon integer) RETURNS void AS $$
+CREATE OR REPLACE FUNCTION he_TOptics_Traj_NN_ERP(DB text, p_obj integer, p_traj integer, epsilon integer, commonprd boolean DEFAULT False) RETURNS void AS $$
 DECLARE
 	rec record;
 	distance double precision;
@@ -364,7 +386,7 @@ END;
 $$ LANGUAGE plpgsql STRICT;
 
 
-CREATE OR REPLACE FUNCTION he_TOptics_Traj_NN_LCSS(DB text, p_obj integer, p_traj integer, epsilon integer) RETURNS void AS $$
+CREATE OR REPLACE FUNCTION he_TOptics_Traj_NN_LCSS(DB text, p_obj integer, p_traj integer, epsilon integer, commonprd boolean DEFAULT False) RETURNS void AS $$
 DECLARE
 	rec record;
 	distance double precision;

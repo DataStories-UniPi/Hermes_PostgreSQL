@@ -83,10 +83,10 @@ For demonstration purposes, a very simple and small dataset, consisting of 10
 trajectories, will be used. The name of the dataset is *tocluster*. In the
 next two images, the dataset is presented both graphically and in the database.
 
-![tocluster in database](images\tocluster.png)
+![tocluster in database](tocluster.png)
 @image latex tocluster.png "tocluster in database" width=\textwidth
 
-![tocluster graphically](images\map.png)
+![tocluster graphically](map.png)
 @image latex map.png "tocluster graphically" width=\textwidth
 
 

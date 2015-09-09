@@ -104,7 +104,7 @@ ordering with the following querie:
         SELECT * FROM TOptics_Traj_ordering;
 
 
-![trajectory ordering](images\trajectory_ordering.png)
+![trajectory ordering](trajectory_ordering.png)
 @image latex trajectory_ordering.png "trajectory ordering" width=\textwidth
 
 If we want to use the above ordering to extract the clusters,
@@ -117,7 +117,7 @@ Finally, the clusters can be seen by running:
         SELECT * FROM TOptics_Traj_clustering;
         
 
-![clusters](images\extract.png)
+![clusters](extract.png)
 @image latex extract.png "trajectory ordering" width=\textwidth
 
 Notice that because the parameter minpts was 3 (1 core object + two others),

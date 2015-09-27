@@ -81,7 +81,8 @@ Void
 ## Hands on example {#handsonexample}
 For demonstration purposes, a very simple and small dataset, consisting of 10
 trajectories, will be used. The name of the dataset is *tocluster*. In the
-next two images, the dataset is presented both graphically and in the database.
+next two images, the dataset is presented both graphically (in two dimensions)
+and in the database.
 
 ![tocluster in database](tocluster.png)
 @image latex tocluster.png "tocluster in database" width=\textwidth

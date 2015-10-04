@@ -1,9 +1,9 @@
 # TOptics {#toptics}
 
-Hermes provides an implementation of TOptics algorithm. It is based on OPTICS
-algorithm, which is used for database clustering, but modified to work with
-spatiotemporal data ie. the Trajectory type of Hermes @cite ankerst1999optics
-@cite nanni2006time. In the next paragraphs, the necessary functions are
+Hermes provides an implementation of TOptics @cite nanni2006time algorithm. It is based on OPTICS @cite ankerst1999optics
+algorithm, which is used for point clustering, but modified to work with
+spatiotemporal data 
+. In the next paragraphs, the necessary functions are
 presented, as well as a hands on example.
 
 ## TOptics ordering {#ordering}
@@ -94,13 +94,13 @@ and in the database.
 Suppose we want to cluster the above dataset. We want clusters consisting of
 at least 3 trajectories (core point + 2 others). The radious of the cluster
 would be 100000 units. We get the trajectory ordering by running the following
-querie:
+query:
 
         SELECT TOptics_Traj('tocluster_traj', 'he_TOptics_Traj_NN_Euclidean', 2, 1000000);
         
 Notice that in the DB parameter the suffix traj is appended. That it due to
 function's requirement for trajectory storage mode. We can see the trajectory
-ordering with the following querie:
+ordering with the following query:
 
         SELECT * FROM TOptics_Traj_ordering;
 
@@ -109,7 +109,7 @@ ordering with the following querie:
 @image latex trajectory_ordering.png "trajectory ordering" width=\textwidth
 
 If we want to use the above ordering to extract the clusters,
-using the same arguments we used for ordering we run the following querie:
+using the same arguments we used for ordering we run the following query:
 
         SELECT TOpticsExtractClusters(1000000, 2);
         
@@ -124,10 +124,6 @@ Finally, the clusters can be seen by running:
 Notice that because the parameter minpts was 3 (1 core object + two others),
 the trajectories 8, 13 are considered noise. If the value of minpts was 1,
 all else being equal, we would get three clusters.
-
-
-In more complex datasets we can extract clusters of different density by
-changing the parameter epsilon.
 
 Final notice: The distance functions DTW, LCSS, EDR and ERP require
 additional parameters. If one of the above is intended to be used, one must call

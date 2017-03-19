@@ -517,7 +517,7 @@ Finally, the fourth step is the clustering phase, where the clusters are built "
 	INSERT INTO S2T_Parameters(key, value) VALUES ('M', 500);-- Setting the maximum number of representatives to be identified.
 	INSERT INTO S2T_Parameters(key, value) VALUES ('eps_ssa', 0.001);--Setting the parameter eps_ssa which is used for the sampling phase. It is a positive real number close to zero that acts as a lower bound threshold of similarity between sub-trajectories and representative candidates.
 	INSERT INTO S2T_Parameters(key, value) VALUES ('eps_sca', 0.001);--Setting the parameter eps_sca which is used for the clustering phase. It is a positive real number close to zero that acts as a lower bound threshold of similarity between sub-trajectories and representatives.
-	SELECT S2T_Sigma(length(SegmentSP(lx,ly, hx,hy)) * 0.001) FROM hdatasets_statistics WHERE dataset = HDatasetID('imis');--Setting parameter Sigma. This parameter is used in the first, third and fourth step. Sigma shows how fast the function of the "voting influence” decreases with distance.
+	SELECT S2T_Sigma(length(SegmentSP(lx,ly, hx,hy)) * 0.001) FROM hdatasets_statistics WHERE dataset = HDatasetID('imis');--Setting parameter Sigma. This parameter is used in the first, third and fourth step. Sigma shows how fast the function of the "voting influenceï¿½ decreases with distance.
 	INSERT INTO S2T_Parameters(key, value) VALUES ('temporal_buffer_size', '0 seconds');--Setting the temporal buffer size of the voting step.
 	INSERT INTO S2T_Parameters(key, value) 
 		SELECT 'spatial_buffer_size', round(sqrt(-2*(length(SegmentSP(lx,ly, hx,hy)) * 0.001)^2*ln(0.001)))::integer 
@@ -536,7 +536,7 @@ Finally, the fourth step is the clustering phase, where the clusters are built "
 	SELECT S2T_VotingMethod('Trapezoidal');--Setting the Trapezoidal as the distance function.
 	SELECT S2T_Clustering();--The function that performs the clustering
 	
-@see N. Pelekis, P. Tampakis, M. Vodas, C. Panagiotakis, Y. Theodoridis, “In-DBMS Sampling-based Sub-trajectory Clustering”, Proceedings of the 20th International Conference on Extending Database Technology (EDBT2017), Venice, Italy, March 2017. ACM Press. 
+@see N. Pelekis, P. Tampakis, M. Vodas, C. Panagiotakis, Y. Theodoridis, "In-DBMS Sampling-based Sub-trajectory Clustering", Proceedings of the 20th International Conference on Extending Database Technology (EDBT2017), Venice, Italy, March 2017. ACM Press. 
 
 # Visualization {#visualization}
 
@@ -546,7 +546,7 @@ Hermes provides a set of functions that allow to construct a KML document within
 - function string_agg() aggregates points;
 - function KMLFolder() encloses aggregated points under one KML folder element.
 
-By enclosing a folder element into a KML document element, a KML file is ready to be written into a system file using “COPY” command. But before someone could export the results of a query he should create a directory where PostgreSQL has access. An example of how we visualized the Timeslice query is following:
+By enclosing a folder element into a KML document element, a KML file is ready to be written into a system file using ï¿½COPYï¿½ command. But before someone could export the results of a query he should create a directory where PostgreSQL has access. An example of how we visualized the Timeslice query is following:
 
 	COPY (
 		WITH 

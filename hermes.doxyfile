@@ -751,6 +751,7 @@ INPUT = README.md \
 		doc/functionality.md \
 		doc/advanced.md \
 		doc/documentation.md \
+		doc/documentation.md \
 		Hermes 
 
 # This tag can be used to specify the character encoding of the source files

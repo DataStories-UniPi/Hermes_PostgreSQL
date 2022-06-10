@@ -160,3 +160,7 @@ PostgreSQL 9.4/
 # Exclude build from doxygen
 
 doc/bin/*
+
+/nbproject/private/
+/dist/
+*.msi
